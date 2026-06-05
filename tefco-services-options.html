@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tefco — Services Section Options</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,400..700;1,400..700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif;
+  --font-display: 'Space Grotesk', sans-serif;
+  --font-serif: 'Playfair Display', serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  --gold:       #14b8a6;
+  --gold-dark:  #0f766e;
+  --gold-light: #2dd4bf;
+  --gold-pale:  #e6f4f2;
+  --charcoal:   #161719;
+  --wood-dark:  #1e1f22;
+  --wood-light: #f7f6f3;
+  --slate:      #fdfdfc;
+  --shadow-premium: 0 10px 40px -10px rgba(0,0,0,.2);
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { font-family: var(--font-sans); background: var(--charcoal); color: var(--wood-light); -webkit-font-smoothing: antialiased; }
+img { max-width: 100%; display: block; }
+a { color: inherit; text-decoration: none; }
+.wrap { max-width: 1280px; margin: 0 auto; padding-left: 24px; padding-right: 24px; }
+@media (min-width: 768px) { .wrap { padding-left: 48px; padding-right: 48px; } }
+
+/* option divider banner */
+.opt-banner {
+  background: var(--charcoal); color: #fff; padding: 28px 0;
+  border-top: 4px solid var(--gold);
+}
+.opt-banner .tag { font-family: var(--font-mono); font-size: 10px; letter-spacing: .35em; color: var(--gold); text-transform: uppercase; font-weight: 700; }
+.opt-banner h2 { font-family: var(--font-display); font-size: 22px; font-weight: 700; text-transform: uppercase; margin-top: 6px; }
+.opt-banner p { font-size: 12px; color: rgba(255,255,255,.55); font-weight: 300; margin-top: 6px; max-width: 640px; line-height: 1.6; }
+
+/* shared section header */
+.sec-head { text-align: center; margin-bottom: 40px; }
+.sec-head .lbl { display: inline-block; color: var(--gold); font-family: var(--font-mono); font-size: 10px; letter-spacing: .35em; font-weight: 700; margin-bottom: 12px; text-transform: uppercase; }
+.sec-head h2 { font-size: clamp(1.5rem, 3vw, 2rem); font-weight: 800; color: var(--charcoal); text-transform: uppercase; }
+
+.reveal { opacity: 0; transform: translateY(24px); transition: opacity .6s ease, transform .6s ease; }
+.reveal.in { opacity: 1; transform: none; }
+
+/* ════════════════════════════════════════════
+   OPTION A — PHOTO CARDS
+════════════════════════════════════════════ */
+.optA { background: var(--slate); padding: 72px 0 80px; }
+.a-grid { display: grid; grid-template-columns: 1fr; gap: 24px; }
+@media (min-width: 640px) { .a-grid { grid-template-columns: 1fr 1fr; } }
+@media (min-width: 1024px) { .a-grid { grid-template-columns: repeat(3, 1fr); } }
+.a-card {
+  background: #fff; border: 1px solid rgba(0,0,0,.05); border-radius: 2px;
+  overflow: hidden; cursor: pointer; display: flex; flex-direction: column;
+  transition: box-shadow .5s, transform .5s;
+}
+.a-card:hover { box-shadow: var(--shadow-premium); transform: translateY(-6px); }
+.a-card .ph { position: relative; aspect-ratio: 16/10; overflow: hidden; background: var(--charcoal); }
+.a-card .ph img { width: 100%; height: 100%; object-fit: cover; filter: brightness(.92); transition: transform .7s ease; }
+.a-card:hover .ph img { transform: scale(1.08); }
+.a-card .ph::after {
+  content: ""; position: absolute; left: 0; bottom: 0; height: 3px; width: 0;
+  background: var(--gold); transition: width .5s ease;
+}
+.a-card:hover .ph::after { width: 100%; }
+.a-card .num {
+  position: absolute; top: 12px; right: 12px;
+  font-family: var(--font-mono); font-size: 10px; letter-spacing: .2em; font-weight: 700;
+  color: #fff; background: rgba(22,23,25,.7); backdrop-filter: blur(4px);
+  padding: 6px 10px; border-radius: 2px;
+}
+.a-card .body { padding: 26px 26px 28px; display: flex; flex-direction: column; flex-grow: 1; }
+.a-card h3 {
+  font-family: var(--font-display); font-size: 15px; font-weight: 800;
+  letter-spacing: .15em; color: var(--charcoal); text-transform: uppercase;
+  transition: color .3s;
+}
+.a-card:hover h3 { color: var(--gold-dark); }
+.a-card p { font-size: 12.5px; line-height: 1.7; color: rgba(0,0,0,.55); font-weight: 300; margin-top: 10px; flex-grow: 1; }
+.a-card .more {
+  display: inline-flex; align-items: center; gap: 6px; margin-top: 18px;
+  font-size: 10px; font-weight: 700; letter-spacing: .2em; color: var(--gold);
+  text-transform: uppercase;
+}
+.a-card .more svg { transition: transform .3s; }
+.a-card:hover .more svg { transform: translateX(6px); }
+
+/* ════════════════════════════════════════════
+   OPTION B — FULL-BLEED IMAGE TILES
+════════════════════════════════════════════ */
+.optB { background: var(--charcoal); padding: 72px 0 80px; }
+.optB .sec-head h2 { color: #fff; }
+.b-grid { display: grid; grid-template-columns: 1fr; gap: 14px; }
+@media (min-width: 640px) { .b-grid { grid-template-columns: 1fr 1fr; } }
+@media (min-width: 1024px) { .b-grid { grid-template-columns: repeat(3, 1fr); } }
+.b-tile {
+  position: relative; height: 300px; overflow: hidden; border-radius: 2px;
+  cursor: pointer; background: var(--wood-dark);
+}
+.b-tile img {
+  position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;
+  filter: brightness(.55) contrast(1.05); transition: transform .8s ease, filter .5s;
+}
+.b-tile:hover img { transform: scale(1.07); filter: brightness(.4) contrast(1.05); }
+.b-tile .shade { position: absolute; inset: 0; background: linear-gradient(to top, rgba(10,10,12,.85), transparent 55%); }
+.b-tile .inner {
+  position: absolute; left: 0; right: 0; bottom: 0; padding: 24px;
+  display: flex; flex-direction: column; transform: translateY(58px); transition: transform .45s ease;
+}
+.b-tile:hover .inner { transform: translateY(0); }
+.b-tile h3 {
+  font-family: var(--font-display); font-size: 16px; font-weight: 800;
+  letter-spacing: .15em; color: #fff; text-transform: uppercase;
+  display: flex; align-items: center; gap: 10px;
+}
+.b-tile h3::before { content: ""; width: 22px; height: 2px; background: var(--gold); flex-shrink: 0; }
+.b-tile p {
+  font-size: 12px; line-height: 1.65; color: rgba(255,255,255,.75); font-weight: 300;
+  margin-top: 10px; opacity: 0; transition: opacity .45s ease .08s; min-height: 40px;
+}
+.b-tile:hover p { opacity: 1; }
+.b-tile .plus {
+  position: absolute; top: 16px; right: 16px; width: 34px; height: 34px;
+  border: 1px solid rgba(255,255,255,.35); border-radius: 50%; color: #fff;
+  display: flex; align-items: center; justify-content: center; font-size: 18px; font-weight: 300;
+  background: rgba(0,0,0,.25); backdrop-filter: blur(4px); transition: all .3s;
+}
+.b-tile:hover .plus { background: var(--gold); border-color: var(--gold); transform: rotate(90deg); }
+
+/* ════════════════════════════════════════════
+   OPTION C — ICON → PHOTO HOVER REVEAL
+════════════════════════════════════════════ */
+.optC { background: var(--slate); padding: 72px 0 80px; }
+.c-grid { max-width: 1280px; margin: 0 auto; display: grid; grid-template-columns: 1fr; }
+@media (min-width: 640px) { .c-grid { grid-template-columns: 1fr 1fr; } }
+@media (min-width: 1024px) { .c-grid { grid-template-columns: repeat(3, 1fr); } }
+.c-cell {
+  position: relative; overflow: hidden; cursor: pointer;
+  padding: 52px 40px; text-align: center; min-height: 300px;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  border: 1px solid rgba(0,0,0,.05); margin: -1px 0 0 -1px;
+  background: var(--slate); isolation: isolate;
+}
+.c-cell .bgimg {
+  position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;
+  opacity: 0; transform: scale(1.12); transition: opacity .55s ease, transform .9s ease;
+  z-index: -2;
+}
+.c-cell::after {
+  content: ""; position: absolute; inset: 0; background: rgba(13,14,16,.72);
+  opacity: 0; transition: opacity .55s ease; z-index: -1;
+}
+.c-cell:hover .bgimg { opacity: 1; transform: scale(1.02); }
+.c-cell:hover::after { opacity: 1; }
+.c-cell .ico {
+  margin-bottom: 22px; padding: 16px; border-radius: 50%;
+  background: rgba(230,244,242,.4); transition: background .5s, transform .5s;
+}
+.c-cell:hover .ico { background: rgba(20,184,166,.18); transform: translateY(-4px); }
+.c-cell .ico svg { width: 46px; height: 46px; color: var(--gold-dark); transition: color .4s; display: block; }
+.c-cell:hover .ico svg { color: var(--gold-light); }
+.c-cell h3 {
+  font-family: var(--font-display); font-size: 15px; font-weight: 800;
+  letter-spacing: .2em; color: var(--charcoal); text-transform: uppercase;
+  transition: color .4s;
+}
+.c-cell:hover h3 { color: #fff; }
+.c-cell p {
+  font-size: 12px; line-height: 1.7; color: rgba(0,0,0,.55); font-weight: 300;
+  max-width: 300px; margin-top: 14px; transition: color .4s;
+}
+.c-cell:hover p { color: rgba(255,255,255,.8); }
+.c-cell .more {
+  display: inline-flex; align-items: center; gap: 6px; margin-top: 20px;
+  font-size: 10px; font-weight: 700; letter-spacing: .2em; color: var(--gold);
+  text-transform: uppercase; opacity: .85; transition: all .3s;
+}
+.c-cell:hover .more { color: var(--gold-light); opacity: 1; }
+.c-cell:hover .more svg { transform: translateX(6px); }
+.c-cell .more svg { transition: transform .3s; }
+
+/* ════════════════════════════════════════════
+   OPTION D — EDITORIAL LIST + FLOATING THUMBNAIL
+════════════════════════════════════════════ */
+.optD { background: var(--charcoal); padding: 72px 0 90px; position: relative; }
+.optD .sec-head h2 { color: #fff; }
+.d-list { max-width: 1080px; margin: 0 auto; position: relative; }
+.d-row {
+  display: grid; grid-template-columns: 64px 1.1fr 1.6fr 44px; gap: 24px; align-items: center;
+  padding: 30px 8px; border-bottom: 1px solid rgba(255,255,255,.08); cursor: pointer;
+  position: relative; transition: background .3s, padding-left .3s;
+}
+.d-row:first-child { border-top: 1px solid rgba(255,255,255,.08); }
+.d-row:hover { background: rgba(255,255,255,.025); padding-left: 20px; }
+.d-row .idx { font-family: var(--font-mono); font-size: 12px; letter-spacing: .15em; color: rgba(255,255,255,.35); transition: color .3s; }
+.d-row:hover .idx { color: var(--gold); }
+.d-row h3 {
+  font-family: var(--font-display); font-size: clamp(16px, 2vw, 22px); font-weight: 700;
+  letter-spacing: .08em; color: #fff; text-transform: uppercase; transition: color .3s;
+}
+.d-row:hover h3 { color: var(--gold-light); }
+.d-row p { font-size: 12px; line-height: 1.65; color: rgba(255,255,255,.5); font-weight: 300; }
+.d-row .arr {
+  width: 38px; height: 38px; border: 1px solid rgba(255,255,255,.2); border-radius: 50%;
+  display: flex; align-items: center; justify-content: center; color: rgba(255,255,255,.6);
+  transition: all .3s; justify-self: end;
+}
+.d-row:hover .arr { background: var(--gold); border-color: var(--gold); color: #fff; transform: rotate(-45deg); }
+/* floating thumbnail follows the cursor */
+#dThumb {
+  position: fixed; width: 260px; aspect-ratio: 4/3; border-radius: 3px; overflow: hidden;
+  pointer-events: none; z-index: 30; opacity: 0; transform: scale(.92) rotate(-2deg);
+  transition: opacity .25s ease, transform .35s ease; box-shadow: 0 30px 60px -15px rgba(0,0,0,.6);
+  border: 1px solid rgba(255,255,255,.15); display: none;
+}
+@media (min-width: 1024px) { #dThumb { display: block; } }
+#dThumb.on { opacity: 1; transform: scale(1) rotate(0deg); }
+#dThumb img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity .25s; }
+#dThumb img.on { opacity: 1; }
+/* mobile fallback thumb inside row */
+.d-row .mthumb { display: none; }
+@media (max-width: 1023px) {
+  .d-row { grid-template-columns: 44px 1fr 44px; }
+  .d-row p { display: none; }
+}
+
+/* footer note */
+.note { background: var(--wood-dark); padding: 40px 0; text-align: center; }
+.note p { font-family: var(--font-mono); font-size: 11px; letter-spacing: .15em; color: rgba(255,255,255,.45); text-transform: uppercase; }
+</style>
+</head>
+<body>
+
+<!-- ═══════════════ OPTION A ═══════════════ -->
+<div class="opt-banner">
+  <div class="wrap">
+    <span class="tag">Option A</span>
+    <h2>Photo Cards</h2>
+    <p>Thumbnail photo on top, text below — closest to a classic services grid. Hover: card lifts, photo zooms, a teal line draws across, and the arrow nudges.</p>
+  </div>
+</div>
+<section class="optA">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="lbl">What We Do</span>
+      <h2>Our Services</h2>
+    </div>
+    <div class="a-grid" id="aGrid"></div>
+  </div>
+</section>
+
+<!-- ═══════════════ OPTION B ═══════════════ -->
+<div class="opt-banner">
+  <div class="wrap">
+    <span class="tag">Option B</span>
+    <h2>Full-Bleed Image Tiles</h2>
+    <p>Big dramatic photo tiles on the dark background. The title sits over the image; hovering darkens the photo, slides the description up, and spins the plus button.</p>
+  </div>
+</div>
+<section class="optB">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="lbl">What We Do</span>
+      <h2>Our Services</h2>
+    </div>
+    <div class="b-grid" id="bGrid"></div>
+  </div>
+</section>
+
+<!-- ═══════════════ OPTION C ═══════════════ -->
+<div class="opt-banner">
+  <div class="wrap">
+    <span class="tag">Option C</span>
+    <h2>Icon &rarr; Photo Hover Reveal</h2>
+    <p>Keeps the clean icon grid you have now, but hovering any cell fades a full photo in behind it and flips the text to white. Subtle until you touch it.</p>
+  </div>
+</div>
+<section class="optC">
+  <div class="sec-head" style="padding-top:0;">
+    <span class="lbl">What We Do</span>
+    <h2>Our Services</h2>
+  </div>
+  <div class="c-grid" id="cGrid"></div>
+</section>
+
+<!-- ═══════════════ OPTION D ═══════════════ -->
+<div class="opt-banner">
+  <div class="wrap">
+    <span class="tag">Option D</span>
+    <h2>Editorial List + Floating Thumbnail</h2>
+    <p>A bold numbered list on the dark background. On desktop, a photo thumbnail follows your cursor as you move across the rows — a premium portfolio-style effect.</p>
+  </div>
+</div>
+<section class="optD">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="lbl">What We Do</span>
+      <h2>Our Services</h2>
+    </div>
+    <div class="d-list" id="dList"></div>
+  </div>
+  <div id="dThumb"></div>
+</section>
+
+<div class="note">
+  <p>Pick a favorite (or mix elements) and I'll drop it into the homepage</p>
+</div>
+
+<script>
+/* real Tefco services + photos */
+const SERVICES = [
+  {
+    id: 'powder-coating', title: 'POWDER COATING',
+    description: 'We have all your powder coating needs covered — from residential, to commercial, and everything in between!',
+    image: 'https://tefcofab.com/wp-content/uploads/2026/02/wheelspowdercoat.jpg',
+  },
+  {
+    id: 'sand-shot-blasting', title: 'SAND/SHOT BLASTING',
+    description: 'Whether you have a small part, vehicle, or larger item, you can rely on us as your go-to sandblasting company.',
+    image: 'https://tefcofab.com/wp-content/uploads/2024/12/wheelsbefore-e1739484003231.jpg',
+  },
+  {
+    id: 'custom-fabrication', title: 'CUSTOM FABRICATION',
+    description: 'From your home to your retail store or office, we can help you design and create just about anything.',
+    image: 'https://tefcofab.com/wp-content/uploads/2024/11/IMG_1096.jpg',
+  },
+  {
+    id: 'gates', title: 'GATES',
+    description: 'We specialize in all types of custom iron gates including entry gates and security gates.',
+    image: 'https://tefcofab.com/wp-content/uploads/2026/05/image-77.png',
+  },
+  {
+    id: 'railings', title: 'RAILINGS',
+    description: 'Whether you love ornamental, modern, rustic, or traditional, we can make it. Contact us to get started!',
+    image: 'https://tefcofab.com/wp-content/uploads/2024/11/IMG_0803-scaled.jpg',
+  },
+  {
+    id: 'commercial', title: 'COMMERCIAL',
+    description: 'We specialize in sandblasting, powder coating, and metal fabrication to deliver quality results for your business.',
+    image: 'https://tefcofab.com/wp-content/uploads/2024/11/Tefcopics2011-008-scaled.jpg',
+  },
+];
+
+const SERVICE_ICONS = {
+  'powder-coating': '<svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M10 16 H24 L28 12 H38 M28 12 V26" stroke-width="1.5"/><rect x="6" y="16" width="10" height="14" rx="2"/><path d="M34 30 V38 M30 34 H38"/><path d="M40 16 L42 18 M42 12 L44 14 M38 20 L40 22" stroke-width="1"/></svg>',
+  'sand-shot-blasting': '<svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M8 30 L22 16 L26 20 L12 34 Z" stroke-width="1.5"/><path d="M26 14 L30 18" stroke-width="1.5"/><circle cx="34" cy="12" r="1"/><circle cx="38" cy="16" r="1"/><circle cx="36" cy="22" r="1"/><circle cx="40" cy="10" r="1"/><circle cx="42" cy="18" r="1"/><path d="M6 38 H26" stroke-dasharray="2,2" stroke-width="1"/></svg>',
+  'custom-fabrication': '<svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M12 36 L28 20"/><path d="M25 17 L30 12 L36 18 L31 23 Z" stroke-width="1.5"/><path d="M33 11 C35 7 39 8 40 10 L41 12 C42 14 41 18 37 20 Z"/><path d="M8 40 L40 8" stroke-dasharray="2,2" stroke-width="1" opacity=".55"/></svg>',
+  'gates': '<svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M8 40 V14 C8 10 12 8 16 10" stroke-width="1.5"/><path d="M40 40 V14 C40 10 36 8 32 10" stroke-width="1.5"/><path d="M16 40 V12"/><path d="M24 40 V8"/><path d="M32 40 V12"/><path d="M6 40 H42" stroke-width="1.5"/><circle cx="24" cy="6" r="1.5"/></svg>',
+  'railings': '<svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M6 18 H42" stroke-width="1.5"/><path d="M6 38 H42" stroke-width="1.5"/><path d="M10 18 V38 M18 18 V38 M26 18 V38 M34 18 V38 M40 18 V38"/><path d="M10 18 C10 24 18 26 18 20" stroke-width="1"/></svg>',
+  'commercial': '<svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M8 40 V10 H26 V40" stroke-width="1.5"/><path d="M26 18 H40 V40" stroke-width="1.5"/><path d="M6 40 H42" stroke-width="1.5"/><path d="M12 16 H16 M20 16 H22 M12 22 H16 M20 22 H22 M12 28 H16 M20 28 H22 M30 24 H36 M30 30 H36"/></svg>',
+};
+
+const ARROW = '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>';
+const ARROW_LG = '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>';
+function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+
+/* OPTION A */
+document.getElementById('aGrid').innerHTML = SERVICES.map((s, i) => `
+  <div class="a-card reveal" style="transition-delay:${i*70}ms">
+    <div class="ph">
+      <img src="${s.image}" alt="${esc(s.title)}" loading="lazy">
+      <span class="num">0${i+1}</span>
+    </div>
+    <div class="body">
+      <h3>${esc(s.title)}</h3>
+      <p>${esc(s.description)}</p>
+      <span class="more">Learn More ${ARROW}</span>
+    </div>
+  </div>`).join('');
+
+/* OPTION B */
+document.getElementById('bGrid').innerHTML = SERVICES.map((s, i) => `
+  <div class="b-tile reveal" style="transition-delay:${i*70}ms">
+    <img src="${s.image}" alt="${esc(s.title)}" loading="lazy">
+    <div class="shade"></div>
+    <div class="plus">+</div>
+    <div class="inner">
+      <h3>${esc(s.title)}</h3>
+      <p>${esc(s.description)}</p>
+    </div>
+  </div>`).join('');
+
+/* OPTION C */
+document.getElementById('cGrid').innerHTML = SERVICES.map((s, i) => `
+  <div class="c-cell reveal" style="transition-delay:${i*70}ms">
+    <img class="bgimg" src="${s.image}" alt="" loading="lazy">
+    <div class="ico">${SERVICE_ICONS[s.id]}</div>
+    <h3>${esc(s.title)}</h3>
+    <p>${esc(s.description)}</p>
+    <span class="more">Learn More ${ARROW}</span>
+  </div>`).join('');
+
+/* OPTION D */
+document.getElementById('dList').innerHTML = SERVICES.map((s, i) => `
+  <div class="d-row reveal" data-img="${s.image}" style="transition-delay:${i*60}ms">
+    <span class="idx">0${i+1}</span>
+    <h3>${esc(s.title)}</h3>
+    <p>${esc(s.description)}</p>
+    <span class="arr">${ARROW_LG}</span>
+  </div>`).join('');
+
+/* floating thumbnail logic for option D */
+const dThumb = document.getElementById('dThumb');
+dThumb.innerHTML = SERVICES.map(s => `<img src="${s.image}" data-src="${s.image}" loading="lazy">`).join('');
+const dImgs = Array.from(dThumb.querySelectorAll('img'));
+let thumbX = 0, thumbY = 0, curX = 0, curY = 0, thumbOn = false;
+
+document.querySelectorAll('.d-row').forEach(row => {
+  row.addEventListener('mouseenter', () => {
+    dImgs.forEach(im => im.classList.toggle('on', im.dataset.src === row.dataset.img));
+    dThumb.classList.add('on'); thumbOn = true;
+  });
+  row.addEventListener('mouseleave', () => {
+    dThumb.classList.remove('on'); thumbOn = false;
+  });
+  row.addEventListener('mousemove', (e) => {
+    thumbX = e.clientX + 28;
+    thumbY = e.clientY - 90;
+  });
+});
+(function animThumb(){
+  curX += (thumbX - curX) * .12;
+  curY += (thumbY - curY) * .12;
+  dThumb.style.left = curX + 'px';
+  dThumb.style.top = curY + 'px';
+  requestAnimationFrame(animThumb);
+})();
+
+/* reveal on scroll (staggered via inline delays) */
+const io = new IntersectionObserver((entries) => {
+  entries.forEach(en => { if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); } });
+}, { rootMargin: '-40px' });
+document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+</script>
+</body>
+</html>

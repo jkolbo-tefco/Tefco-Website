@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tefco Fabrication — Design 4: Soft Studio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Lora:ital,wght@0,500;0,600;1,500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --teal-deep:   #0a5c5f;
+      --teal-brand:  #0d7377;
+      --teal-light:  #14a3a8;
+      --teal-pale:   #e8f5f5;
+      --white:       #ffffff;
+      --off-white:   #fafafa;
+      --light-gray:  #f2f2f2;
+      --border:      #e8e8e8;
+      --text-dark:   #1a1f22;
+      --text-mid:    #4a5568;
+      --text-light:  #718096;
+      --sans: 'Plus Jakarta Sans', sans-serif;
+      --serif: 'Lora', Georgia, serif;
+      --r: 20px;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: var(--sans); color: var(--text-mid); background: var(--white); line-height: 1.65; font-size: 15px; -webkit-font-smoothing: antialiased; }
+    img { max-width: 100%; display: block; }
+    a { text-decoration: none; color: inherit; }
+    .wrap { max-width: 1180px; margin: 0 auto; padding: 0 clamp(20px, 4vw, 48px); }
+
+    /* ── NAV ── */
+    .nav {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 16px clamp(20px, 4vw, 48px);
+      position: sticky; top: 0; z-index: 50;
+      background: rgba(255,255,255,.92); backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav img { height: 40px; }
+    .nav ul { display: flex; gap: 6px; list-style: none; }
+    .nav ul a {
+      font-size: 13.5px; font-weight: 600; color: var(--text-mid);
+      padding: 9px 16px; border-radius: 100px; transition: all .2s;
+    }
+    .nav ul a:hover, .nav ul a.on { background: var(--teal-pale); color: var(--teal-deep); }
+    .btn-pill {
+      display: inline-block; background: var(--teal-brand); color: white;
+      font-size: 13.5px; font-weight: 700; padding: 12px 26px; border-radius: 100px;
+      transition: all .2s; border: none; cursor: pointer;
+    }
+    .btn-pill:hover { background: var(--teal-light); transform: translateY(-1px); }
+    .btn-pill.ghost { background: transparent; color: var(--teal-brand); border: 2px solid var(--teal-brand); }
+    .btn-pill.ghost:hover { background: var(--teal-pale); }
+
+    /* ── HERO ── */
+    .hero {
+      background: linear-gradient(150deg, var(--teal-pale) 0%, var(--white) 55%, var(--off-white) 100%);
+      padding: 70px 0 80px;
+    }
+    .hero-grid { display: grid; grid-template-columns: 1fr 1.1fr; gap: 56px; align-items: center; }
+    .hero-copy .pill-tag {
+      display: inline-block; background: var(--white); border: 1px solid var(--teal-light);
+      color: var(--teal-deep); font-size: 12px; font-weight: 700; padding: 7px 16px; border-radius: 100px;
+      margin-bottom: 22px;
+    }
+    .hero-copy h1 {
+      font-family: var(--serif); font-weight: 500; color: var(--text-dark);
+      font-size: clamp(38px, 4.8vw, 58px); line-height: 1.12; letter-spacing: -0.01em;
+    }
+    .hero-copy h1 em { font-style: italic; color: var(--teal-brand); }
+    .hero-copy p { margin-top: 20px; font-size: 16px; max-width: 440px; }
+    .hero-copy .acts { display: flex; gap: 14px; margin-top: 32px; align-items: center; }
+    .hero-ph { position: relative; }
+    .hero-ph .main { border-radius: 28px; overflow: hidden; box-shadow: 0 24px 60px rgba(10,92,95,.18); }
+    .hero-ph .main img { width: 100%; height: clamp(340px, 44vw, 480px); object-fit: cover; }
+    .hero-ph .float {
+      position: absolute; left: -28px; bottom: 28px;
+      background: var(--white); border-radius: 18px; padding: 16px 22px;
+      box-shadow: 0 12px 36px rgba(26,31,34,.12);
+      display: flex; gap: 18px; align-items: center;
+    }
+    .hero-ph .float .n { font-size: 26px; font-weight: 800; color: var(--teal-deep); line-height: 1; }
+    .hero-ph .float .l { font-size: 11px; color: var(--text-light); margin-top: 4px; }
+
+    /* ── TRIO CARDS ── */
+    .trio { padding: 56px 0 26px; }
+    .trio-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+    .tcard {
+      display: flex; gap: 16px; align-items: center;
+      background: var(--off-white); border: 1px solid var(--border); border-radius: var(--r);
+      padding: 20px 22px; transition: all .25s;
+    }
+    .tcard:hover { background: var(--teal-pale); border-color: var(--teal-light); transform: translateY(-2px); }
+    .tcard .ic {
+      width: 52px; height: 52px; border-radius: 16px; background: var(--teal-deep); color: white;
+      display: flex; align-items: center; justify-content: center; font-size: 22px; flex-shrink: 0;
+    }
+    .tcard h3 { font-size: 15.5px; font-weight: 700; color: var(--text-dark); }
+    .tcard p { font-size: 12.5px; color: var(--text-light); margin-top: 2px; }
+
+    /* ── FEATURED WORK ── */
+    .featured { padding: 60px 0 80px; }
+    .f-head { display: flex; align-items: flex-end; justify-content: space-between; margin-bottom: 34px; gap: 24px; }
+    .f-head h2 { font-family: var(--serif); font-weight: 500; font-size: clamp(28px, 3.4vw, 40px); color: var(--text-dark); }
+    .f-head h2 em { font-style: italic; color: var(--teal-brand); }
+    .f-head p { font-size: 13.5px; color: var(--text-light); max-width: 360px; }
+    .f-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; }
+    .fcard { background: var(--white); border: 1px solid var(--border); border-radius: var(--r); overflow: hidden; transition: all .25s; }
+    .fcard:hover { box-shadow: 0 16px 40px rgba(10,92,95,.14); transform: translateY(-3px); }
+    .fcard .ph { height: 200px; overflow: hidden; }
+    .fcard .ph img { width: 100%; height: 100%; object-fit: cover; transition: transform .4s; }
+    .fcard:hover .ph img { transform: scale(1.05); }
+    .fcard .body { padding: 18px 20px 22px; }
+    .fcard h3 { font-size: 15.5px; font-weight: 700; color: var(--text-dark); }
+    .fcard p { font-size: 12.5px; color: var(--text-light); margin-top: 4px; }
+    .fcard .go { display: inline-block; margin-top: 12px; font-size: 12.5px; font-weight: 700; color: var(--teal-brand); }
+    .fcard .go:hover { color: var(--teal-light); }
+
+    /* ── DARK BAND ── */
+    .latest {
+      background: linear-gradient(135deg, var(--teal-deep) 0%, #073c3e 100%);
+      border-radius: 32px; margin: 0 clamp(12px, 2vw, 28px) 80px;
+      padding: 64px clamp(24px, 4vw, 56px);
+      color: white;
+    }
+    .latest-grid { display: grid; grid-template-columns: 0.9fr 1.6fr; gap: 48px; align-items: center; }
+    .latest h2 { font-family: var(--serif); font-weight: 500; font-size: clamp(28px, 3.4vw, 40px); color: white; line-height: 1.15; }
+    .latest h2 em { font-style: italic; color: #9fd9db; }
+    .latest .blurb { color: rgba(255,255,255,.75); font-size: 14px; margin-top: 16px; max-width: 320px; }
+    .latest .btn-pill { background: white; color: var(--teal-deep); margin-top: 28px; }
+    .latest .btn-pill:hover { background: var(--teal-pale); }
+    .l-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+    .lcard { background: var(--white); border-radius: 18px; overflow: hidden; color: var(--text-mid); }
+    .lcard .ph { height: 150px; overflow: hidden; }
+    .lcard .ph img { width: 100%; height: 100%; object-fit: cover; }
+    .lcard .body { padding: 16px 18px 20px; }
+    .lcard h3 { font-size: 14px; font-weight: 700; color: var(--text-dark); }
+    .lcard p { font-size: 11.5px; color: var(--text-light); margin-top: 3px; }
+    .lcard .mini {
+      display: inline-block; margin-top: 12px; font-size: 11px; font-weight: 700;
+      background: var(--teal-brand); color: white; padding: 8px 16px; border-radius: 100px;
+    }
+    .lcard .mini:hover { background: var(--teal-light); }
+
+    /* ── REVIEWS ── */
+    .reviews { padding: 0 0 80px; }
+    .r-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+    .rcard { background: var(--teal-pale); border: 1px solid var(--teal-light); border-radius: var(--r); padding: 26px; }
+    .rcard .stars { color: #c9a227; font-size: 14px; letter-spacing: 2px; }
+    .rcard blockquote { font-family: var(--serif); font-style: italic; font-size: 15.5px; color: var(--text-dark); margin-top: 14px; line-height: 1.6; }
+    .rcard .who { margin-top: 14px; font-size: 13px; font-weight: 700; color: var(--teal-deep); }
+    .rcard .src { font-size: 11px; color: var(--text-light); }
+
+    /* ── CTA ── */
+    .cta { padding: 0 0 90px; text-align: center; }
+    .cta-card {
+      background: var(--off-white); border: 1px solid var(--border); border-radius: 32px;
+      padding: 64px clamp(24px, 5vw, 80px); max-width: 880px; margin: 0 auto;
+    }
+    .cta h2 { font-family: var(--serif); font-weight: 500; font-size: clamp(28px, 3.6vw, 42px); color: var(--text-dark); }
+    .cta h2 em { font-style: italic; color: var(--teal-brand); }
+    .cta p { margin: 14px auto 0; max-width: 460px; font-size: 15px; }
+    .cta .acts { display: flex; gap: 14px; justify-content: center; margin-top: 30px; flex-wrap: wrap; }
+
+    /* ── FOOTER ── */
+    .footer { background: var(--off-white); border-top: 1px solid var(--border); padding: 52px 0 0; }
+    .foot-grid { display: grid; grid-template-columns: 1.4fr 1fr 1fr 1fr; gap: 40px; padding-bottom: 40px; }
+    .foot-grid img { height: 46px; }
+    .foot-grid .blurb { font-size: 13px; color: var(--text-light); margin-top: 14px; max-width: 280px; line-height: 1.7; }
+    .foot-grid h4 { font-size: 13px; font-weight: 800; color: var(--text-dark); margin-bottom: 16px; }
+    .foot-grid ul { list-style: none; }
+    .foot-grid li { margin-bottom: 9px; }
+    .foot-grid a { font-size: 13.5px; color: var(--text-mid); }
+    .foot-grid a:hover { color: var(--teal-brand); }
+    .foot-grid .hrs { font-size: 13.5px; line-height: 1.9; }
+    .footer-bar {
+      background: var(--teal-deep); color: rgba(255,255,255,.85);
+      padding: 13px clamp(20px, 4vw, 48px); display: flex; justify-content: space-between;
+      font-size: 11.5px; letter-spacing: .5px;
+    }
+
+    @media (max-width: 980px) {
+      .nav ul { display: none; }
+      .hero-grid, .latest-grid { grid-template-columns: 1fr; gap: 36px; }
+      .trio-grid, .r-grid, .l-cards { grid-template-columns: 1fr; }
+      .f-grid { grid-template-columns: 1fr 1fr; }
+      .f-head { flex-direction: column; align-items: flex-start; }
+      .hero-ph .float { left: 12px; }
+      .foot-grid { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 560px) { .f-grid { grid-template-columns: 1fr; } .foot-grid { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+
+  <nav class="nav">
+    <img src="https://tefcofab.com/wp-content/uploads/2026/02/Tefco_Primary_Logo_Clear-1.png" alt="Tefco Fabrication">
+    <ul>
+      <li><a href="#" class="on">Home</a></li>
+      <li><a href="#">Services</a></li>
+      <li><a href="#">Gallery</a></li>
+      <li><a href="#">About</a></li>
+      <li><a href="#">Contact</a></li>
+    </ul>
+    <a href="#" class="btn-pill">Get a Quote</a>
+  </nav>
+
+  <header class="hero">
+    <div class="wrap hero-grid">
+      <div class="hero-copy">
+        <span class="pill-tag">✦ Ogden, Utah · Est. 1942</span>
+        <h1>Ironwork that makes your home <em>one of a kind</em></h1>
+        <p>Custom railings, security doors, staircases, and powder coating — handcrafted by Northern Utah's most trusted fabrication shop.</p>
+        <div class="acts">
+          <a href="#" class="btn-pill">Start Your Project</a>
+          <a href="#" class="btn-pill ghost">View Our Work</a>
+        </div>
+      </div>
+      <div class="hero-ph">
+        <div class="main">
+          <img src="https://tefcofab.com/wp-content/uploads/2024/11/101810-003-scaled.jpg" alt="Custom iron railing on stone building">
+        </div>
+        <div class="float">
+          <div><div class="n">80+</div><div class="l">Years in business</div></div>
+          <div><div class="n">5.0★</div><div class="l">Google rating</div></div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <section class="trio">
+    <div class="wrap trio-grid">
+      <a href="#" class="tcard">
+        <div class="ic">⚒</div>
+        <div><h3>Custom Fabrication</h3><p>If it's metal, we build it — from sketch to install</p></div>
+      </a>
+      <a href="#" class="tcard">
+        <div class="ic">🎨</div>
+        <div><h3>Powder Coating</h3><p>Hundreds of colors, up to 24 ft capacity</p></div>
+      </a>
+      <a href="#" class="tcard">
+        <div class="ic">🏠</div>
+        <div><h3>Install Included</h3><p>Measured, built &amp; installed by our own crew</p></div>
+      </a>
+    </div>
+  </section>
+
+  <section class="featured">
+    <div class="wrap">
+      <div class="f-head">
+        <div>
+          <h2>Featured <em>Services</em></h2>
+        </div>
+        <p>From residential railings to large-scale commercial fabrication — design, fabrication, finishing, and installation under one roof.</p>
+      </div>
+      <div class="f-grid">
+        <a href="#" class="fcard">
+          <div class="ph"><img src="https://tefcofab.com/wp-content/uploads/2024/11/IMG_0803-scaled.jpg" alt="Custom indoor railing"></div>
+          <div class="body"><h3>Custom Railings</h3><p>Interior &amp; exterior iron railings</p><span class="go">Explore →</span></div>
+        </a>
+        <a href="#" class="fcard">
+          <div class="ph"><img src="https://tefcofab.com/wp-content/uploads/2026/02/1000037064-1-scaled.jpg" alt="Custom security door"></div>
+          <div class="body"><h3>Security Doors</h3><p>Heavy-gauge steel with decorative ironwork</p><span class="go">Explore →</span></div>
+        </a>
+        <a href="#" class="fcard">
+          <div class="ph"><img src="https://tefcofab.com/wp-content/uploads/2024/11/IMG_3051-scaled.jpg" alt="Metal staircase"></div>
+          <div class="body"><h3>Metal Staircases</h3><p>Exterior, interior &amp; spiral fabrication</p><span class="go">Explore →</span></div>
+        </a>
+        <a href="#" class="fcard">
+          <div class="ph"><img src="https://tefcofab.com/wp-content/uploads/2024/11/IMG_1096.jpg" alt="Custom metal fabrication"></div>
+          <div class="body"><h3>Custom Fabrication</h3><p>Gates, planters, brackets &amp; structural steel</p><span class="go">Explore →</span></div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section class="latest">
+    <div class="latest-grid">
+      <div>
+        <h2>Fresh from <em>the shop</em></h2>
+        <p class="blurb">Recent projects out of our Ogden facility — powder coating, ornamental iron, and custom builds for outside customers too.</p>
+        <a href="#" class="btn-pill">View Full Gallery</a>
+      </div>
+      <div class="l-cards">
+        <div class="lcard">
+          <div class="ph"><img src="https://tefcofab.com/wp-content/uploads/2026/05/image-77.png" alt="Ornamental security door"></div>
+          <div class="body"><h3>Ornamental Door</h3><p>Custom scrollwork design</p><a href="#" class="mini">View Project</a></div>
+        </div>
+        <div class="lcard">
+          <div class="ph"><img src="https://tefcofab.com/wp-content/uploads/2026/02/wheelspowdercoat.jpg" alt="Powder coated wheels"></div>
+          <div class="body"><h3>Wheel Coating</h3><p>Gloss powder coat finish</p><a href="#" class="mini">View Project</a></div>
+        </div>
+        <div class="lcard">
+          <div class="ph"><img src="https://tefcofab.com/wp-content/uploads/2021/11/utv-cage-gray-powder-coat.jpg" alt="UTV cage gray powder coat"></div>
+          <div class="body"><h3>UTV Cage</h3><p>Textured gray powder coat</p><a href="#" class="mini">View Project</a></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="reviews">
+    <div class="wrap r-grid">
+      <div class="rcard">
+        <div class="stars">★★★★★</div>
+        <blockquote>"Hands down the best powder coater in Ogden. Incredible quality, great turnaround, and a fair price."</blockquote>
+        <div class="who">Patrick</div><div class="src">Google Review</div>
+      </div>
+      <div class="rcard">
+        <div class="stars">★★★★★</div>
+        <blockquote>"Top-notch coating — Ray did a fantastic job. Fast turnaround and the finish was perfect."</blockquote>
+        <div class="who">Thomas</div><div class="src">Google Review</div>
+      </div>
+      <div class="rcard">
+        <div class="stars">★★★★★</div>
+        <blockquote>"We needed a custom security door with a unique design. Tefco nailed it — looks amazing and feels incredibly solid."</blockquote>
+        <div class="who">Sarah M.</div><div class="src">Google Review</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta">
+    <div class="wrap">
+      <div class="cta-card">
+        <h2>Ready to start <em>your project?</em></h2>
+        <p>Call us or stop by our Ogden shop — we'll take measurements, talk through your vision, and give you a free estimate.</p>
+        <div class="acts">
+          <a href="tel:8016211010" class="btn-pill">Call (801) 621-1010</a>
+          <a href="#" class="btn-pill ghost">Send a Message</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="wrap foot-grid">
+      <div>
+        <img src="https://tefcofab.com/wp-content/uploads/2026/02/Tefco_Primary_Logo_Clear-1.png" alt="Tefco">
+        <p class="blurb">Creating ornamental iron and custom fabrication since 1942. Call or use our online form to speak with a team member.</p>
+      </div>
+      <div>
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a href="#">Home</a></li>
+          <li><a href="#">About Us</a></li>
+          <li><a href="#">Gallery</a></li>
+          <li><a href="#">Contact Us</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Services</h4>
+        <ul>
+          <li><a href="#">Custom Railings</a></li>
+          <li><a href="#">Security Doors</a></li>
+          <li><a href="#">Metal Staircases</a></li>
+          <li><a href="#">Powder Coating</a></li>
+          <li><a href="#">Sand &amp; Shot Blasting</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Hours &amp; Location</h4>
+        <p class="hrs">
+          Mon – Fri: 7:00am – 3:30pm<br>
+          Sat – Sun: Closed<br><br>
+          318 26th Street<br>
+          Ogden, UT 84401<br>
+          (801) 621-1010
+        </p>
+      </div>
+    </div>
+    <div class="footer-bar">
+      <span>© 2026 Tefco Fabrication. All rights reserved.</span>
+      <span>tefcofab.com</span>
+    </div>
+  </footer>
+
+</body>
+</html>

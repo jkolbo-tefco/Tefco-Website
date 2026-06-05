@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tefco — About Section Scroll Effect Options</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif;
+  --font-display: 'Space Grotesk', sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  --gold:       #14b8a6;
+  --gold-dark:  #0f766e;
+  --gold-light: #2dd4bf;
+  --charcoal:   #161719;
+  --wood-dark:  #1e1f22;
+  --wood-light: #f7f6f3;
+  --slate:      #fdfdfc;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { font-family: var(--font-sans); background: var(--charcoal); color: var(--wood-light); -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+img { max-width: 100%; display: block; }
+.wrap { max-width: 1280px; margin: 0 auto; padding: 0 24px; }
+@media (min-width: 768px) { .wrap { padding: 0 48px; } }
+
+/* spacer to give room to scroll between demos */
+.spacer { height: 38vh; background: var(--slate); display: flex; align-items: center; justify-content: center; }
+.spacer span { font-family: var(--font-mono); font-size: 11px; letter-spacing: .3em; color: rgba(0,0,0,.3); text-transform: uppercase; }
+
+/* option banner */
+.opt-banner { background: var(--charcoal); color: #fff; padding: 28px 0; border-top: 4px solid var(--gold); }
+.opt-banner .tag { font-family: var(--font-mono); font-size: 10px; letter-spacing: .35em; color: var(--gold); text-transform: uppercase; font-weight: 700; }
+.opt-banner h2 { font-family: var(--font-display); font-size: 22px; font-weight: 700; text-transform: uppercase; margin-top: 6px; }
+.opt-banner p { font-size: 12px; color: rgba(255,255,255,.55); font-weight: 300; margin-top: 6px; max-width: 680px; line-height: 1.6; }
+
+/* ── shared about-section look ── */
+.ab-label { color: var(--gold); font-family: var(--font-mono); font-size: 10px; letter-spacing: .35em; font-weight: 700; text-transform: uppercase; }
+.ab-h2 { font-size: clamp(1.5rem, 3vw, 2.2rem); line-height: 1.3; font-weight: 800; color: #fff; text-transform: uppercase; margin-top: 18px; }
+.ab-div { height: 2px; width: 64px; background: var(--gold); margin-top: 20px; }
+.ab-p { color: rgba(255,255,255,.7); font-size: 13px; line-height: 1.75; font-weight: 300; letter-spacing: .025em; margin-top: 20px; max-width: 480px; }
+
+.reveal { opacity: 0; transform: translateY(24px); transition: opacity .6s ease, transform .6s ease; }
+.reveal.in { opacity: 1; transform: none; }
+
+/* ════════════════════════════════════════════
+   OPTION A — PARALLAX + KEN BURNS
+════════════════════════════════════════════ */
+.optA { background: var(--charcoal); overflow: hidden; }
+.optA .grid { display: grid; grid-template-columns: 1fr; min-height: 640px; }
+@media (min-width: 1024px) { .optA .grid { grid-template-columns: 1fr 1fr; } }
+.optA .copy { display: flex; align-items: center; padding: 80px 32px; }
+@media (min-width: 1024px) { .optA .copy { padding: 80px 96px; } }
+.optA .photo { position: relative; min-height: 380px; overflow: hidden; }
+.optA .photo img {
+  position: absolute; left: 0; top: -12%; width: 100%; height: 124%;
+  object-fit: cover; filter: brightness(.8) contrast(1.05);
+  will-change: transform;
+}
+
+/* ════════════════════════════════════════════
+   OPTION B — PINNED CHAPTER CROSSFADE
+════════════════════════════════════════════ */
+.optB { background: var(--charcoal); }
+.optB .pin-outer { height: 320vh; position: relative; }
+.optB .pin-inner { position: sticky; top: 0; height: 100vh; overflow: hidden; }
+.optB .grid { display: grid; grid-template-columns: 1fr 1fr; height: 100%; }
+@media (max-width: 1023px) { .optB .grid { grid-template-columns: 1fr; } }
+.optB .copy { position: relative; display: flex; align-items: center; padding: 0 32px; }
+@media (min-width: 1024px) { .optB .copy { padding: 0 96px; } }
+.optB .chapter {
+  position: absolute; left: 32px; right: 32px; top: 50%; transform: translateY(-40%);
+  opacity: 0; transition: none; pointer-events: none;
+}
+@media (min-width: 1024px) { .optB .chapter { left: 96px; right: 96px; } }
+.optB .photo { position: relative; overflow: hidden; min-height: 320px; }
+.optB .photo img {
+  position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;
+  filter: brightness(.8) contrast(1.05); opacity: 0; transform: scale(1.08);
+  will-change: opacity, transform;
+}
+/* progress dots */
+.optB .dots { position: absolute; left: 50%; bottom: 28px; transform: translateX(-50%); display: flex; gap: 10px; z-index: 5; }
+.optB .dots span { width: 26px; height: 3px; background: rgba(255,255,255,.2); transition: background .3s; }
+.optB .dots span.on { background: var(--gold); }
+.optB .hint {
+  position: absolute; right: 28px; bottom: 22px; z-index: 5;
+  font-family: var(--font-mono); font-size: 9px; letter-spacing: .25em;
+  color: rgba(255,255,255,.35); text-transform: uppercase;
+}
+@media (max-width: 1023px) {
+  .optB .grid { grid-template-rows: 1fr 1fr; }
+  .optB .photo { order: -1; }
+}
+
+/* ════════════════════════════════════════════
+   OPTION C — STICKY IMAGE + SCROLLING CHAPTERS
+════════════════════════════════════════════ */
+.optC { background: var(--charcoal); }
+.optC .grid { display: grid; grid-template-columns: 1fr 1fr; }
+@media (max-width: 1023px) { .optC .grid { grid-template-columns: 1fr; } }
+.optC .chapters { }
+.optC .chapter {
+  min-height: 88vh; display: flex; flex-direction: column; justify-content: center;
+  padding: 64px 32px;
+}
+@media (min-width: 1024px) { .optC .chapter { padding: 64px 96px; } }
+.optC .media {
+  position: sticky; top: 0; height: 100vh; overflow: hidden;
+}
+@media (max-width: 1023px) { .optC .media { display: none; } }
+.optC .media img {
+  position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;
+  filter: brightness(.8) contrast(1.05); opacity: 0; transform: scale(1.06);
+  transition: opacity .7s ease, transform 1.2s ease;
+}
+.optC .media img.on { opacity: 1; transform: scale(1); }
+.optC .media .count {
+  position: absolute; right: 28px; bottom: 24px; z-index: 3;
+  font-family: var(--font-mono); font-size: 11px; letter-spacing: .3em; color: rgba(255,255,255,.6);
+}
+.optC .media .count b { color: var(--gold); font-size: 20px; }
+/* mobile inline imgs */
+.optC .m-img { display: none; margin-top: 28px; border-radius: 2px; overflow: hidden; }
+.optC .m-img img { width: 100%; height: 240px; object-fit: cover; }
+@media (max-width: 1023px) { .optC .m-img { display: block; } }
+
+/* ════════════════════════════════════════════
+   OPTION D — CURTAIN / CLIP REVEAL + DRIFT
+════════════════════════════════════════════ */
+.optD { background: var(--charcoal); overflow: hidden; }
+.optD .grid { display: grid; grid-template-columns: 1fr 1fr; min-height: 640px; }
+@media (max-width: 1023px) { .optD .grid { grid-template-columns: 1fr; } }
+.optD .copy { display: flex; align-items: center; padding: 80px 32px; }
+@media (min-width: 1024px) { .optD .copy { padding: 80px 96px; } }
+.optD .photo { position: relative; min-height: 380px; overflow: hidden; }
+.optD .photo .clipbox {
+  position: absolute; inset: 0; will-change: clip-path;
+}
+.optD .photo img {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  object-fit: cover; filter: brightness(.8) contrast(1.05);
+  will-change: transform;
+}
+.optD .photo .frameline {
+  position: absolute; inset: 24px; border: 1px solid rgba(20,184,166,.45);
+  pointer-events: none; opacity: 0; transition: opacity .8s ease .3s;
+}
+.optD.done .photo .frameline { opacity: 1; }
+
+.note { background: var(--wood-dark); padding: 40px 0; text-align: center; }
+.note p { font-family: var(--font-mono); font-size: 11px; letter-spacing: .15em; color: rgba(255,255,255,.45); text-transform: uppercase; }
+</style>
+</head>
+<body>
+
+<div class="spacer"><span>Scroll down — Option A</span></div>
+
+<!-- ═══════════════ OPTION A ═══════════════ -->
+<div class="opt-banner">
+  <div class="wrap">
+    <span class="tag">Option A</span>
+    <h2>Parallax + Slow Zoom</h2>
+    <p>The image drifts at a different speed than the page (parallax) and slowly zooms as you scroll past it. Subtle and classy — content stays the same, the section just feels alive.</p>
+  </div>
+</div>
+<section class="optA" id="optA">
+  <div class="grid">
+    <div class="copy">
+      <div>
+        <span class="ab-label reveal">About Tefco</span>
+        <h2 class="ab-h2 reveal">Trusted Metal<br>Fabrication Shop.</h2>
+        <div class="ab-div reveal"></div>
+        <p class="ab-p reveal">We've got all your needs covered: from residential, to commercial, repairs, and everything in between. We specialize in all kinds of ornamental iron work. From powder coating, sand/shot blasting to custom fabrication, gates, railing and security doors, we can help.</p>
+        <p class="ab-p reveal">Due to the level of our quality craftsmanship over the last 80 years, we've built a trusted reputation in the Ogden area &amp; throughout Utah.</p>
+      </div>
+    </div>
+    <div class="photo">
+      <img id="aImg" src="https://tefcofab.com/wp-content/uploads/2024/11/Tefcopics2011-008-scaled.jpg" alt="Tefco fabrication shop">
+    </div>
+  </div>
+</section>
+
+<div class="spacer"><span>Keep scrolling — Option B</span></div>
+
+<!-- ═══════════════ OPTION B ═══════════════ -->
+<div class="opt-banner">
+  <div class="wrap">
+    <span class="tag">Option B</span>
+    <h2>Pinned Chapter Crossfade</h2>
+    <p>The section pins to the screen while you scroll. Scrolling drives it through three chapters — About → Our Promise → Why Tefco — text and image crossfading together. This is the "transitions to completely different text and image" idea.</p>
+  </div>
+</div>
+<section class="optB" id="optB">
+  <div class="pin-outer" id="bOuter">
+    <div class="pin-inner">
+      <div class="grid">
+        <div class="copy" id="bCopy"></div>
+        <div class="photo" id="bPhoto"></div>
+      </div>
+      <div class="dots" id="bDots"></div>
+      <div class="hint">Scroll to advance</div>
+    </div>
+  </div>
+</section>
+
+<div class="spacer"><span>Keep scrolling — Option C</span></div>
+
+<!-- ═══════════════ OPTION C ═══════════════ -->
+<div class="opt-banner">
+  <div class="wrap">
+    <span class="tag">Option C</span>
+    <h2>Sticky Image + Scrolling Chapters</h2>
+    <p>The text chapters scroll naturally like the rest of the page, but the image column sticks to the screen and crossfades to match whichever chapter you're reading. Same storytelling as B, but nothing ever feels "locked."</p>
+  </div>
+</div>
+<section class="optC" id="optC">
+  <div class="grid">
+    <div class="chapters" id="cChapters"></div>
+    <div class="media" id="cMedia"></div>
+  </div>
+</section>
+
+<div class="spacer"><span>Keep scrolling — Option D</span></div>
+
+<!-- ═══════════════ OPTION D ═══════════════ -->
+<div class="opt-banner">
+  <div class="wrap">
+    <span class="tag">Option D</span>
+    <h2>Curtain Reveal + Drift</h2>
+    <p>As the section scrolls into view the image "opens" from a narrow strip to full size (a curtain/clip reveal) while zooming out, then keeps a gentle parallax drift. A teal inner frame draws on once it settles. One-time wow moment, no content change.</p>
+  </div>
+</div>
+<section class="optD" id="optD">
+  <div class="grid">
+    <div class="copy">
+      <div>
+        <span class="ab-label reveal">About Tefco</span>
+        <h2 class="ab-h2 reveal">Trusted Metal<br>Fabrication Shop.</h2>
+        <div class="ab-div reveal"></div>
+        <p class="ab-p reveal">We've got all your needs covered: from residential, to commercial, repairs, and everything in between. We specialize in all kinds of ornamental iron work. From powder coating, sand/shot blasting to custom fabrication, gates, railing and security doors, we can help.</p>
+        <p class="ab-p reveal">Due to the level of our quality craftsmanship over the last 80 years, we've built a trusted reputation in the Ogden area &amp; throughout Utah.</p>
+      </div>
+    </div>
+    <div class="photo">
+      <div class="clipbox" id="dClip">
+        <img id="dImg" src="https://tefcofab.com/wp-content/uploads/2024/11/Tefcopics2011-008-scaled.jpg" alt="Tefco fabrication shop">
+      </div>
+      <div class="frameline"></div>
+    </div>
+  </div>
+</section>
+
+<div class="spacer"><span>End of options</span></div>
+<div class="note">
+  <p>Pick a favorite and I'll wire it into the homepage about section</p>
+</div>
+
+<script>
+/* ── chapter content (real Tefco copy) ── */
+const CHAPTERS = [
+  {
+    label: 'About Tefco',
+    title: 'Trusted Metal<br>Fabrication Shop.',
+    text: "We've got all your needs covered: from residential, to commercial, repairs, and everything in between. We specialize in all kinds of ornamental iron work. From powder coating, sand/shot blasting to custom fabrication, gates, railing and security doors, we can help.",
+    image: 'https://tefcofab.com/wp-content/uploads/2024/11/Tefcopics2011-008-scaled.jpg',
+  },
+  {
+    label: 'Our Promise',
+    title: 'Our Work Is<br>Second To None.',
+    text: "We promise. And behind that promise, we back our work with a satisfaction guarantee. We won't stop working until you like what we've done. Let TEFCO help you put a unique flare on your next project!",
+    image: 'https://tefcofab.com/wp-content/uploads/2024/11/IMG_0803-scaled.jpg',
+  },
+  {
+    label: 'Why Tefco',
+    title: 'Rely On The Best —<br>Choose Tefco.',
+    text: "With over 80 years of experience in welding and metal working, TEFCO of Utah has the equipment and skills necessary to get the job done right. You're going to love the end result — a perfectly executed product that will elevate your space.",
+    image: 'https://tefcofab.com/wp-content/uploads/2026/05/image-77.png',
+  },
+];
+
+const clamp = (v, a, b) => Math.min(b, Math.max(a, v));
+
+/* ════════ OPTION A — parallax + ken burns ════════ */
+const aImg = document.getElementById('aImg');
+const optA = document.getElementById('optA');
+function tickA() {
+  const r = optA.getBoundingClientRect();
+  const vh = window.innerHeight;
+  if (r.bottom < 0 || r.top > vh) return;
+  // progress: 0 when section enters from bottom, 1 when it leaves at top
+  const p = clamp((vh - r.top) / (vh + r.height), 0, 1);
+  const drift = (p - .5) * 60;            // px of parallax travel
+  const zoom = 1.04 + p * .1;             // slow ken burns
+  aImg.style.transform = `translateY(${drift}px) scale(${zoom})`;
+}
+
+/* ════════ OPTION B — pinned chapter crossfade ════════ */
+const bCopy = document.getElementById('bCopy');
+const bPhoto = document.getElementById('bPhoto');
+const bDots = document.getElementById('bDots');
+const bOuter = document.getElementById('bOuter');
+
+bCopy.innerHTML = CHAPTERS.map(c => `
+  <div class="chapter">
+    <span class="ab-label">${c.label}</span>
+    <h2 class="ab-h2">${c.title}</h2>
+    <div class="ab-div"></div>
+    <p class="ab-p">${c.text}</p>
+  </div>`).join('');
+bPhoto.innerHTML = CHAPTERS.map(c => `<img src="${c.image}" alt="">`).join('');
+bDots.innerHTML = CHAPTERS.map(() => '<span></span>').join('');
+
+const bChaps = Array.from(bCopy.children);
+const bImgs = Array.from(bPhoto.children);
+const bDotEls = Array.from(bDots.children);
+const N = CHAPTERS.length;
+
+function tickB() {
+  const r = bOuter.getBoundingClientRect();
+  const vh = window.innerHeight;
+  const total = r.height - vh;
+  const p = clamp(-r.top / total, 0, 1);          // 0..1 through the pin
+  const seg = p * (N - 1);                         // 0..N-1
+  bChaps.forEach((el, i) => {
+    const d = Math.abs(seg - i);
+    const o = clamp(1 - d * 1.6, 0, 1);            // fade window
+    el.style.opacity = o;
+    el.style.transform = `translateY(calc(-40% + ${(i - seg) * -34}px))`;
+  });
+  bImgs.forEach((el, i) => {
+    const d = Math.abs(seg - i);
+    const o = clamp(1 - d * 1.4, 0, 1);
+    el.style.opacity = o;
+    el.style.transform = `scale(${1.08 - clamp(1 - d, 0, 1) * .08})`;
+  });
+  const active = Math.round(seg);
+  bDotEls.forEach((el, i) => el.classList.toggle('on', i === active));
+}
+
+/* ════════ OPTION C — sticky image + scrolling chapters ════════ */
+const cChapters = document.getElementById('cChapters');
+const cMedia = document.getElementById('cMedia');
+cChapters.innerHTML = CHAPTERS.map((c, i) => `
+  <div class="chapter" data-i="${i}">
+    <span class="ab-label reveal">${c.label}</span>
+    <h2 class="ab-h2 reveal">${c.title}</h2>
+    <div class="ab-div reveal"></div>
+    <p class="ab-p reveal">${c.text}</p>
+    <div class="m-img reveal"><img src="${c.image}" alt="" loading="lazy"></div>
+  </div>`).join('');
+cMedia.innerHTML = CHAPTERS.map(c => `<img src="${c.image}" alt="">`).join('') +
+  `<div class="count"><b id="cNum">01</b> / 0${N}</div>`;
+const cImgs = Array.from(cMedia.querySelectorAll('img'));
+const cNum = () => document.getElementById('cNum');
+
+const cIO = new IntersectionObserver((entries) => {
+  entries.forEach(en => {
+    if (en.isIntersecting) {
+      const i = +en.target.dataset.i;
+      cImgs.forEach((im, j) => im.classList.toggle('on', i === j));
+      cNum().textContent = '0' + (i + 1);
+    }
+  });
+}, { threshold: .55 });
+Array.from(cChapters.children).forEach(el => cIO.observe(el));
+cImgs[0].classList.add('on');
+
+/* ════════ OPTION D — curtain clip reveal + drift ════════ */
+const optD = document.getElementById('optD');
+const dClip = document.getElementById('dClip');
+const dImg = document.getElementById('dImg');
+function tickD() {
+  const r = optD.getBoundingClientRect();
+  const vh = window.innerHeight;
+  if (r.bottom < 0 || r.top > vh) return;
+  // reveal progress: 0 when entering, 1 once section center hits viewport center
+  const reveal = clamp((vh - r.top) / (vh * .9), 0, 1);
+  const e = 1 - Math.pow(1 - reveal, 3);           // ease-out
+  const ix = (1 - e) * 38;                          // inset % horizontal
+  const iy = (1 - e) * 18;                          // inset % vertical
+  dClip.style.clipPath = `inset(${iy}% ${ix}% ${iy}% ${ix}%)`;
+  // continue parallax drift after reveal
+  const p = clamp((vh - r.top) / (vh + r.height), 0, 1);
+  dImg.style.transform = `translateY(${(p - .5) * 44}px) scale(${1.22 - e * .18})`;
+  optD.classList.toggle('done', e > .97);
+}
+
+/* ── master scroll loop ── */
+function onScroll() { tickA(); tickB(); tickD(); }
+window.addEventListener('scroll', onScroll, { passive: true });
+window.addEventListener('resize', onScroll);
+onScroll();
+
+/* reveal-on-scroll for static text */
+const io = new IntersectionObserver((entries) => {
+  entries.forEach(en => { if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); } });
+}, { rootMargin: '-40px' });
+document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+</script>
+</body>
+</html>

@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tefco Fabrication — Design 1: Bold Editorial</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --teal-deep:   #0a5c5f;
+      --teal-brand:  #0d7377;
+      --teal-light:  #14a3a8;
+      --teal-pale:   #e8f5f5;
+      --white:       #ffffff;
+      --off-white:   #fafafa;
+      --light-gray:  #f2f2f2;
+      --border:      #e8e8e8;
+      --text-dark:   #1a1f22;
+      --text-mid:    #4a5568;
+      --text-light:  #718096;
+      --font-display: 'Space Grotesk', sans-serif;
+      --font-body: 'Inter', sans-serif;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: var(--font-body);
+      color: var(--text-mid);
+      background: var(--off-white);
+      line-height: 1.6;
+      font-size: 15px;
+      -webkit-font-smoothing: antialiased;
+    }
+    img { max-width: 100%; display: block; }
+    a { text-decoration: none; color: inherit; }
+    .wrap { max-width: 1280px; margin: 0 auto; padding: 0 clamp(16px, 4vw, 48px); }
+
+    /* ── NAV ── */
+    .nav {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 18px clamp(16px, 4vw, 48px);
+      border-bottom: 1px solid var(--border);
+      background: var(--off-white);
+      position: sticky; top: 0; z-index: 50;
+    }
+    .nav-brand { display: flex; align-items: center; gap: 12px; }
+    .nav-brand img { height: 38px; }
+    .nav-brand .tagline {
+      font-size: 10px; text-transform: uppercase; letter-spacing: 1.5px;
+      color: var(--text-light); border-left: 1px solid var(--border); padding-left: 12px; line-height: 1.4;
+    }
+    .nav-menu { display: flex; gap: 28px; list-style: none; }
+    .nav-menu a {
+      font-family: var(--font-display);
+      font-size: 12px; text-transform: uppercase; letter-spacing: 1px; font-weight: 500;
+      color: var(--text-dark);
+    }
+    .nav-menu a:hover { color: var(--teal-brand); }
+    .nav-cta {
+      font-family: var(--font-display);
+      font-size: 12px; text-transform: uppercase; letter-spacing: 1px; font-weight: 600;
+      background: var(--text-dark); color: white; padding: 10px 20px; border-radius: 100px;
+      transition: background .2s;
+    }
+    .nav-cta:hover { background: var(--teal-brand); }
+
+    /* ── HERO ── */
+    .hero { position: relative; padding: 48px clamp(16px, 4vw, 48px) 0; }
+    .hero-head { position: relative; z-index: 2; }
+    .hero-head h1 {
+      font-family: var(--font-display);
+      font-size: clamp(64px, 13vw, 190px);
+      line-height: 0.88;
+      letter-spacing: -0.03em;
+      font-weight: 700;
+      color: var(--text-dark);
+      text-transform: uppercase;
+    }
+    .hero-head h1 .line2 { color: var(--teal-light); display: block; }
+    .hero-head .est {
+      font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: var(--text-light);
+      margin-bottom: 10px;
+    }
+    .hero-media { position: relative; }
+    .hero-media-inner { position: relative; border-radius: 18px; overflow: hidden; margin-top: clamp(-60px, -4vw, -20px); }
+    .hero-media img { width: 100%; height: clamp(380px, 55vh, 560px); object-fit: cover; }
+    .hero-media .shade {
+      position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(26,31,34,.55), transparent 45%);
+    }
+    .hero-sub {
+      position: absolute; left: clamp(20px, 3vw, 40px); bottom: clamp(20px, 3vw, 40px);
+      color: white; max-width: 460px; z-index: 3;
+    }
+    .hero-sub p { font-size: clamp(15px, 1.6vw, 18px); line-height: 1.55; font-weight: 300; color: rgba(255,255,255,.92); }
+    .hero-badge {
+      position: absolute; right: clamp(20px, 3vw, 40px); top: clamp(20px, 3vw, 40px);
+      width: 104px; height: 104px; border-radius: 50%;
+      border: 1px solid rgba(255,255,255,.5);
+      display: flex; align-items: center; justify-content: center; text-align: center;
+      color: white; font-family: var(--font-display);
+      font-size: 10px; text-transform: uppercase; letter-spacing: 1.5px; line-height: 1.5;
+      backdrop-filter: blur(3px); background: rgba(10,92,95,.25);
+      z-index: 3;
+    }
+    /* stat pills overlapping hero bottom */
+    .hero-stats {
+      position: absolute; right: clamp(20px, 3vw, 40px); bottom: clamp(20px, 3vw, 40px);
+      display: flex; gap: 10px; z-index: 3;
+    }
+    .stat-pill {
+      background: rgba(26,31,34,.78); backdrop-filter: blur(6px);
+      border: 1px solid rgba(255,255,255,.14);
+      border-radius: 14px; padding: 16px 18px; color: white; min-width: 110px;
+    }
+    .stat-pill .n { font-family: var(--font-display); font-size: 26px; font-weight: 700; line-height: 1; }
+    .stat-pill .l { font-size: 10px; text-transform: uppercase; letter-spacing: 1px; color: rgba(255,255,255,.6); margin-top: 6px; }
+
+    /* ── INTRO (dark) ── */
+    .intro { background: var(--text-dark); color: white; margin-top: 64px; padding: 90px 0; }
+    .intro-tag { font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: var(--teal-light); margin-bottom: 24px; }
+    .intro-grid { display: grid; grid-template-columns: 1.4fr 1fr; gap: 64px; align-items: start; }
+    .intro h2 {
+      font-family: var(--font-display);
+      font-size: clamp(30px, 4.2vw, 52px); line-height: 1.1; font-weight: 600; letter-spacing: -0.02em;
+      color: white;
+    }
+    .intro h2 em { color: var(--teal-light); font-style: normal; }
+    .intro-side p { font-size: 14px; line-height: 1.8; color: rgba(255,255,255,.65); }
+    .intro-side p + p { margin-top: 16px; }
+
+    /* dark service cards */
+    .intro-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 64px; }
+    .icard { position: relative; border-radius: 16px; overflow: hidden; height: 300px; }
+    .icard img { width: 100%; height: 100%; object-fit: cover; transition: transform .4s; }
+    .icard:hover img { transform: scale(1.04); }
+    .icard .veil { position: absolute; inset: 0; background: linear-gradient(to top, rgba(10,32,34,.8), transparent 55%); }
+    .icard .txt { position: absolute; left: 20px; right: 20px; bottom: 18px; color: white; }
+    .icard .txt h3 { font-family: var(--font-display); font-size: 18px; font-weight: 600; }
+    .icard .txt p { font-size: 12px; color: rgba(255,255,255,.7); margin-top: 4px; }
+    .icard .plus {
+      position: absolute; top: 16px; right: 16px; width: 34px; height: 34px; border-radius: 50%;
+      border: 1px solid rgba(255,255,255,.4); color: white; display: flex; align-items: center; justify-content: center;
+      font-size: 18px; font-weight: 300; background: rgba(0,0,0,.2); backdrop-filter: blur(4px);
+    }
+
+    /* ── SERVICES LIGHT ── */
+    .services { padding: 90px 0; }
+    .sec-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 24px; margin-bottom: 40px; }
+    .sec-head .tag { font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: var(--teal-brand); margin-bottom: 12px; }
+    .sec-head h2 {
+      font-family: var(--font-display);
+      font-size: clamp(28px, 3.6vw, 44px); font-weight: 600; letter-spacing: -0.02em; color: var(--text-dark); line-height: 1.1;
+    }
+    .link-arrow {
+      font-family: var(--font-display); font-size: 12px; text-transform: uppercase; letter-spacing: 1px; font-weight: 600;
+      color: var(--teal-brand); white-space: nowrap; padding-bottom: 4px; border-bottom: 2px solid var(--teal-brand);
+    }
+    .svc-rows { border-top: 1px solid var(--border); }
+    .svc-row {
+      display: grid; grid-template-columns: 60px 1.2fr 2fr 140px; gap: 24px; align-items: center;
+      padding: 26px 8px; border-bottom: 1px solid var(--border); transition: background .2s;
+    }
+    .svc-row:hover { background: var(--teal-pale); }
+    .svc-row .idx { font-family: var(--font-display); color: var(--text-light); font-size: 14px; }
+    .svc-row h3 { font-family: var(--font-display); font-size: 20px; font-weight: 600; color: var(--text-dark); }
+    .svc-row p { font-size: 13px; color: var(--text-mid); }
+    .svc-row .thumb { width: 140px; height: 84px; border-radius: 10px; overflow: hidden; justify-self: end; }
+    .svc-row .thumb img { width: 100%; height: 100%; object-fit: cover; }
+
+    /* ── BIG STATS BAND ── */
+    .band { background: var(--teal-deep); color: white; padding: 70px 0; }
+    .band-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; }
+    .band-stat { border-left: 1px solid rgba(255,255,255,.25); padding-left: 28px; }
+    .band-stat .n { font-family: var(--font-display); font-size: clamp(44px, 5vw, 64px); font-weight: 700; line-height: 1; }
+    .band-stat .n span { color: var(--teal-light); }
+    .band-stat .l { font-size: 12px; text-transform: uppercase; letter-spacing: 1.5px; color: rgba(255,255,255,.6); margin-top: 12px; }
+
+    /* ── GALLERY STRIP ── */
+    .gallery { padding: 90px 0; }
+    .gal-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+    .gal-grid .g { border-radius: 14px; overflow: hidden; height: 240px; position: relative; }
+    .gal-grid .g img { width: 100%; height: 100%; object-fit: cover; transition: transform .4s; }
+    .gal-grid .g:hover img { transform: scale(1.05); }
+    .gal-grid .g:nth-child(1) { grid-column: span 2; }
+
+    /* ── CONTACT ── */
+    .contact { background: var(--text-dark); color: white; padding: 90px 0; }
+    .contact-grid { display: grid; grid-template-columns: 1fr 1.1fr; gap: 64px; align-items: center; }
+    .contact h2 {
+      font-family: var(--font-display); font-size: clamp(30px, 4vw, 48px); font-weight: 600;
+      line-height: 1.1; letter-spacing: -0.02em; color: white;
+    }
+    .contact h2 em { color: var(--teal-light); font-style: normal; }
+    .contact .sub { color: rgba(255,255,255,.6); margin-top: 18px; font-size: 14px; max-width: 380px; }
+    .contact .meta { margin-top: 36px; font-size: 13px; color: rgba(255,255,255,.7); line-height: 2; }
+    .form-card { background: white; border-radius: 18px; padding: 36px; color: var(--text-mid); }
+    .form-card h3 { font-family: var(--font-display); color: var(--text-dark); font-size: 20px; margin-bottom: 20px; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px; }
+    .form-card input, .form-card textarea {
+      width: 100%; border: 1px solid var(--border); border-radius: 10px; padding: 13px 14px;
+      font-family: var(--font-body); font-size: 14px; background: var(--off-white); color: var(--text-dark);
+    }
+    .form-card input:focus, .form-card textarea:focus { outline: 2px solid var(--teal-brand); outline-offset: 1px; }
+    .form-card textarea { resize: vertical; min-height: 96px; margin-bottom: 16px; }
+    .btn-send {
+      width: 100%; background: var(--teal-brand); color: white; border: none; border-radius: 100px;
+      padding: 15px; font-family: var(--font-display); font-size: 13px; font-weight: 600;
+      text-transform: uppercase; letter-spacing: 1.5px; cursor: pointer; transition: background .2s;
+    }
+    .btn-send:hover { background: var(--teal-light); }
+
+    /* ── FOOTER ── */
+    .footer { background: var(--text-dark); border-top: 1px solid rgba(255,255,255,.08); padding: 36px 0; color: rgba(255,255,255,.5); }
+    .footer-inner { display: flex; justify-content: space-between; align-items: center; gap: 20px; flex-wrap: wrap; }
+    .footer img { height: 34px; opacity: .85; }
+    .footer .links { display: flex; gap: 24px; font-size: 12px; text-transform: uppercase; letter-spacing: 1px; }
+    .footer .links a:hover { color: var(--teal-light); }
+    .footer-bar { background: var(--teal-deep); padding: 12px clamp(16px, 4vw, 48px); display: flex; justify-content: space-between; color: rgba(255,255,255,.85); font-size: 11px; letter-spacing: 1px; }
+
+    @media (max-width: 900px) {
+      .nav-menu { display: none; }
+      .intro-grid, .contact-grid { grid-template-columns: 1fr; gap: 36px; }
+      .intro-cards { grid-template-columns: 1fr; }
+      .svc-row { grid-template-columns: 40px 1fr; }
+      .svc-row p, .svc-row .thumb { display: none; }
+      .band-grid { grid-template-columns: 1fr; gap: 28px; }
+      .gal-grid { grid-template-columns: 1fr 1fr; }
+      .gal-grid .g:nth-child(1) { grid-column: span 2; }
+      .hero-stats { position: static; margin-top: 14px; flex-wrap: wrap; }
+      .hero-sub { position: static; color: var(--text-mid); margin-top: 18px; }
+      .hero-sub p { color: var(--text-mid); }
+      .hero-badge { display: none; }
+      .form-row { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="nav">
+    <div class="nav-brand">
+      <img src="https://tefcofab.com/wp-content/uploads/2026/02/Tefco_Primary_Logo_Clear-1.png" alt="Tefco Fabrication">
+      <div class="tagline">Metal Fabrication<br>Ogden, Utah</div>
+    </div>
+    <ul class="nav-menu">
+      <li><a href="#">About</a></li>
+      <li><a href="#">Services</a></li>
+      <li><a href="#">Gallery</a></li>
+      <li><a href="#">Powder Coating</a></li>
+      <li><a href="#">Contact</a></li>
+    </ul>
+    <a href="tel:8016211010" class="nav-cta">(801) 621-1010</a>
+  </nav>
+
+  <header class="hero">
+    <div class="hero-head">
+      <div class="est">Est. 1942 · Ogden, Utah</div>
+      <h1>Tefco<span class="line2">Fabrication</span></h1>
+    </div>
+    <div class="hero-media">
+      <div class="hero-media-inner">
+        <img src="https://tefcofab.com/wp-content/uploads/2024/11/101810-003-scaled.jpg" alt="Custom iron railing on stone building">
+        <div class="shade"></div>
+        <div class="hero-badge">Crafted<br>By Hand<br>Since '42</div>
+        <div class="hero-sub">
+          <p>Custom iron railings, security doors, staircases, and powder coating — precision fabrication backed by 80+ years of craftsmanship.</p>
+        </div>
+        <div class="hero-stats">
+          <div class="stat-pill"><div class="n">80+</div><div class="l">Years in Business</div></div>
+          <div class="stat-pill"><div class="n">1000s</div><div class="l">Projects Done</div></div>
+          <div class="stat-pill"><div class="n">5.0</div><div class="l">Google Rating</div></div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <section class="intro">
+    <div class="wrap">
+      <div class="intro-tag">About Tefco</div>
+      <div class="intro-grid">
+        <h2>We build metalwork that <em>outlasts trends</em> — one-of-a-kind designs, fabricated and installed by our own crew.</h2>
+        <div class="intro-side">
+          <p>TEFCO has served Weber County with high-rated ornamental iron products and services since 1942. Over the decades we've earned a reputation for quality craftsmanship and unique, one-of-a-kind designs.</p>
+          <p>We take pride in getting to know our customers and putting their needs first — from the first measurement to the final install.</p>
+        </div>
+      </div>
+      <div class="intro-cards">
+        <a href="#" class="icard">
+          <img src="https://tefcofab.com/wp-content/uploads/2024/11/IMG_0803-scaled.jpg" alt="Custom indoor railing">
+          <div class="veil"></div><div class="plus">+</div>
+          <div class="txt"><h3>Custom Railings</h3><p>Interior &amp; exterior iron, built to your design</p></div>
+        </a>
+        <a href="#" class="icard">
+          <img src="https://tefcofab.com/wp-content/uploads/2026/02/1000037064-1-scaled.jpg" alt="Custom security door">
+          <div class="veil"></div><div class="plus">+</div>
+          <div class="txt"><h3>Security Doors</h3><p>Heavy-gauge steel with decorative ironwork</p></div>
+        </a>
+        <a href="#" class="icard">
+          <img src="https://tefcofab.com/wp-content/uploads/2024/11/IMG_3051-scaled.jpg" alt="Metal staircase">
+          <div class="veil"></div><div class="plus">+</div>
+          <div class="txt"><h3>Metal Staircases</h3><p>Exterior, interior &amp; spiral fabrication</p></div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section class="services">
+    <div class="wrap">
+      <div class="sec-head">
+        <div>
+          <div class="tag">What We Do</div>
+          <h2>Full-service fabrication,<br>under one roof</h2>
+        </div>
+        <a href="#" class="link-arrow">All Services →</a>
+      </div>
+      <div class="svc-rows">
+        <a href="#" class="svc-row">
+          <div class="idx">01</div><h3>Custom Railings</h3>
+          <p>Interior and exterior iron railings crafted to your design, from classic scrollwork to modern systems.</p>
+          <div class="thumb"><img src="https://tefcofab.com/wp-content/uploads/2026/02/Indoor-modern-railing-system-e1770237188274.png" alt="Modern railing"></div>
+        </a>
+        <a href="#" class="svc-row">
+          <div class="idx">02</div><h3>Security Doors</h3>
+          <p>Heavy-gauge steel doors with decorative ironwork — security that looks like art.</p>
+          <div class="thumb"><img src="https://tefcofab.com/wp-content/uploads/2026/05/image-77.png" alt="Ornamental security door"></div>
+        </a>
+        <a href="#" class="svc-row">
+          <div class="idx">03</div><h3>Metal Staircases</h3>
+          <p>Exterior, interior, and spiral staircase fabrication, engineered for a perfect fit.</p>
+          <div class="thumb"><img src="https://tefcofab.com/wp-content/uploads/2024/11/IMG_0230-scaled.jpg" alt="Custom staircase"></div>
+        </a>
+        <a href="#" class="svc-row">
+          <div class="idx">04</div><h3>Powder Coating</h3>
+          <p>Hundreds of colors, up to 24 ft capacity — we coat for outside customers too.</p>
+          <div class="thumb"><img src="https://tefcofab.com/wp-content/uploads/2026/02/wheelspowdercoat.jpg" alt="Powder coated wheels"></div>
+        </a>
+        <a href="#" class="svc-row">
+          <div class="idx">05</div><h3>Custom Fabrication</h3>
+          <p>Planters, gates, brackets, structural steel — if it's metal, we build it.</p>
+          <div class="thumb"><img src="https://tefcofab.com/wp-content/uploads/2024/11/IMG_1096.jpg" alt="Custom metal fabrication"></div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section class="band">
+    <div class="wrap band-grid">
+      <div class="band-stat"><div class="n">80<span>+</span></div><div class="l">Years of craftsmanship in Ogden</div></div>
+      <div class="band-stat"><div class="n">24<span> ft</span></div><div class="l">Powder coating oven capacity</div></div>
+      <div class="band-stat"><div class="n">5.0<span>★</span></div><div class="l">Average Google review rating</div></div>
+    </div>
+  </section>
+
+  <section class="gallery">
+    <div class="wrap">
+      <div class="sec-head">
+        <div>
+          <div class="tag">Our Work</div>
+          <h2>Recent projects</h2>
+        </div>
+        <a href="#" class="link-arrow">View Gallery →</a>
+      </div>
+      <div class="gal-grid">
+        <div class="g"><img src="https://tefcofab.com/wp-content/uploads/2024/11/Tefcopics2011-008-scaled.jpg" alt="Tefco fabrication shop"></div>
+        <div class="g"><img src="https://tefcofab.com/wp-content/uploads/2026/05/image-77.png" alt="Ornamental security door"></div>
+        <div class="g"><img src="https://tefcofab.com/wp-content/uploads/2021/11/utv-cage-gray-powder-coat.jpg" alt="UTV cage powder coat"></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="contact">
+    <div class="wrap contact-grid">
+      <div>
+        <div class="intro-tag">Start a Project</div>
+        <h2>Let's build <em>something solid.</em></h2>
+        <p class="sub">Call, stop by the shop, or send us the details — we'll get back to you with a free estimate.</p>
+        <div class="meta">
+          318 26th Street, Ogden, UT 84401<br>
+          Mon – Fri: 7:00am – 3:30pm<br>
+          (801) 621-1010
+        </div>
+      </div>
+      <form class="form-card" onsubmit="return false;">
+        <h3>Request a Quote</h3>
+        <div class="form-row">
+          <input type="text" placeholder="Name" aria-label="Name">
+          <input type="tel" placeholder="Phone" aria-label="Phone">
+        </div>
+        <div class="form-row">
+          <input type="email" placeholder="Email" aria-label="Email">
+          <input type="text" placeholder="Project type" aria-label="Project type">
+        </div>
+        <textarea placeholder="Tell us about your project…" aria-label="Message"></textarea>
+        <button class="btn-send" type="submit">Send Request</button>
+      </form>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="wrap footer-inner">
+      <img src="https://tefcofab.com/wp-content/uploads/2026/02/Tefco_Primary_Logo_Clear-1.png" alt="Tefco">
+      <div class="links">
+        <a href="#">About</a><a href="#">Services</a><a href="#">Gallery</a><a href="#">Contact</a>
+      </div>
+      <span style="font-size:12px;">© 2026 Tefco Fabrication</span>
+    </div>
+  </footer>
+  <div class="footer-bar"><span>Tefco Fabrication — Ogden, Utah</span><span>(801) 621-1010 · tefcofab.com</span></div>
+
+</body>
+</html>

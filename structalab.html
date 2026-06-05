@@ -1,0 +1,1786 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Structalab — Design · Build · Live</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,400..700;1,400..700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* ════════════════════════════════════════════
+   THEME TOKENS (converted from Tailwind theme)
+════════════════════════════════════════════ */
+:root {
+  --font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif;
+  --font-display: 'Space Grotesk', sans-serif;
+  --font-serif: 'Playfair Display', serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+
+  --gold:       #14b8a6;  /* brand accent (teal scheme) */
+  --gold-dark:  #0f766e;
+  --gold-light: #2dd4bf;
+  --gold-pale:  #e6f4f2;
+
+  --charcoal:   #161719;
+  --wood-dark:  #1e1f22;
+  --wood-light: #f7f6f3;
+  --slate:      #fdfdfc;
+
+  --shadow-premium: 0 10px 40px -10px rgba(0,0,0,.2);
+}
+
+/* ── Base ── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--font-sans);
+  background: var(--charcoal);
+  color: var(--wood-light);
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+::selection { background: var(--gold); color: var(--charcoal); }
+img { max-width: 100%; display: block; }
+a { color: inherit; text-decoration: none; }
+button { font-family: inherit; cursor: pointer; border: none; background: none; color: inherit; }
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+.wrap { max-width: 1280px; margin: 0 auto; padding-left: 24px; padding-right: 24px; }
+@media (min-width: 768px) { .wrap { padding-left: 48px; padding-right: 48px; } }
+
+/* decorative fixed grid lines */
+.grid-line { position: fixed; top: 0; bottom: 0; width: 1px; background: rgba(255,255,255,.02); pointer-events: none; z-index: 40; display: none; }
+@media (min-width: 768px) { .grid-line { display: block; } .grid-line.l { left: 48px; } .grid-line.r { right: 96px; } }
+
+/* reveal-on-scroll */
+.reveal { opacity: 0; transform: translateY(24px); transition: opacity .6s ease, transform .6s ease; }
+.reveal.in { opacity: 1; transform: none; }
+
+/* ════════════════════════════════════════════
+   TOAST
+════════════════════════════════════════════ */
+.toast {
+  position: fixed; top: 96px; right: 24px; z-index: 60; max-width: 384px;
+  background: rgba(30,31,34,.95); border: 1px solid rgba(20,184,166,.3);
+  padding: 16px; border-radius: 2px; box-shadow: 0 25px 50px -12px rgba(0,0,0,.5);
+  backdrop-filter: blur(12px);
+  display: flex; align-items: flex-start; gap: 12px;
+  opacity: 0; transform: translateY(-20px) scale(.95); pointer-events: none;
+  transition: opacity .3s, transform .3s;
+}
+.toast.show { opacity: 1; transform: none; pointer-events: auto; }
+.toast .ico {
+  padding: 6px; background: rgba(20,184,166,.15); border-radius: 2px;
+  border: 1px solid rgba(20,184,166,.2); color: var(--gold-light); flex-shrink: 0; margin-top: 2px;
+  display: flex;
+}
+.toast .ttl { font-family: var(--font-mono); font-size: 9px; letter-spacing: .2em; color: var(--gold); text-transform: uppercase; font-weight: 700; }
+.toast .msg { font-size: 11px; color: rgba(255,255,255,.8); font-weight: 300; line-height: 1.6; margin-top: 4px; }
+
+/* ════════════════════════════════════════════
+   HEADER
+════════════════════════════════════════════ */
+.site-header {
+  position: fixed; top: 0; left: 0; width: 100%; z-index: 50;
+  transition: all .5s; padding: 24px 0;
+  background: linear-gradient(to bottom, rgba(0,0,0,.8), transparent);
+}
+.site-header.scrolled {
+  background: rgba(22,23,25,.95); backdrop-filter: blur(12px);
+  padding: 16px 0; border-bottom: 1px solid rgba(255,255,255,.05);
+  box-shadow: 0 10px 15px -3px rgba(0,0,0,.1);
+}
+.header-inner { display: flex; align-items: center; justify-content: space-between; }
+
+.logo { display: flex; flex-direction: column; align-items: flex-start; gap: 4px; }
+.logo-row { display: flex; align-items: flex-end; gap: 6px; }
+.logo svg { width: 40px; height: 28px; color: var(--gold); transition: transform .5s; }
+.logo:hover svg { transform: scale(1.05); }
+.logo .word {
+  font-family: var(--font-display); font-size: 18px; letter-spacing: .25em;
+  font-weight: 800; line-height: 1; color: #fff; transition: color .3s;
+}
+.logo:hover .word { color: var(--gold-light); }
+.logo .word span { color: var(--gold); }
+.logo .strap {
+  font-size: 7.5px; letter-spacing: .45em; font-family: var(--font-mono);
+  line-height: 1; margin-left: 2px; color: rgba(255,255,255,.55); font-weight: 600;
+  transition: color .3s;
+}
+.logo:hover .strap { color: rgba(255,255,255,.8); }
+
+.desk-nav { display: none; align-items: center; gap: 32px; }
+@media (min-width: 1024px) { .desk-nav { display: flex; } }
+.desk-nav a {
+  position: relative; font-size: 12px; letter-spacing: .1em; font-weight: 500;
+  color: rgba(255,255,255,.7); padding: 8px 0; transition: color .2s; text-transform: uppercase;
+}
+.desk-nav a:hover { color: #fff; }
+.desk-nav a::after {
+  content: ""; position: absolute; bottom: 0; left: 0; height: 2px; width: 0;
+  background: var(--gold); transition: width .3s;
+}
+.desk-nav a:hover::after, .desk-nav a.active::after { width: 100%; }
+
+.header-actions { display: none; align-items: center; gap: 16px; }
+@media (min-width: 640px) { .header-actions { display: flex; } }
+.quick-dial { display: flex; align-items: center; gap: 6px; font-size: 12px; color: rgba(255,255,255,.45); transition: color .2s; }
+.quick-dial:hover { color: var(--gold); }
+.quick-dial .num { font-family: var(--font-mono); }
+.lang-btn {
+  display: flex; align-items: center; gap: 4px; padding: 4px 8px; border-radius: 4px;
+  border: 1px solid rgba(255,255,255,.1); font-size: 12px; font-family: var(--font-mono);
+  color: rgba(255,255,255,.7); transition: all .3s;
+}
+.lang-btn:hover { color: #fff; border-color: var(--gold); background: rgba(255,255,255,.05); }
+.lang-btn svg { color: var(--gold); }
+
+.btn-cta {
+  background: var(--gold); color: #fff; font-weight: 600; font-size: 12px;
+  letter-spacing: .1em; padding: 14px 20px; border-radius: 2px; transition: all .3s;
+  box-shadow: 0 10px 15px -3px rgba(0,0,0,.3); text-transform: uppercase;
+}
+.btn-cta:hover { background: var(--gold-light); }
+.btn-cta:active { transform: scale(.95); }
+
+.mobile-controls { display: flex; align-items: center; gap: 12px; }
+@media (min-width: 640px) { .mobile-controls { display: none; } }
+.mobile-controls button { padding: 8px; border-radius: 4px; border: 1px solid rgba(255,255,255,.1); color: rgba(255,255,255,.9); font-family: var(--font-mono); font-size: 12px; display: flex; align-items: center; gap: 4px; }
+.mobile-controls .lang svg { color: var(--gold); }
+
+.mobile-drawer {
+  display: none; background: var(--charcoal); border-bottom: 1px solid rgba(255,255,255,.05);
+  overflow: hidden;
+}
+.mobile-drawer.open { display: block; animation: drawerIn .3s ease; }
+@keyframes drawerIn { from { opacity: 0; } to { opacity: 1; } }
+.mobile-drawer .inner { padding: 24px; display: flex; flex-direction: column; gap: 20px; }
+.mobile-drawer nav { display: flex; flex-direction: column; gap: 16px; }
+.mobile-drawer nav a { font-size: 14px; font-weight: 500; letter-spacing: .1em; color: rgba(255,255,255,.8); text-transform: uppercase; }
+.mobile-drawer nav a:hover { color: var(--gold); }
+.mobile-drawer hr { border: none; border-top: 1px solid rgba(255,255,255,.05); }
+.mobile-drawer .phone-row { display: flex; align-items: center; gap: 8px; font-size: 12px; color: rgba(255,255,255,.5); font-family: var(--font-mono); }
+.mobile-drawer .phone-row svg { color: var(--gold); }
+.mobile-drawer .btn-cta { width: 100%; text-align: center; }
+
+/* ════════════════════════════════════════════
+   HERO
+════════════════════════════════════════════ */
+.hero {
+  position: relative; min-height: 100vh; background: var(--charcoal);
+  display: flex; align-items: center; padding-top: 96px; padding-bottom: 64px;
+  overflow: hidden; user-select: none;
+}
+.hero-bg { position: absolute; inset: 0; z-index: 0; overflow: hidden; }
+.hero-bg video {
+  width: 100%; height: 100%; object-fit: cover; object-position: center;
+  transform: scale(1.02); filter: brightness(.45) contrast(1.1);
+}
+.hero-bg .ov-1 { position: absolute; inset: 0; background: linear-gradient(to right, rgba(0,0,0,.85), rgba(0,0,0,.5), transparent); }
+.hero-bg .ov-2 { position: absolute; inset: 0; background: linear-gradient(to top, var(--charcoal), transparent, rgba(0,0,0,.45)); }
+
+.hero-grid {
+  position: relative; z-index: 10; width: 100%;
+  display: grid; grid-template-columns: 1fr; gap: 48px; align-items: center;
+}
+@media (min-width: 1024px) { .hero-grid { grid-template-columns: 2fr 1fr; } }
+
+.hero-copy { max-width: 672px; display: flex; flex-direction: column; gap: 32px; text-align: left; }
+.hero-label {
+  display: flex; align-items: center; gap: 8px; color: var(--gold);
+  font-family: var(--font-mono); font-size: 10px; letter-spacing: .3em;
+}
+.hero h1 {
+  font-size: clamp(2.25rem, 7vw, 5.4rem);
+  font-weight: 800; letter-spacing: -.02em; line-height: 1;
+  color: #fff; display: flex; flex-direction: column; text-transform: uppercase;
+}
+.hero h1 .l1 { font-family: var(--font-display); letter-spacing: -.02em; margin-bottom: 8px; }
+.hero h1 .l2 { font-family: var(--font-display); letter-spacing: .01em; color: rgba(255,255,255,.95); margin-bottom: 16px; }
+.hero h1 .l3 {
+  font-family: var(--font-serif); font-style: italic; color: var(--gold);
+  font-weight: 600; letter-spacing: .025em; text-transform: none; line-height: 1.2; padding: 4px 0;
+}
+@media (min-width: 768px) { .hero h1 .l3 { margin: -8px 0; } }
+.hero h1 .l4 { font-family: var(--font-display); letter-spacing: .02em; color: var(--gold-light); margin-top: 8px; }
+.hero-desc {
+  color: rgba(255,255,255,.7); font-size: 14px; line-height: 1.7;
+  font-weight: 300; letter-spacing: .025em; max-width: 576px;
+}
+@media (min-width: 768px) { .hero-desc { font-size: 16px; } }
+.hero-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 16px; padding-top: 16px; }
+.btn-hero-primary {
+  padding: 16px 32px; background: var(--gold); color: #fff; font-weight: 600;
+  font-size: 12px; letter-spacing: .1em; border-radius: 2px; transition: all .3s;
+  box-shadow: 0 20px 25px -5px rgba(0,0,0,.4); text-transform: uppercase;
+}
+.btn-hero-primary:hover { background: var(--gold-light); }
+.btn-hero-primary:active { transform: scale(.95); }
+.btn-hero-outline {
+  padding: 16px 32px; background: transparent; color: #fff; font-weight: 600;
+  font-size: 12px; letter-spacing: .1em; border-radius: 2px; border: 1px solid var(--gold);
+  transition: all .3s; display: inline-flex; align-items: center; gap: 8px; text-transform: uppercase;
+}
+.btn-hero-outline:hover { background: rgba(255,255,255,.05); border-color: var(--gold-light); }
+.btn-hero-outline:active { transform: scale(.95); }
+.btn-hero-outline svg { color: var(--gold); }
+
+/* hero stamp */
+.hero-stamp-col { display: flex; align-items: center; justify-content: center; }
+@media (min-width: 1024px) { .hero-stamp-col { justify-content: flex-end; } }
+.stamp { position: relative; width: 192px; height: 192px; display: flex; align-items: center; justify-content: center; }
+.stamp .ring-text { position: absolute; inset: 0; width: 100%; height: 100%; animation: spin 24s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+.stamp .ring-text text {
+  font-family: var(--font-mono); font-size: 7px; font-weight: 700;
+  letter-spacing: .27em; fill: rgba(255,255,255,.45); text-transform: uppercase;
+}
+.stamp-core {
+  width: 128px; height: 128px; border-radius: 50%; border: 1px solid rgba(255,255,255,.1);
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  background: rgba(0,0,0,.4); backdrop-filter: blur(4px); box-shadow: var(--shadow-premium);
+  transition: border-color .5s;
+}
+.stamp:hover .stamp-core { border-color: rgba(20,184,166,.3); }
+.stamp-core .est { font-family: var(--font-mono); font-size: 8px; font-weight: 700; letter-spacing: .2em; color: rgba(255,255,255,.4); line-height: 1; margin-bottom: 4px; }
+.stamp-core svg { width: 40px; height: 40px; color: var(--gold); margin: 4px 0; }
+.stamp-core .loc { font-family: var(--font-mono); font-size: 10px; font-weight: 700; letter-spacing: .25em; color: rgba(255,255,255,.8); line-height: 1; margin-top: 4px; }
+
+/* ════════════════════════════════════════════
+   PILLARS
+════════════════════════════════════════════ */
+.pillars {
+  background: var(--slate); border-top: 1px solid rgba(0,0,0,.05); border-bottom: 1px solid rgba(0,0,0,.05);
+  position: relative; z-index: 20; user-select: none;
+}
+.pillars-grid { max-width: 1280px; margin: 0 auto; display: grid; grid-template-columns: 1fr; }
+@media (min-width: 768px) { .pillars-grid { grid-template-columns: 1fr 1fr; } }
+@media (min-width: 1024px) { .pillars-grid { grid-template-columns: repeat(4, 1fr); } }
+.pillar {
+  padding: 48px 40px; display: flex; flex-direction: column; align-items: center;
+  text-align: center; cursor: pointer; transition: background .5s;
+  border-top: 1px solid rgba(0,0,0,.05);
+}
+@media (min-width: 1024px) {
+  .pillar { border-top: none; border-left: 1px solid rgba(0,0,0,.05); padding: 48px; }
+  .pillar:first-child { border-left: none; }
+}
+.pillar:hover { background: #fff; }
+.pillar .ico-wrap {
+  margin-bottom: 24px; padding: 16px; border-radius: 50%;
+  background: rgba(230,244,242,.3); transition: background .5s;
+}
+.pillar:hover .ico-wrap { background: rgba(230,244,242,.7); }
+.pillar .ico-wrap svg { width: 48px; height: 48px; color: var(--gold-dark); display: block; }
+.pillar h3 {
+  font-family: var(--font-display); font-size: 14px; font-weight: 800;
+  letter-spacing: .2em; color: var(--charcoal); margin-bottom: 16px;
+  transition: color .3s; text-transform: uppercase;
+}
+@media (min-width: 768px) { .pillar h3 { font-size: 16px; } }
+.pillar:hover h3 { color: var(--gold); }
+.pillar p {
+  font-size: 12px; line-height: 1.7; color: rgba(0,0,0,.6); font-weight: 300;
+  letter-spacing: .025em; max-width: 320px; margin-bottom: 32px; flex-grow: 1;
+}
+@media (min-width: 768px) { .pillar p { font-size: 13px; } }
+.pillar .more {
+  display: inline-flex; align-items: center; gap: 6px; font-size: 10px;
+  font-weight: 700; letter-spacing: .2em; color: var(--gold); transition: color .3s; text-transform: uppercase;
+}
+.pillar .more svg { transition: transform .3s; }
+.pillar:hover .more svg { transform: translateX(6px); }
+
+/* ════════════════════════════════════════════
+   ABOUT
+════════════════════════════════════════════ */
+.about { position: relative; background: var(--charcoal); overflow: hidden; user-select: none; }
+.about-grid { display: grid; grid-template-columns: 1fr; min-height: 640px; }
+@media (min-width: 1024px) { .about-grid { grid-template-columns: 1fr 1fr; } }
+.about-copy {
+  display: flex; align-items: center; justify-content: center;
+  padding: 80px 32px; position: relative; z-index: 10; text-align: left;
+}
+@media (min-width: 1024px) { .about-copy { padding: 80px 96px; } }
+.about-copy .inner { max-width: 576px; display: flex; flex-direction: column; gap: 24px; }
+.about-label { color: var(--gold); font-family: var(--font-mono); font-size: 10px; letter-spacing: .35em; font-weight: 700; }
+.about h2 {
+  font-size: clamp(1.5rem, 3vw, 2.2rem); line-height: 1.375; font-weight: 800;
+  color: #fff; text-transform: uppercase;
+}
+.about .divider { height: 2px; width: 64px; background: var(--gold); }
+.about-desc { color: rgba(255,255,255,.7); font-size: 12px; line-height: 1.7; font-weight: 300; letter-spacing: .025em; }
+@media (min-width: 768px) { .about-desc { font-size: 14px; } }
+.about-badges { display: grid; grid-template-columns: 1fr; gap: 16px; padding: 16px 0 8px; }
+@media (min-width: 640px) { .about-badges { grid-template-columns: repeat(3, 1fr); } }
+.about-badge { display: flex; align-items: center; gap: 10px; }
+.about-badge .bx { padding: 8px; background: rgba(255,255,255,.05); border-radius: 2px; border: 1px solid rgba(255,255,255,.05); display: flex; }
+.about-badge svg { width: 16px; height: 16px; color: var(--gold); }
+.about-badge span { font-size: 10px; letter-spacing: .1em; font-family: var(--font-mono); color: rgba(255,255,255,.8); text-transform: uppercase; font-weight: 600; }
+.btn-about {
+  padding: 16px 24px; background: transparent; border: 1px solid rgba(255,255,255,.2);
+  color: #fff; font-weight: 600; font-size: 10px; letter-spacing: .1em;
+  text-transform: uppercase; transition: all .3s; border-radius: 2px; align-self: flex-start;
+}
+.btn-about:hover { border-color: var(--gold); background: rgba(255,255,255,.05); }
+.about-photo { position: relative; min-height: 300px; overflow: hidden; }
+@media (min-width: 1024px) { .about-photo { min-height: 100%; } }
+.about-photo img {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  object-fit: cover; object-position: center; filter: brightness(.8) contrast(1.05);
+}
+.about-photo .fade { position: absolute; left: 0; right: 0; bottom: 0; height: 96px; background: linear-gradient(to top, var(--charcoal), transparent); }
+@media (min-width: 1024px) { .about-photo .fade { display: none; } }
+
+/* ════════════════════════════════════════════
+   PROJECTS
+════════════════════════════════════════════ */
+.projects { background: var(--slate); padding: 80px 0 96px; position: relative; z-index: 20; text-align: left; user-select: none; }
+.projects .head { display: flex; flex-direction: column; gap: 24px; margin-bottom: 48px; }
+@media (min-width: 768px) { .projects .head { flex-direction: row; align-items: flex-end; justify-content: space-between; } }
+.projects .head .lbl { display: inline-block; color: var(--gold); font-family: var(--font-mono); font-size: 10px; letter-spacing: .35em; font-weight: 700; margin-bottom: 12px; }
+.projects .head h2 {
+  font-size: clamp(1.5rem, 3vw, 2rem); line-height: 1.25; font-weight: 800;
+  color: var(--charcoal); text-transform: uppercase; max-width: 672px;
+}
+.btn-all {
+  padding: 14px 20px; background: transparent; border: 1px solid rgba(0,0,0,.15);
+  color: var(--charcoal); font-weight: 600; font-size: 10px; letter-spacing: .1em;
+  text-transform: uppercase; transition: all .3s; border-radius: 2px;
+  display: inline-flex; align-items: center; gap: 8px; white-space: nowrap;
+}
+.btn-all:hover { border-color: var(--gold); background: var(--wood-light); }
+.btn-all:active { transform: scale(.95); }
+.btn-all svg { color: var(--gold); }
+
+.proj-grid { display: grid; grid-template-columns: 1fr; gap: 24px; }
+@media (min-width: 640px) { .proj-grid { grid-template-columns: 1fr 1fr; } }
+@media (min-width: 1024px) { .proj-grid { grid-template-columns: repeat(4, 1fr); } }
+.proj-card {
+  display: flex; flex-direction: column; justify-content: space-between;
+  background: #fff; border: 1px solid rgba(0,0,0,.03); border-radius: 2px;
+  overflow: hidden; cursor: pointer; transition: box-shadow .5s;
+}
+.proj-card:hover { box-shadow: var(--shadow-premium); }
+.proj-card .frame { position: relative; aspect-ratio: 4/3; overflow: hidden; background: var(--charcoal); }
+.proj-card .frame img {
+  width: 100%; height: 100%; object-fit: cover; object-position: center;
+  filter: brightness(.93) contrast(1.02); transition: transform .7s;
+}
+.proj-card:hover .frame img { transform: scale(1.08); }
+.proj-card .frame .hover-shade {
+  position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,.5), transparent 50%);
+  opacity: 0; transition: opacity .5s;
+}
+.proj-card:hover .frame .hover-shade { opacity: 1; }
+.proj-card .cat {
+  position: absolute; top: 12px; left: 12px; background: rgba(22,23,25,.8);
+  backdrop-filter: blur(4px); color: rgba(255,255,255,.9); font-size: 8px;
+  letter-spacing: .2em; font-family: var(--font-mono); padding: 6px 12px;
+  border-radius: 2px; text-transform: uppercase; font-weight: 600;
+  box-shadow: 0 1px 3px rgba(0,0,0,.3);
+}
+.proj-card .year {
+  position: absolute; bottom: 12px; right: 12px; background: var(--gold); color: #fff;
+  font-size: 9px; letter-spacing: .1em; font-family: var(--font-mono);
+  padding: 4px 10px; border-radius: 2px; opacity: 0; transition: opacity .3s;
+}
+.proj-card:hover .year { opacity: 1; }
+.proj-card .meta { padding: 24px; flex-grow: 1; display: flex; flex-direction: column; justify-content: space-between; background: #fff; }
+.proj-card h3 {
+  font-family: var(--font-display); font-size: 14px; font-weight: 800;
+  letter-spacing: .05em; color: var(--charcoal); transition: color .3s; text-transform: uppercase;
+}
+.proj-card:hover h3 { color: var(--gold); }
+.proj-card .desc { font-size: 11px; line-height: 1.7; color: rgba(0,0,0,.5); margin-top: 6px; margin-bottom: 24px; }
+.proj-card .view {
+  display: inline-flex; align-items: center; gap: 6px; font-size: 9px; font-weight: 700;
+  letter-spacing: .25em; color: var(--gold); margin-top: auto; text-transform: uppercase; transition: color .3s;
+}
+.proj-card:hover .view { color: var(--gold-dark); }
+.proj-card .view svg { transition: transform .3s; }
+.proj-card:hover .view svg { transform: translateX(6px); }
+
+/* ════════════════════════════════════════════
+   STATS BANNER
+════════════════════════════════════════════ */
+.statsband {
+  background: var(--charcoal); border-top: 1px solid rgba(255,255,255,.05);
+  border-bottom: 1px solid rgba(255,255,255,.05); position: relative; z-index: 20; user-select: none;
+}
+.statsband-grid { max-width: 1280px; margin: 0 auto; display: grid; grid-template-columns: 1fr; align-items: stretch; }
+@media (min-width: 1024px) { .statsband-grid { grid-template-columns: 2fr 1fr; } }
+.stats-left { padding: 56px 40px; display: flex; align-items: center; }
+@media (min-width: 1024px) { .stats-left { padding: 64px; } }
+.stats-items { display: grid; grid-template-columns: 1fr; gap: 32px; width: 100%; text-align: left; }
+@media (min-width: 640px) { .stats-items { grid-template-columns: 1fr 1fr; } }
+@media (min-width: 768px) { .stats-items { grid-template-columns: repeat(4, 1fr); gap: 24px; } }
+.stat-item { display: flex; align-items: center; gap: 16px; }
+.stat-item .bx {
+  padding: 12px; background: rgba(255,255,255,.05); border-radius: 2px;
+  border: 1px solid rgba(255,255,255,.1); transition: border-color .3s; display: flex;
+}
+.stat-item:hover .bx { border-color: rgba(20,184,166,.3); }
+.stat-item .bx svg { width: 32px; height: 32px; color: var(--gold); }
+.stat-item .big {
+  font-family: var(--font-display); font-size: 20px; font-weight: 800;
+  color: #fff; display: block; line-height: 1.1; margin-bottom: 4px; text-transform: uppercase;
+}
+.stat-item .sml {
+  font-size: 10px; letter-spacing: .1em; font-family: var(--font-mono);
+  color: rgba(255,255,255,.5); display: block; line-height: 1.4; text-transform: uppercase; font-weight: 500;
+}
+.stats-cta {
+  background: var(--gold); padding: 40px; display: flex; flex-direction: column;
+  justify-content: space-between; align-items: flex-start; position: relative;
+  overflow: hidden; color: #fff; text-align: left; transition: background .5s;
+}
+@media (min-width: 768px) { .stats-cta { padding: 48px; } }
+.stats-cta:hover { background: var(--gold-dark); }
+.stats-cta::before {
+  content: ""; position: absolute; inset: 0;
+  background: linear-gradient(to bottom right, rgba(255,255,255,.1), transparent);
+  pointer-events: none;
+}
+.stats-cta h3 { font-family: var(--font-display); font-size: 18px; font-weight: 800; letter-spacing: -.02em; line-height: 1.1; position: relative; z-index: 1; text-transform: uppercase; }
+@media (min-width: 768px) { .stats-cta h3 { font-size: 20px; } }
+.stats-cta p { font-size: 12px; color: rgba(255,255,255,.8); font-weight: 300; letter-spacing: .025em; max-width: 320px; margin-top: 12px; position: relative; z-index: 1; }
+.stats-cta .btn-quote {
+  width: 100%; background: var(--charcoal); color: #fff; font-weight: 600;
+  font-size: 12px; letter-spacing: .1em; padding: 16px 0; border-radius: 2px;
+  transition: all .3s; text-transform: uppercase; margin-top: 32px;
+  box-shadow: 0 20px 25px -5px rgba(0,0,0,.2); position: relative; z-index: 1;
+}
+.stats-cta .btn-quote:hover { background: #000; }
+.stats-cta .btn-quote:active { transform: scale(.98); }
+
+/* ════════════════════════════════════════════
+   FOOTER
+════════════════════════════════════════════ */
+.site-footer {
+  background: var(--slate); padding: 64px 0; border-top: 1px solid rgba(0,0,0,.1);
+  position: relative; z-index: 20; text-align: left; color: rgba(0,0,0,.9); user-select: none;
+}
+.footer-grid { display: grid; grid-template-columns: 1fr; gap: 48px; align-items: start; margin-bottom: 56px; }
+@media (min-width: 768px) { .footer-grid { grid-template-columns: 1fr 1fr; } }
+@media (min-width: 1024px) { .footer-grid { grid-template-columns: 4fr 2fr 2fr 2fr 2fr; gap: 32px; } }
+.footer .logo .word { color: var(--charcoal); }
+.footer .logo .word span { color: var(--gold-dark); }
+.footer .logo svg { color: var(--gold-dark); }
+.footer .logo .strap { color: rgba(0,0,0,.55); font-weight: 700; }
+.footer-byline { font-size: 12px; color: rgba(0,0,0,.5); line-height: 1.7; font-weight: 300; letter-spacing: .025em; max-width: 384px; margin-top: 24px; }
+.footer h4 {
+  font-family: var(--font-display); font-size: 10px; letter-spacing: .25em;
+  font-weight: 800; color: var(--charcoal); text-transform: uppercase; margin-bottom: 16px;
+}
+.footer ul { list-style: none; }
+.footer ul li { margin-bottom: 10px; }
+.footer ul a { font-size: 12px; color: rgba(0,0,0,.55); letter-spacing: .05em; transition: color .2s; }
+.footer ul a:hover { color: var(--gold); }
+.footer .contact-li { display: flex; align-items: center; gap: 8px; font-size: 12px; color: rgba(0,0,0,.5); font-weight: 300; }
+.footer .contact-li svg { width: 14px; height: 14px; color: var(--gold-dark); flex-shrink: 0; }
+.footer .contact-li a:hover { color: var(--gold); }
+.footer .mono { font-family: var(--font-mono); color: rgba(0,0,0,.6); }
+.socials { display: flex; align-items: center; gap: 12px; padding-top: 12px; }
+.socials a {
+  padding: 8px; background: rgba(0,0,0,.05); border-radius: 50%;
+  color: rgba(0,0,0,.6); display: flex; transition: all .3s;
+}
+.socials a:hover { background: var(--gold-pale); color: var(--gold-dark); }
+.socials svg { width: 14px; height: 14px; }
+
+.footer-stamp-col { display: flex; flex-direction: column; align-items: center; justify-content: space-between; gap: 32px; align-self: stretch; }
+@media (min-width: 1024px) { .footer-stamp-col { align-items: flex-end; } }
+.footer-stamp { position: relative; width: 112px; height: 112px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.footer-stamp .ring-text { position: absolute; inset: 0; width: 100%; height: 100%; animation: spin 40s linear infinite; }
+.footer-stamp text { font-family: var(--font-mono); font-size: 4.8px; font-weight: 800; letter-spacing: .25em; fill: rgba(0,0,0,.35); text-transform: uppercase; }
+.footer-stamp .core {
+  width: 72px; height: 72px; border-radius: 50%; border: 1px solid rgba(0,0,0,.1);
+  display: flex; align-items: center; justify-content: center; box-shadow: 0 1px 2px rgba(0,0,0,.05);
+}
+.footer-stamp .core svg { width: 24px; height: 24px; color: var(--gold-dark); }
+.btn-top {
+  padding: 12px; background: var(--charcoal); color: #fff; border-radius: 50%;
+  transition: all .3s; box-shadow: 0 4px 6px -1px rgba(0,0,0,.1); flex-shrink: 0; display: flex;
+}
+.btn-top:hover { background: var(--gold); }
+.btn-top:active { transform: scale(.9); }
+.btn-top svg { transition: transform .3s; }
+.btn-top:hover svg { transform: translateY(-4px); }
+
+.footer-bottom-hr { border: none; border-top: 1px solid rgba(0,0,0,.05); margin-bottom: 24px; }
+.footer-bottom {
+  display: flex; flex-direction: column; align-items: center; justify-content: space-between; gap: 16px;
+  font-size: 10px; color: rgba(0,0,0,.4); font-family: var(--font-mono); letter-spacing: .1em; text-transform: uppercase;
+}
+@media (min-width: 640px) { .footer-bottom { flex-direction: row; } }
+.footer-bottom .tag { color: rgba(0,0,0,.3); font-size: 9px; text-transform: lowercase; font-family: var(--font-sans); letter-spacing: normal; }
+
+/* ════════════════════════════════════════════
+   MODALS (Quote, Lightbox) & DRAWER
+════════════════════════════════════════════ */
+.overlay {
+  position: fixed; inset: 0; z-index: 50; display: none;
+  align-items: center; justify-content: center; padding: 16px;
+}
+.overlay.open { display: flex; }
+.overlay .backdrop {
+  position: absolute; inset: 0; background: #000; opacity: 0;
+  transition: opacity .3s; backdrop-filter: blur(4px);
+}
+.overlay.open .backdrop { opacity: .78; }
+
+.panel {
+  position: relative; z-index: 10; background: var(--wood-dark);
+  border: 1px solid rgba(255,255,255,.1); width: 100%; border-radius: 2px;
+  box-shadow: var(--shadow-premium); overflow: hidden; max-height: 90vh;
+  display: flex; flex-direction: column; text-align: left; color: #fff;
+  opacity: 0; transform: scale(.95) translateY(20px);
+  transition: opacity .35s, transform .35s;
+}
+.overlay.open .panel { opacity: 1; transform: none; }
+#quoteModal .panel { max-width: 672px; }
+#lightbox .panel { max-width: 896px; }
+
+/* quote modal */
+.qm-head { padding: 24px; border-bottom: 1px solid rgba(255,255,255,.05); display: flex; align-items: center; justify-content: space-between; flex-shrink: 0; background: var(--charcoal); }
+.qm-head h3 { font-family: var(--font-display); font-size: 14px; font-weight: 800; letter-spacing: .05em; text-transform: uppercase; color: var(--gold); }
+@media (min-width: 768px) { .qm-head h3 { font-size: 16px; } }
+.qm-head p { font-size: 11px; color: rgba(255,255,255,.5); font-weight: 300; max-width: 448px; margin-top: 4px; display: none; }
+@media (min-width: 640px) { .qm-head p { display: block; } }
+.btn-x { padding: 6px; border-radius: 2px; color: rgba(255,255,255,.6); transition: all .2s; display: flex; }
+.btn-x:hover { background: rgba(255,255,255,.05); color: #fff; }
+
+.qm-body { flex-grow: 1; padding: 24px; overflow-y: auto; }
+.qm-form { display: flex; flex-direction: column; gap: 20px; }
+.form-err {
+  padding: 14px; background: rgba(69,10,10,.4); border: 1px solid rgba(239,68,68,.3);
+  border-radius: 4px; font-size: 12px; color: #fecaca; display: none;
+  align-items: center; gap: 8px; font-weight: 300;
+}
+.form-err.show { display: flex; }
+.form-err svg { color: #f87171; flex-shrink: 0; }
+.frow { display: grid; grid-template-columns: 1fr; gap: 16px; }
+@media (min-width: 640px) { .frow { grid-template-columns: 1fr 1fr; } }
+.fgroup { display: flex; flex-direction: column; gap: 6px; }
+.fgroup label {
+  font-size: 10px; letter-spacing: .1em; font-family: var(--font-mono);
+  color: rgba(255,255,255,.4); text-transform: uppercase; font-weight: 600;
+}
+.fgroup label b { color: var(--gold); font-weight: 600; }
+.fgroup input, .fgroup select, .fgroup textarea {
+  width: 100%; background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.1);
+  outline: none; padding: 12px; font-size: 12px; letter-spacing: .025em;
+  border-radius: 2px; color: #fff; font-family: var(--font-sans); transition: all .2s;
+}
+.fgroup select { background: var(--charcoal); color: rgba(255,255,255,.8); }
+.fgroup textarea { resize: none; padding: 14px; }
+.fgroup input:focus, .fgroup select:focus, .fgroup textarea:focus { border-color: var(--gold); background: rgba(255,255,255,.08); }
+.fgroup input::placeholder, .fgroup textarea::placeholder { color: rgba(255,255,255,.3); }
+.qm-submit-row { padding-top: 16px; display: flex; justify-content: flex-end; }
+.btn-submit {
+  padding: 16px 32px; background: var(--gold); color: #fff; font-weight: 600;
+  font-size: 12px; letter-spacing: .1em; border-radius: 2px; transition: all .3s;
+  display: inline-flex; align-items: center; gap: 6px; text-transform: uppercase;
+}
+.btn-submit:hover { background: var(--gold-light); }
+.btn-submit:active { transform: scale(.95); }
+.btn-submit:disabled { cursor: not-allowed; opacity: .8; }
+
+.qm-success { padding: 32px 16px; display: none; flex-direction: column; align-items: center; text-align: center; gap: 24px; }
+.qm-success.show { display: flex; }
+.qm-success .big-check {
+  padding: 16px; background: rgba(230,244,242,.1); border-radius: 50%;
+  border: 1px solid rgba(20,184,166,.2); animation: pulse 2s infinite; display: flex;
+}
+@keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: .6; } }
+.qm-success .big-check svg { width: 48px; height: 48px; color: var(--gold-light); }
+.qm-success h4 { font-family: var(--font-display); font-size: 16px; font-weight: 800; letter-spacing: .1em; color: var(--gold); text-transform: uppercase; }
+.qm-success .sdesc { font-size: 12px; color: rgba(255,255,255,.75); line-height: 1.7; font-weight: 300; letter-spacing: .025em; max-width: 448px; margin-top: 12px; }
+.qm-success .refbox {
+  background: var(--charcoal); border: 1px solid rgba(255,255,255,.05); padding: 16px;
+  border-radius: 2px; font-family: var(--font-mono); font-size: 9px; letter-spacing: .1em;
+  color: rgba(255,255,255,.4); text-transform: uppercase; max-width: 384px;
+}
+.qm-success .refbox b { color: var(--gold-light); font-weight: 700; display: block; margin-top: 4px; }
+.btn-close-success { padding: 12px 32px; background: rgba(255,255,255,.1); color: rgba(255,255,255,.9); font-weight: 600; font-size: 12px; letter-spacing: .1em; border-radius: 2px; transition: background .2s; text-transform: uppercase; }
+.btn-close-success:hover { background: rgba(255,255,255,.15); }
+
+/* lightbox */
+.lb-scroller { flex-grow: 1; overflow-y: auto; }
+.lb-float { position: absolute; top: 16px; z-index: 20; }
+.lb-float.l { left: 16px; } .lb-float.r { right: 16px; }
+.lb-float button {
+  background: rgba(0,0,0,.45); color: #fff; padding: 10px; border-radius: 50%;
+  backdrop-filter: blur(4px); transition: background .3s; box-shadow: 0 4px 6px -1px rgba(0,0,0,.3); display: flex;
+}
+.lb-float button:hover { background: rgba(0,0,0,.75); }
+.lb-grid { display: grid; grid-template-columns: 1fr; align-items: stretch; }
+@media (min-width: 1024px) { .lb-grid { grid-template-columns: 5fr 7fr; } }
+.lb-photo { position: relative; min-height: 250px; }
+@media (min-width: 1024px) { .lb-photo { min-height: 500px; } }
+.lb-photo img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; filter: brightness(.88) contrast(1.05); }
+.lb-photo .fade-b { position: absolute; left: 0; right: 0; bottom: 0; height: 128px; background: linear-gradient(to top, var(--wood-dark), transparent); }
+@media (min-width: 1024px) { .lb-photo .fade-b { display: none; } }
+.lb-photo .fade-r { display: none; }
+@media (min-width: 1024px) { .lb-photo .fade-r { display: block; position: absolute; top: 0; bottom: 0; right: 0; width: 96px; background: linear-gradient(to right, transparent, var(--wood-dark)); } }
+.lb-body { padding: 40px; display: flex; flex-direction: column; gap: 32px; background: var(--wood-dark); }
+.lb-cat { font-size: 9px; letter-spacing: .3em; font-family: var(--font-mono); font-weight: 700; color: var(--gold-light); text-transform: uppercase; display: block; }
+.lb-body h2 { font-size: clamp(1.5rem, 3vw, 1.875rem); font-family: var(--font-display); font-weight: 800; color: #fff; text-transform: uppercase; line-height: 1.05; margin-top: 12px; }
+.lb-loc { display: flex; align-items: center; gap: 8px; font-size: 12px; color: rgba(255,255,255,.55); font-weight: 300; margin-top: 12px; }
+.lb-loc svg { color: var(--gold); }
+.lb-desc { color: rgba(255,255,255,.75); font-size: 12px; line-height: 1.7; font-weight: 300; letter-spacing: .025em; }
+@media (min-width: 768px) { .lb-desc { font-size: 14px; } }
+.lb-sect { border-top: 1px solid rgba(255,255,255,.05); padding-top: 24px; }
+.lb-sect-lbl { font-size: 10px; letter-spacing: .1em; font-family: var(--font-mono); color: rgba(255,255,255,.45); text-transform: uppercase; font-weight: 700; display: flex; align-items: center; gap: 8px; margin-bottom: 16px; }
+.lb-sect-lbl svg { color: var(--gold); }
+.lb-chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.lb-chips span {
+  background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.05);
+  color: rgba(255,255,255,.8); padding: 6px 12px; border-radius: 2px;
+  font-size: 10px; letter-spacing: .05em; text-transform: uppercase; font-weight: 500; transition: border-color .3s;
+}
+.lb-chips span:hover { border-color: rgba(20,184,166,.2); }
+.lb-specs { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+@media (min-width: 768px) { .lb-specs { grid-template-columns: repeat(4, 1fr); } }
+.lb-spec .k { font-size: 9px; font-family: var(--font-mono); letter-spacing: .1em; color: rgba(255,255,255,.4); text-transform: uppercase; display: block; font-weight: 600; margin-bottom: 4px; }
+.lb-spec .v { font-size: 12px; color: rgba(255,255,255,.8); font-weight: 500; line-height: 1.375; }
+.lb-highlights { padding: 40px; background: var(--charcoal); border-top: 1px solid rgba(255,255,255,.05); }
+.lb-highlights .hl-lbl { font-size: 10px; letter-spacing: .25em; font-family: var(--font-mono); color: var(--gold); text-transform: uppercase; font-weight: 700; display: block; margin-bottom: 16px; }
+.lb-hl-grid { display: grid; grid-template-columns: 1fr; gap: 16px; }
+@media (min-width: 640px) { .lb-hl-grid { grid-template-columns: 1fr 1fr; } }
+.lb-hl { display: flex; align-items: flex-start; gap: 10px; }
+.lb-hl .chk { background: rgba(230,244,242,.1); padding: 4px; border-radius: 2px; border: 1px solid rgba(230,244,242,.1); flex-shrink: 0; margin-top: 2px; display: flex; }
+.lb-hl .chk svg { color: var(--gold-light); }
+.lb-hl span:last-child { font-size: 12px; color: rgba(255,255,255,.7); font-weight: 300; letter-spacing: .025em; line-height: 1.7; }
+
+/* drawer */
+#drawer { position: fixed; inset: 0; z-index: 50; display: none; justify-content: flex-end; }
+#drawer.open { display: flex; }
+#drawer .backdrop { position: absolute; inset: 0; background: #000; opacity: 0; transition: opacity .3s; backdrop-filter: blur(4px); }
+#drawer.open .backdrop { opacity: .5; }
+.drawer-panel {
+  position: relative; z-index: 10; width: 100%; max-width: 448px; background: var(--wood-dark);
+  border-left: 1px solid rgba(255,255,255,.05); height: 100%; box-shadow: -25px 0 50px -12px rgba(0,0,0,.5);
+  display: flex; flex-direction: column; justify-content: space-between; text-align: left; color: #fff;
+  transform: translateX(100%); transition: transform .4s ease-out;
+}
+@media (min-width: 768px) { .drawer-panel { max-width: 512px; } }
+#drawer.open .drawer-panel { transform: none; }
+.drawer-head { padding: 24px; border-bottom: 1px solid rgba(255,255,255,.05); display: flex; align-items: center; justify-content: space-between; background: var(--charcoal); flex-shrink: 0; }
+.drawer-head .lbl { font-family: var(--font-mono); font-size: 9px; letter-spacing: .3em; color: rgba(255,255,255,.4); text-transform: uppercase; font-weight: 900; }
+.drawer-body { flex-grow: 1; padding: 32px; overflow-y: auto; display: flex; flex-direction: column; gap: 32px; }
+.drawer-ico { padding: 16px; background: rgba(255,255,255,.05); border-radius: 2px; border: 1px solid rgba(255,255,255,.05); align-self: flex-start; }
+.drawer-ico svg { width: 56px; height: 56px; color: var(--gold); display: block; }
+.drawer-body h2 { font-size: clamp(1.25rem, 2.5vw, 1.5rem); font-family: var(--font-display); font-weight: 800; color: #fff; text-transform: uppercase; line-height: 1.25; margin-top: 8px; }
+.drawer-text { border-top: 1px solid rgba(255,255,255,.05); padding-top: 24px; color: rgba(255,255,255,.7); font-size: 12px; font-weight: 300; line-height: 1.7; letter-spacing: .025em; }
+@media (min-width: 640px) { .drawer-text { font-size: 14px; } }
+.drawer-feats { border-top: 1px solid rgba(255,255,255,.05); padding-top: 24px; }
+.drawer-feats .lbl { font-size: 10px; letter-spacing: .25em; font-family: var(--font-mono); color: var(--gold); text-transform: uppercase; font-weight: 700; display: block; margin-bottom: 12px; }
+.drawer-feat { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px; }
+.drawer-feat .chk { background: rgba(230,244,242,.1); padding: 4px; border-radius: 2px; border: 1px solid rgba(20,184,166,.15); flex-shrink: 0; margin-top: 2px; display: flex; }
+.drawer-feat .chk svg { color: var(--gold-light); }
+.drawer-feat span:last-child { font-size: 12px; color: rgba(255,255,255,.75); font-weight: 300; letter-spacing: .025em; line-height: 1.7; }
+.drawer-foot { padding: 24px; background: var(--charcoal); border-top: 1px solid rgba(255,255,255,.05); flex-shrink: 0; text-align: center; }
+.drawer-foot p { font-size: 11px; color: rgba(255,255,255,.45); font-weight: 300; max-width: 384px; margin: 0 auto 16px; line-height: 1.5; }
+.drawer-foot .btn-quote-full {
+  width: 100%; background: var(--gold); color: #fff; font-weight: 600; font-size: 12px;
+  letter-spacing: .1em; padding: 16px 0; border-radius: 2px; transition: background .3s;
+  text-transform: uppercase; box-shadow: 0 20px 25px -5px rgba(0,0,0,.3);
+}
+.drawer-foot .btn-quote-full:hover { background: var(--gold-light); }
+</style>
+</head>
+<body>
+
+<!-- decorative grid lines -->
+<div class="grid-line l"></div>
+<div class="grid-line r"></div>
+
+<!-- toast -->
+<div class="toast" id="toast">
+  <div class="ico">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z"/></svg>
+  </div>
+  <div>
+    <span class="ttl">STRUCTALAB HUB</span>
+    <p class="msg" id="toastMsg"></p>
+  </div>
+</div>
+
+<!-- ════════════ HEADER ════════════ -->
+<header class="site-header" id="siteHeader">
+  <div class="wrap header-inner">
+    <a href="#inicio" class="logo nav-link">
+      <div class="logo-row">
+        <svg viewBox="0 0 100 70" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M15 45 L25 25 L35 45 M25 35 L25 45" stroke-width="1.5" opacity=".6"/>
+          <path d="M75 45 L82 31 L89 45 M82 38 L82 45" stroke-width="1.5" opacity=".6"/>
+          <path d="M30 45 L50 20 L70 45 Z" stroke-width="3"/>
+          <line x1="34" y1="40" x2="66" y2="40"/>
+          <line x1="38" y1="35" x2="62" y2="35"/>
+          <line x1="42" y1="30" x2="58" y2="30"/>
+          <line x1="50" y1="20" x2="50" y2="45" stroke-width="1.5"/>
+          <path d="M10 45 L90 45" stroke-width="1.5"/>
+        </svg>
+        <span class="word">STRUCTA<span>LAB</span></span>
+      </div>
+      <span class="strap">DESIGN &bull; BUILD &bull; LIVE</span>
+    </a>
+
+    <nav class="desk-nav" id="deskNav">
+      <a href="#inicio" class="nav-link" data-section="inicio" data-i18n="nav.inicio"></a>
+      <a href="#sobre-nosotros" class="nav-link" data-section="sobre-nosotros" data-i18n="nav.sobreNosotros"></a>
+      <a href="#servicios" class="nav-link" data-section="servicios" data-i18n="nav.servicios"></a>
+      <a href="#proyectos" class="nav-link" data-section="proyectos" data-i18n="nav.proyectos"></a>
+      <a href="#contacto" class="nav-link" data-section="contacto" data-i18n="nav.contacto"></a>
+    </nav>
+
+    <div class="header-actions">
+      <a class="quick-dial" href="tel:6145550198">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        <span class="num">(614) 555-0198</span>
+      </a>
+      <button class="lang-btn" data-lang-toggle title="Cambiar idioma / Change Language">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>
+        <span class="lang-label">EN</span>
+      </button>
+      <button class="btn-cta" data-open-quote data-i18n="nav.cta"></button>
+    </div>
+
+    <div class="mobile-controls">
+      <button class="lang" data-lang-toggle>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>
+        <span class="lang-label">EN</span>
+      </button>
+      <button id="burger" aria-label="Menu">
+        <svg id="burgerOpen" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="18" y2="18"/></svg>
+        <svg id="burgerClose" style="display:none" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <div class="mobile-drawer" id="mobileDrawer">
+    <div class="inner">
+      <nav>
+        <a href="#inicio" class="nav-link" data-i18n="nav.inicio"></a>
+        <a href="#sobre-nosotros" class="nav-link" data-i18n="nav.sobreNosotros"></a>
+        <a href="#servicios" class="nav-link" data-i18n="nav.servicios"></a>
+        <a href="#proyectos" class="nav-link" data-i18n="nav.proyectos"></a>
+        <a href="#contacto" class="nav-link" data-i18n="nav.contacto"></a>
+      </nav>
+      <hr>
+      <div class="phone-row">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        <span>(614) 555-0198</span>
+      </div>
+      <button class="btn-cta" data-open-quote data-i18n="nav.cta"></button>
+    </div>
+  </div>
+</header>
+
+<!-- ════════════ HERO ════════════ -->
+<section id="inicio" class="hero">
+  <div class="hero-bg">
+    <video autoplay loop muted playsinline poster="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?q=80&w=2000">
+      <source src="https://images.pexels.com/video-files/3209211/3209211-hd_1920_1080_25fps.mp4" type="video/mp4">
+      <source src="https://images.pexels.com/video-files/5842813/5842813-hd_1920_1080_25fps.mp4" type="video/mp4">
+    </video>
+    <div class="ov-1"></div>
+    <div class="ov-2"></div>
+  </div>
+
+  <div class="wrap hero-grid">
+    <div class="hero-copy">
+      <div class="hero-label reveal">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="rgba(20,184,166,.25)" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z"/></svg>
+        <span>COLUMBUS ARCHITECTURE &amp; DESIGN STUDIO</span>
+      </div>
+
+      <h1 class="reveal">
+        <span class="l1" data-i18n="hero.titleLine1"></span>
+        <span class="l2" data-i18n="hero.titleLine2"></span>
+        <span class="l3" id="heroSerifLine"></span>
+        <span class="l4" data-i18n="hero.titleLine4"></span>
+      </h1>
+
+      <p class="hero-desc reveal" data-i18n="hero.description"></p>
+
+      <div class="hero-actions reveal">
+        <button class="btn-hero-primary" data-scroll="#servicios" data-i18n="hero.ctaServices"></button>
+        <button class="btn-hero-outline" data-scroll="#proyectos">
+          <span data-i18n="hero.ctaProjects"></span>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <div class="hero-stamp-col">
+      <div class="stamp reveal">
+        <svg class="ring-text" viewBox="0 0 160 160">
+          <path id="stampPath" d="M 80, 80 m -62, 0 a 62,62 0 1,1 124,0 a 62,62 0 1,1 -124,0" fill="none" stroke="none"/>
+          <text><textPath href="#stampPath" startOffset="0%">&bull; FROM CONCEPT TO COMPLETION &bull; CONCEPT TO COMPLETE</textPath></text>
+        </svg>
+        <div class="stamp-core">
+          <span class="est" data-i18n="hero.stampEst"></span>
+          <svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M12 28 L28 12"/><path d="M26 10 L30 14"/><path d="M25 9 L27 11 L29 13"/>
+            <path d="M28 28 L12 12"/><path d="M14 10 L10 14"/><path d="M15 9 L13 11 L11 13"/>
+            <circle cx="20" cy="20" r="1.5" fill="currentColor"/>
+          </svg>
+          <span class="loc" data-i18n="hero.stampOhio"></span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════ PILLARS (rendered by JS) ════════════ -->
+<section id="servicios" class="pillars">
+  <div class="pillars-grid" id="pillarsGrid"></div>
+</section>
+
+<!-- ════════════ ABOUT ════════════ -->
+<section id="sobre-nosotros" class="about">
+  <div class="about-grid">
+    <div class="about-copy">
+      <div class="inner">
+        <span class="about-label reveal" data-i18n="about.label"></span>
+        <h2 class="reveal" id="aboutTitle"></h2>
+        <div class="divider reveal"></div>
+        <p class="about-desc reveal" data-i18n="about.description"></p>
+
+        <div class="about-badges reveal">
+          <div class="about-badge">
+            <div class="bx">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></svg>
+            </div>
+            <span id="badge1"></span>
+          </div>
+          <div class="about-badge">
+            <div class="bx">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15.477 12.89 1.515 8.526a.5.5 0 0 1-.81.47l-3.58-2.687a1 1 0 0 0-1.197 0l-3.586 2.686a.5.5 0 0 1-.81-.469l1.514-8.526"/><circle cx="12" cy="8" r="6"/></svg>
+            </div>
+            <span id="badge2"></span>
+          </div>
+          <div class="about-badge">
+            <div class="bx">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z"/></svg>
+            </div>
+            <span id="badge3"></span>
+          </div>
+        </div>
+
+        <div class="reveal" style="padding-top:16px;">
+          <button class="btn-about" data-open-quote data-i18n="about.cta"></button>
+        </div>
+      </div>
+    </div>
+    <div class="about-photo">
+      <img src="https://images.unsplash.com/photo-1503387762-592deb58ef4e?q=80&w=1200" alt="Architectural wood framing desk with blueprints plans" referrerpolicy="no-referrer">
+      <div class="fade"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════ FEATURED PROJECTS (rendered by JS) ════════════ -->
+<section id="proyectos" class="projects">
+  <div class="wrap">
+    <div class="head">
+      <div>
+        <span class="lbl" data-i18n="projects.label"></span>
+        <h2 data-i18n="projects.title"></h2>
+      </div>
+      <div>
+        <button class="btn-all" id="btnAllProjects">
+          <span data-i18n="projects.ctaAll"></span>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z"/></svg>
+        </button>
+      </div>
+    </div>
+    <div class="proj-grid" id="projGrid"></div>
+  </div>
+</section>
+
+<!-- ════════════ STATS BANNER ════════════ -->
+<section id="stats-banner" class="statsband">
+  <div class="statsband-grid">
+    <div class="stats-left">
+      <div class="stats-items">
+        <div class="stat-item reveal">
+          <div class="bx">
+            <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M6 26 V14 L16 6 L26 14 V26 Z"/><path d="M12 26 V18 H20 V26"/>
+              <line x1="8" y1="21" x2="10" y2="21"/><line x1="22" y1="21" x2="24" y2="21"/>
+            </svg>
+          </div>
+          <div>
+            <span class="big">+120</span>
+            <span class="sml" data-i18n="stats.completedProjects"></span>
+          </div>
+        </div>
+        <div class="stat-item reveal">
+          <div class="bx">
+            <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.5">
+              <circle cx="16" cy="11" r="4"/><path d="M8 24 C8 19 12 18 16 18 C20 18 24 19 24 24"/>
+              <circle cx="8" cy="13" r="3" opacity=".6"/><path d="M3 24 C3 21 5 20 8 20" opacity=".6" stroke-dasharray="1,1"/>
+              <circle cx="24" cy="13" r="3" opacity=".6"/><path d="M24 20 C27 20 29 21 29 24" opacity=".6" stroke-dasharray="1,1"/>
+            </svg>
+          </div>
+          <div>
+            <span class="big" id="statTeamBig"></span>
+            <span class="sml" id="statTeamSml"></span>
+          </div>
+        </div>
+        <div class="stat-item reveal">
+          <div class="bx">
+            <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M7 11 L10 10 L15 10 L19 12 L24 11 L25 14 L24 18 L26 21 L24 24 L22 23 L18 25 L15 24 L11 25 L8 21 L10 17 L7 15 Z"/>
+              <circle cx="17" cy="17" r="1.5" fill="currentColor"/>
+            </svg>
+          </div>
+          <div>
+            <span class="big">COLUMBUS,</span>
+            <span class="sml">OHIO</span>
+          </div>
+        </div>
+        <div class="stat-item reveal">
+          <div class="bx">
+            <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M9 23 L21 11"/><path d="M19 9 L23 13"/><path d="M21 7 L25 11"/><path d="M8 24 C7 25 7 25 8 24 Z"/>
+            </svg>
+          </div>
+          <div>
+            <span class="big" id="statQualBig" style="font-size:12px; letter-spacing:.1em;"></span>
+            <span class="sml" id="statQualSml"></span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="stats-cta">
+      <div>
+        <h3 data-i18n="stats.ctaCardTitle"></h3>
+        <p data-i18n="stats.ctaCardDesc"></p>
+      </div>
+      <button class="btn-quote" data-open-quote data-i18n="stats.ctaCardBtn"></button>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════ FOOTER ════════════ -->
+<footer id="contacto" class="site-footer footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div>
+        <a href="#inicio" class="logo nav-link">
+          <div class="logo-row">
+            <svg viewBox="0 0 100 70" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" style="width:44px;height:32px;">
+              <path d="M15 45 L25 25 L35 45 M25 35 L25 45" stroke-width="1.3" opacity=".45"/>
+              <path d="M75 45 L82 31 L89 45 M82 38 L82 45" stroke-width="1.3" opacity=".45"/>
+              <path d="M30 45 L50 20 L70 45 Z" stroke-width="2.8"/>
+              <line x1="34" y1="40" x2="66" y2="40"/>
+              <line x1="38" y1="35" x2="62" y2="35"/>
+              <line x1="42" y1="30" x2="58" y2="30"/>
+              <line x1="50" y1="20" x2="50" y2="45" stroke-width="1.5"/>
+              <path d="M10 45 L90 45" stroke-width="1.2"/>
+            </svg>
+            <span class="word">STRUCTA<span>LAB</span></span>
+          </div>
+          <span class="strap">DESIGN &bull; BUILD &bull; LIVE</span>
+        </a>
+        <p class="footer-byline" data-i18n="footer.byLine"></p>
+      </div>
+
+      <div>
+        <h4 data-i18n="footer.navigation"></h4>
+        <ul id="footNav"></ul>
+      </div>
+
+      <div>
+        <h4 data-i18n="footer.services"></h4>
+        <ul id="footSvc"></ul>
+      </div>
+
+      <div>
+        <h4 data-i18n="footer.contact"></h4>
+        <ul>
+          <li class="contact-li">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"/><circle cx="12" cy="10" r="3"/></svg>
+            <span>Columbus, Ohio</span>
+          </li>
+          <li class="contact-li">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+            <a href="mailto:info@structalab.com">info@structalab.com</a>
+          </li>
+          <li class="contact-li">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+            <span class="mono">(614) 555-0198</span>
+          </li>
+        </ul>
+        <div class="socials">
+          <a href="https://instagram.com" target="_blank" rel="noreferrer" title="Instagram">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg>
+          </a>
+          <a href="https://facebook.com" target="_blank" rel="noreferrer" title="Facebook">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+          </a>
+          <a href="https://pinterest.com" target="_blank" rel="noreferrer" title="Pinterest">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <div class="footer-stamp-col">
+        <div class="footer-stamp">
+          <svg class="ring-text" viewBox="0 0 100 100">
+            <path id="footerStampPath" d="M 50, 50 m -35, 0 a 35,35 0 1,1 70,0 a 35,35 0 1,1 -70,0" fill="none" stroke="none"/>
+            <text><textPath href="#footerStampPath" startOffset="0%">&bull; EST. OHIO &bull; CONCEPT TO COMPLETION</textPath></text>
+          </svg>
+          <div class="core">
+            <svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.8">
+              <path d="M12 28 L28 12"/><path d="M26 10 L30 14"/>
+              <path d="M28 28 L12 12"/><path d="M14 10 L10 14"/>
+              <circle cx="20" cy="20" r="1.5" fill="currentColor"/>
+            </svg>
+          </div>
+        </div>
+        <button class="btn-top" id="btnTop" title="Volver arriba / Scroll to Top">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 7-7 7 7"/><path d="M12 19V5"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <hr class="footer-bottom-hr">
+    <div class="footer-bottom">
+      <span data-i18n="footer.rights"></span>
+      <span class="tag">engineered under premium structural specifications</span>
+    </div>
+  </div>
+</footer>
+
+<!-- ════════════ QUOTE MODAL ════════════ -->
+<div class="overlay" id="quoteModal">
+  <div class="backdrop" data-close-quote></div>
+  <div class="panel">
+    <div class="qm-head">
+      <div>
+        <h3 data-i18n="modal.title"></h3>
+        <p data-i18n="modal.subtitle"></p>
+      </div>
+      <button class="btn-x" data-close-quote title="Cerrar / Close">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+      </button>
+    </div>
+    <div class="qm-body no-scrollbar">
+      <form class="qm-form" id="quoteForm" novalidate>
+        <div class="form-err" id="formErr">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="M12 8v4"/><path d="M12 16h.01"/></svg>
+          <span id="formErrMsg"></span>
+        </div>
+        <div class="frow">
+          <div class="fgroup">
+            <label><span data-i18n="modal.name"></span> <b>*</b></label>
+            <input type="text" name="name" placeholder="p. ej. Carlos Lozano" required>
+          </div>
+          <div class="fgroup">
+            <label><span data-i18n="modal.email"></span> <b>*</b></label>
+            <input type="email" name="email" placeholder="carlos@ejemplo.com" required>
+          </div>
+        </div>
+        <div class="frow">
+          <div class="fgroup">
+            <label data-i18n="modal.phone"></label>
+            <input type="tel" name="phone" placeholder="(614) 555-0000" style="font-family: var(--font-mono);">
+          </div>
+          <div class="fgroup">
+            <label data-i18n="modal.type"></label>
+            <select name="projectType" id="projectTypeSelect"></select>
+          </div>
+        </div>
+        <div class="frow">
+          <div class="fgroup">
+            <label data-i18n="modal.budget"></label>
+            <input type="text" name="budget" placeholder="p. ej. $150,000 - $250,000">
+          </div>
+          <div class="fgroup">
+            <label data-i18n="modal.timeline"></label>
+            <input type="text" name="timeline" placeholder="p. ej. Próximos 3 meses">
+          </div>
+        </div>
+        <div class="fgroup">
+          <label><span data-i18n="modal.description"></span> <b>*</b></label>
+          <textarea name="description" rows="4" required></textarea>
+        </div>
+        <div class="qm-submit-row">
+          <button type="submit" class="btn-submit" id="btnSubmit">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.536 21.686a.5.5 0 0 0 .937-.024l6.5-19a.496.496 0 0 0-.635-.635l-19 6.5a.5.5 0 0 0-.024.937l7.93 3.18a2 2 0 0 1 1.112 1.11z"/><path d="m21.854 2.147-10.94 10.939"/></svg>
+            <span id="btnSubmitLabel"></span>
+          </button>
+        </div>
+      </form>
+
+      <div class="qm-success" id="qmSuccess">
+        <div class="big-check">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg>
+        </div>
+        <div style="max-width:448px;">
+          <h4 data-i18n="modal.successTitle"></h4>
+          <p class="sdesc" data-i18n="modal.successDesc"></p>
+        </div>
+        <div class="refbox">
+          CONSULTATION REGISTRATION REFERENCE:
+          <b id="refNumber"></b>
+        </div>
+        <div style="padding-top:16px;">
+          <button class="btn-close-success" id="btnSuccessClose" data-i18n="modal.close"></button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════ PROJECT LIGHTBOX ════════════ -->
+<div class="overlay" id="lightbox">
+  <div class="backdrop" data-close-lightbox></div>
+  <div class="panel">
+    <div class="lb-float l">
+      <button data-close-lightbox title="Back">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></svg>
+      </button>
+    </div>
+    <div class="lb-float r">
+      <button data-close-lightbox title="Close">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+      </button>
+    </div>
+    <div class="lb-scroller no-scrollbar" id="lbContent"><!-- rendered by JS --></div>
+  </div>
+</div>
+
+<!-- ════════════ PILLAR DRAWER ════════════ -->
+<div id="drawer">
+  <div class="backdrop" data-close-drawer></div>
+  <div class="drawer-panel">
+    <div class="drawer-head">
+      <span class="lbl" id="drawerHeadLbl"></span>
+      <button class="btn-x" data-close-drawer title="Cerrar / Close">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+      </button>
+    </div>
+    <div class="drawer-body no-scrollbar" id="drawerBody"><!-- rendered by JS --></div>
+    <div class="drawer-foot">
+      <p id="drawerFootText"></p>
+      <button class="btn-quote-full" id="drawerQuoteBtn"></button>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ════════════════════════════════════════════
+   DATA (ported from src/data.ts)
+════════════════════════════════════════════ */
+const TEXTS = {
+  es: {
+    nav: { inicio:'INICIO', sobreNosotros:'SOBRE NOSOTROS', servicios:'SERVICIOS', proyectos:'PROYECTOS', proceso:'PROCESO', contacto:'CONTACTO', cta:'COTIZA TU PROYECTO' },
+    hero: {
+      titleLine1:'CONSTRUIMOS', titleLine2:'CON PROPÓSITO.', titleLine3:'DISEÑAMOS', titleLine4:'PARA VIVIR.',
+      description:'En Structalab transformamos ideas en espacios funcionales y duraderos. Casas, remodelaciones y estructuras a la medida en Columbus, Ohio.',
+      ctaServices:'NUESTROS SERVICIOS', ctaProjects:'VER PROYECTOS', stampEst:'EST.', stampOhio:'OHIO', stampFrom:'FROM CONCEPT TO COMPLETION',
+    },
+    pillars: { verMas:'VER MÁS' },
+    about: {
+      label:'SOBRE NOSOTROS', title:'EXPERIENCIA. INTEGRIDAD. CALIDAD.',
+      description:'Somos un equipo de profesionales y maestros capacitados comprometidos con entregar proyectos que superan expectativas. Trabajamos con materiales de calidad y los más altos estándares de construcción, garantizando durabilidad y sofisticación en cada ensamble.',
+      cta:'CONOCE MÁS SOBRE NOSOTROS',
+    },
+    projects: {
+      label:'PROYECTOS DESTACADOS', title:'IDEAS QUE CONSTRUIMOS, RESULTADOS QUE PERDURAN.', ctaAll:'VER TODOS LOS PROYECTOS',
+      verProyecto:'VER PROYECTO', detailsLabel:'DETALLES DEL PROYECTO', back:'VOLVER', client:'Cliente', location:'Ubicación',
+      area:'Área', year:'Año', duration:'Duración', materials:'Materiales principales', highlightsLabel:'Puntos clave del diseño',
+    },
+    stats: {
+      completedProjects:'PROYECTOS COMPLETADOS', team:'EQUIPO CAPACITADO', location:'COLUMBUS, OHIO', detail:'CALIDAD EN CADA DETALLE',
+      ctaCardTitle:'¿TIENES UN PROYECTO EN MENTE?', ctaCardDesc:'Hablemos sobre cómo podemos hacerlo realidad.', ctaCardBtn:'COTIZA TU PROYECTO',
+    },
+    footer: {
+      navigation:'NAVEGACIÓN', services:'SERVICIOS', contact:'CONTACTO',
+      rights:'© 2026 Structalab. Todos los derechos reservados.', byLine:'Diseñado y construido con precisión para vivir.',
+    },
+    modal: {
+      title:'CREEMOS JUNTOS TU PRÓXIMO ESPACIO',
+      subtitle:'Llena el formulario y un especialista de Structalab se pondrá en contacto contigo en menos de 24 horas.',
+      name:'Nombre Completo', email:'Correo Electrónico', phone:'Teléfono', type:'Tipo de Proyecto',
+      typePlaceholder:'Selecciona una categoría...', budget:'Presupuesto Estimado ($USD)', budgetPlaceholder:'Rango de inversión...',
+      timeline:'Plazo Deseado', timelinePlaceholder:'¿Cuándo empezamos?', description:'Describe tu Proyecto',
+      descriptionPlaceholder:'Cuéntanos tu visión, ideas o necesidades específicas...',
+      submit:'ENVIAR SOLICITUD', sending:'ENVIANDO...',
+      successTitle:'¡SOLICITUD RECIBIDA CON ÉXITO!',
+      successDesc:'Gracias por confiar en Structalab. Hemos registrado tu proyecto y nuestro equipo de arquitectos e ingenieros ya está analizando tu propuesta. Nos comunicaremos contigo muy pronto.',
+      close:'CERRAR',
+    },
+  },
+  en: {
+    nav: { inicio:'HOME', sobreNosotros:'ABOUT US', servicios:'SERVICES', proyectos:'PROJECTS', proceso:'PROCESS', contacto:'CONTACT', cta:'GET A QUOTE' },
+    hero: {
+      titleLine1:'WE BUILD', titleLine2:'WITH PURPOSE.', titleLine3:'WE DESIGN', titleLine4:'FOR LIVING.',
+      description:'At Structalab we transform ideas into functional and durable spaces. Custom homes, renovations, and expert custom framing in Columbus, Ohio.',
+      ctaServices:'OUR SERVICES', ctaProjects:'VIEW PROJECTS', stampEst:'EST.', stampOhio:'OHIO', stampFrom:'FROM CONCEPT TO COMPLETION',
+    },
+    pillars: { verMas:'VIEW MORE' },
+    about: {
+      label:'ABOUT US', title:'EXPERIENCE. INTEGRITY. QUALITY.',
+      description:'We are a dedicated team of premium construction professionals and skilled craftsmen committed to delivering projects that exceed client expectations. We build with peerless timber, high-quality materials, and strict code compliance, ensuring absolute refinement.',
+      cta:'LEARN MORE ABOUT US',
+    },
+    projects: {
+      label:'FEATURED PROJECTS', title:'IDEAS WE BUILD, RESULTS THAT LAST.', ctaAll:'VIEW ALL PROJECTS',
+      verProyecto:'VIEW PROJECT', detailsLabel:'PROJECT DETAILS', back:'BACK', client:'Client', location:'Location',
+      area:'Area', year:'Year', duration:'Duration', materials:'Key Materials', highlightsLabel:'Design Highlights',
+    },
+    stats: {
+      completedProjects:'COMPLETED PROJECTS', team:'TRAINED TEAM', location:'COLUMBUS, OHIO', detail:'QUALITY IN EVERY DETAIL',
+      ctaCardTitle:'HAVE A PROJECT IN MIND?', ctaCardDesc:"Let's talk about how we can make it a reality.", ctaCardBtn:'GET A QUOTE',
+    },
+    footer: {
+      navigation:'NAVIGATION', services:'SERVICES', contact:'CONTACT',
+      rights:'© 2026 Structalab. All rights reserved.', byLine:'Designed and built with precision for life.',
+    },
+    modal: {
+      title:'LET’S BUILD YOUR NEXT SPACE TOGETHER',
+      subtitle:'Complete this form and a Structalab specialist will reach out to you within 24 hours.',
+      name:'Full Name', email:'Email Address', phone:'Phone Number', type:'Project Type',
+      typePlaceholder:'Select a category...', budget:'Estimated Budget ($USD)', budgetPlaceholder:'Investment range...',
+      timeline:'Desired Timeline', timelinePlaceholder:'When do we start?', description:'Project Description',
+      descriptionPlaceholder:'Tell us about your vision, ideas, or specific space needs...',
+      submit:'SUBMIT PROJECT CORRESPONDENCE', sending:'SUBMITTING MODE...',
+      successTitle:'CORRESPONDENCE RECEIVED SUCCESSFULLY!',
+      successDesc:'Thank you for choosing Structalab. Your custom project brief has been registered. Our lead architects and project estimators are reviewing your details. We will be in touch shortly.',
+      close:'CLOSE',
+    },
+  },
+};
+
+const PILLARS = {
+  es: [
+    { id:'casas', title:'CASAS', description:'Construcción de casas personalizadas con atención a cada detalle.',
+      detailsHeader:'Construcción De Residencias De Alta Gama',
+      detailsText:'Elaboramos obras arquitectónicas residenciales de primer nivel, adaptadas por completo a tu vida. Diseñamos casas que fusionan durabilidad, iluminación natural, y la elegancia del sistema constructivo de marcos de madera (Timber Framing).',
+      keyFeatures:[
+        'Cimentaciones y estructuras reforzadas contra inclemencias climáticas',
+        'Fusión de estilos rústico-contemporáneos de alta especificación',
+        'Espacios funcionales inteligentes y eficiencia energética pasiva',
+        'Administración integral de permisos y aprobaciones en Ohio' ] },
+    { id:'remodelaciones', title:'REMODELACIONES', description:'Renovamos y transformamos tus espacios con calidad y experiencia.',
+      detailsHeader:'Transformación Elegante De Interiores y Exteriores',
+      detailsText:'Evolucionamos la habitabilidad de tu cocina, sala, terraza o loft completo. Integramos soluciones sofisticadas restaurando elementos clásicos o incorporando toques modernos de carpintería fina que aumentan significativamente la cotización de tu hogar.',
+      keyFeatures:[
+        'Remodelaciones completas de cocinas gourmet y baños tipo spa',
+        'Ampliado estructural con vigas de soporte pesadas expuestas',
+        'Selección fina de maderas duras y acabados duraderos contra rayaduras',
+        'Mínimo impacto operacional en tu rutina diaria durante la obra' ] },
+    { id:'estructuras', title:'ESTRUCTURAS', description:'Construimos estructuras para eventos y proyectos especiales.',
+      detailsHeader:'Estructuras de Ingeniería en Madera y Timber Framing',
+      detailsText:'Creamos pabellones, gazebos, terrazas abiertas, pérgolas pesadas y estructuras efímeras para eventos corporativos o enlaces matrimoniales. Creamos hitos visuales donde la madera es protagonista absoluta.',
+      keyFeatures:[
+        'Sistemas tradicionales de ensamble de espiga y mortaja (Timber Framing)',
+        'Estructuras desmontables de alta resistencia y rápida erección',
+        'Instalación impecable de luces vintage aéreas y cableado embutido',
+        'Cálculos mecánicos estructurales aprobados para cargas de viento o nieve' ] },
+    { id:'gestion', title:'GESTIÓN DE PROYECTOS', description:'Planificación, logística y ejecución eficiente de principio a fin.',
+      detailsHeader:'Coordinación Logística y Transparencia Financiera',
+      detailsText:'Reducimos el estrés del proceso de construcción mediante una gestión rigurosa de proveedores, cronogramas milimétricos de ejecución, y un sistema de control financiero abierto para vigilar cada dólar invertido.',
+      keyFeatures:[
+        'Estimaciones y cotizaciones desglosadas por partidas de material',
+        'Supervisión y control de sub-vías diario por directores experimentados',
+        'Plataforma digital para monitorear el avance con fotos semanales',
+        'Auditoría constante de cumplimiento de seguridad OSHA' ] },
+  ],
+  en: [
+    { id:'casas', title:'HOMES', description:'Construction of ultra-custom signature homes, looking closely at every joint.',
+      detailsHeader:'High-End Custom Residences',
+      detailsText:'We craft high-end architectural residential masterpieces tailored completely to your lifestyle. We design timber-framed cabins and luxury modern houses that fuse severe structural durability, natural light, and modern lines.',
+      keyFeatures:[
+        'Heavy-duty foundations and storm-resilient timber structures',
+        'Sophisticated fusion of rustic warmth and contemporary minimalism',
+        'Passive heating/cooling optimization and smart home automation',
+        'Turnkey permitting and regulatory clearance in the Ohio area' ] },
+    { id:'remodelaciones', title:'RENOVATIONS', description:'We renew and transform your layout spaces with deep field expertise.',
+      detailsHeader:'Elegant Interior & Exterior Upgrades',
+      detailsText:'We elevate your gourmet kitchens, high-ceiling master lounges, timber decks, or absolute structural lofts. We integrate bespoke wooden joinery, stone surfaces, and premium lighting to breathe rich soul into existing architectural spaces.',
+      keyFeatures:[
+        'Full-scale gourmet kitchens and luxury spa-style bathrooms',
+        'Open-concept transformations with exposed load-bearing timber beams',
+        'Premium hardwood material sourcing, custom stains, and heavy sealers',
+        'Strict cleanliness guidelines to preserve peace of mind during construction' ] },
+    { id:'estructuras', title:'TIMBER STRUCTURES', description:'We construct pavilions and custom framework for special events and installations.',
+      detailsHeader:'Heavy-Timber Architectural Formwork',
+      detailsText:'We design and construct gorgeous pavilions, premium outdoor dining pergolas, heavy timber gazebos, and temporal spatial installations for prestigious corporate retreats or scenic family events.',
+      keyFeatures:[
+        'Traditional mortise and tenon joinery with exposed oak pegs',
+        'Fast-mounting modular frameworks with high visual presence',
+        'Discrete pathways for ambient warm festoon light paths and power',
+        'Full-level engineering diagnostics for local wind speed and heavy snowloads' ] },
+    { id:'gestion', title:'PROJECT MANAGEMENT', description:'Meticulous planning, clear supply logistics, and on-time execution.',
+      detailsHeader:'Integrated Sourcing & Real-time Client Reporting',
+      detailsText:'We completely de-risk your construction layout. Through our rigid logistics planning, we sync custom lumber orders, trade workers, inspections, and financial statements so you have zero surprises.',
+      keyFeatures:[
+        'Highly direct, line-by-line itemized estimates with no hidden margins',
+        'Daily oversight by experienced structural supervisors on site',
+        'Digital client portal with automated high-res progress galleries',
+        'Strict adherence to OSHA building protocols and local codes' ] },
+  ],
+};
+
+const PROJECTS = {
+  es: [
+    { id:'casa-new-albany', title:'CASA MODERNA', subtitle:'NEW ALBANY', category:'Construcción Residencial', location:'New Albany, Ohio',
+      image:'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=800',
+      description:'Construcción de casa personalizada',
+      fullDescription:'Un espectacular proyecto residencial de nueva planta que combina un diseño contemporáneo escandinavo con estructuras masivas de madera de roble expuestas. El hogar destaca por sus enormes ventanales orientados al sur, capturando la luz del bosque y optimizando el consumo energético mediante calefacción geotérmica.',
+      details:{ client:'Familia Miller-Reed', area:'412 m²', year:'2025', duration:'11 Meses',
+        materials:['Madera de Roble Blanco','Acero Corten','Vidrio Triple Panel','Piedra de Cantera Local'] },
+      highlights:[
+        'Vigas macizas ensambladas sin herrajes metálicos visibles',
+        'Un sistema de aislamiento térmico de última generación (SIPs)',
+        'Amplio salón de doble altura con chimenea central flotante',
+        'Certificación energética A+ de alta eficiencia' ] },
+    { id:'remodelacion-clintonville', title:'REMODELACIÓN', subtitle:'CLINTONVILLE', category:'Remodelación de Interiores', location:'Clintonville, Columbus, OH',
+      image:'https://images.unsplash.com/photo-1556911220-e15b29be8c8f?q=80&w=800',
+      description:'Remodelación completa de cocina y sala',
+      fullDescription:'La renovación completa de una casa de mediados de siglo en Clintonville, convirtiendo estancias oscuras y segmentadas en un espacio diáfano único. Diseñamos e instalamos gabinetes personalizados a techo, una isla de cocina de 3.5 metros con encimera de madera recuperada, y restauramos el piso original de roble rojo americano.',
+      details:{ client:'Dra. Elena Santos y Dr. James Cole', area:'85 m²', year:'2025', duration:'7 Semanas',
+        materials:['Pino de Corazón Recuperado','Granito Cuarcita','Grifería de Latón Cepillado','Azulejo Zellige'] },
+      highlights:[
+        'Estructuración abierta eliminando muros de carga divisorios',
+        'Muebles de cocina construidos íntegramente a mano en nuestro taller',
+        'Área integrada de desayuno y rincón de lectura soleado',
+        'Restauración de acabados históricos integrando luces LED ocultas' ] },
+    { id:'estructura-dublin', title:'ESTRUCTURA PARA EVENTO', subtitle:'DUBLIN', category:'Estructuras Especiales', location:'Dublin, Ohio',
+      image:'https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=800',
+      description:'Estructura temporal para evento corporativo',
+      fullDescription:'Construcción y montaje express de un espectacular pabellón de madera con un diseño geométrico de vanguardia para un retiro institucional de primer nivel. El gran reto consistió en realizar la cimentación hincada temporal respetando intacto el pasto del parque circundante, levantando 12 macro-marcos autoportantes en solo 3 días.',
+      details:{ client:'Dublin Innovative Park', area:'260 m²', year:'2024', duration:'72 Horas (Montaje)',
+        materials:['Vigas Laminadas de Abeto','Uniones Metálicas de Alta Resistencia','Lona Impermeable Tensada','Luces Vintage de Filamento'] },
+      highlights:[
+        'Desmontable en su totalidad con cero impacto final en el terreno habitable',
+        'Resistencia a ráfagas de viento continuadas de hasta 85 km/h',
+        'Espacio completamente despejado sin columnas interiores obstructivas',
+        'Vigas modulares reutilizables para próximos retiros institucionales' ] },
+    { id:'remodelacion-german-village', title:'REMODELACIÓN', subtitle:'GERMAN VILLAGE', category:'Restauración Histórica', location:'German Village, Columbus, OH',
+      image:'https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?q=80&w=800',
+      description:'Renovación de interiores y ampliación',
+      fullDescription:'Un impresionante proyecto de restauración interior de una cabaña unifamiliar protegida del siglo XIX. Respetando fielmente las normativas del distrito histórico, reforzamos los cimientos originales de ladrillo, levantamos un entrepiso de madera rústica expuesta para albergar una biblioteca abuhardillada, y modernizamos los sistemas eléctricos con total sutileza.',
+      details:{ client:'Marcus & Sophia Moretti', area:'145 m²', year:'2024', duration:'4 Meses',
+        materials:['Ladrillo Original Restaurado','Piso de Madera Flotante de Roble','Perfiles Metálicos Negros Pavonados','Mortero de Cal Transpirable'] },
+      highlights:[
+        'Entrepiso suspendido sobre tensores internos de acero para no sobrecargar los muros',
+        'Consolidación de las cerchas de madera originales cepilladas y tratadas',
+        'Hermosas escaleras artesanales helicoidales que ocupan mínimo espacio',
+        'Climatización silenciosa de confort invisible por suelo radiante' ] },
+  ],
+  en: [
+    { id:'casa-new-albany', title:'MODERN RESIDENZ', subtitle:'NEW ALBANY', category:'Custom Home Build', location:'New Albany, Ohio',
+      image:'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=800',
+      description:'State-of-the-Art forest custom home',
+      fullDescription:'A spectacular newly-built residential project pairing contemporary Scandinavian restraint with massive, beautiful timber logs. The house features grand south-facing floor-to-ceiling glass fronts, bathing the double-height great room in natural forest light and optimizing solar gains via passive geotermal floors.',
+      details:{ client:'The Miller-Reed Family', area:'4,435 sq ft', year:'2025', duration:'11 Months',
+        materials:['White Oak Timber','Corten Accented Steel','Triple-Pane Solar Glass','Ohio Quarry Ledgerock'] },
+      highlights:[
+        'Massive hand-crafted timber joints with no visible hardware plates',
+        'Top-grade structural insulated panels (SIPs) for thermal efficiency',
+        'Double-height fireplace hearth finished with hand-carved local limestone',
+        'Platinum rated passive solar energy standards' ] },
+    { id:'remodelacion-clintonville', title:'KITCHEN REMODEL', subtitle:'CLINTONVILLE', category:'Interior Renovation', location:'Clintonville, Columbus, OH',
+      image:'https://images.unsplash.com/photo-1556911220-e15b29be8c8f?q=80&w=800',
+      description:'Complete open kitchen & lounge transformation',
+      fullDescription:'A comprehensive, layout-reversing interior remodel of a historic Clintonville bungalow, converting compartmentalized rooms into a flowing, warm living environment. We crafted custom floor-to-ceiling Shaker storage, mounted a 12ft central island capped in reclaimed dark heartwood, and revived the home’s original red oak wood planks.',
+      details:{ client:'Dr. Elena Santos & Dr. James Cole', area:'915 sq ft', year:'2025', duration:'7 Weeks',
+        materials:['Reclaimed Heart Pine Wood','Quartzite Counters','Satin Brushed Brass Hardware','Handmade Zellige Tile'] },
+      highlights:[
+        'Load-bearing wall removal replaced with robust exposed support beams',
+        'Bespoke cabinetry constructed by hand inside our local shop',
+        'Custom built-in sunny breakfast reading bench corner',
+        'Integrated subtle architectural task LED channels' ] },
+    { id:'estructura-dublin', title:'EVENT PAVILION', subtitle:'DUBLIN', category:'Heavy Timber Framing', location:'Dublin, Ohio',
+      image:'https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=800',
+      description:'Aesthetic temporal corporate dome',
+      fullDescription:'Design and express onsite assembly of an avant-garde timber lattice dome for an executive retreats summit. The main challenge was grounding the temporary foundations safely while ensuring zero landscape impact to the host lawn, raising 12 modular timber columns over a 3-day window.',
+      details:{ client:'Dublin Innovative Park', area:'2,800 sq ft', year:'2024', duration:'72 Hours (Assembly)',
+        materials:['Glu-lam Spruce Timber','High-tensile Modular Anchors','Translucent Tensile Cover','Edison Filament Lamps'] },
+      highlights:[
+        'Completely reversible layout yielding zero environmental print in the park',
+        'Engineered to withstand sustained wind shears of up to 53 mph',
+        'Completely open interior with state-of-the-art span structures',
+        'Pre-bored timber beams optimized for future event configurations' ] },
+    { id:'remodelacion-german-village', title:'GERMAN VILLAGE', subtitle:'CIVIC RENEWAL', category:'Historic Restoration', location:'German Village, Columbus, OH',
+      image:'https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?q=80&w=800',
+      description:'Attic conversion & internal structural consolidation',
+      fullDescription:'A stunning nineteenth-century German Village residential restoration. Working strictly in tandem with historic preservation board regulations, we reinforced the crumbling brick footings, raised a raw oak-beamed loft mezzanine to hide a reading library, and updated the old home’s cabling with quiet, state-of-the-art climate lines.',
+      details:{ client:'Marcus & Sophia Moretti', area:'1,560 sq ft', year:'2024', duration:'4 Months',
+        materials:['Sanded Clean Original Brickwork','Solid Oak Floor Planks','Industrial Hot-Rolled Steel Treads','Breathable Lime Mortar'] },
+      highlights:[
+        'Suspended mezzanine supported by hidden steel tiebacks to protect old load-bearing brick',
+        'Original heavy timber framing wood was cleaned, reinforced, and oiled on-site',
+        'Industrial custom spiral staircase with custom hand-carved wood rail',
+        'Whisper-quiet floor heating integration' ] },
+  ],
+};
+
+/* pillar line-art icons */
+const PILLAR_ICONS = {
+  casas: '<svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M6 38 V22 L24 8 L42 22 V38 Z"/><path d="M32 14 V10 H36 V17"/><path d="M20 38 V28 H28 V38"/><circle cx="24" cy="18" r="3"/></svg>',
+  remodelaciones: '<svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M12 36 L28 20"/><path d="M25 17 L30 12 L36 18 L31 23 Z" stroke-width="1.5"/><path d="M33 11 C35 7 39 8 40 10 L41 12 C42 14 41 18 37 20 Z"/><path d="M8 40 L40 8" stroke-dasharray="2,2" stroke-width="1" opacity=".55"/><path d="M14 34 L12 32"/><path d="M20 28 L18 26"/><path d="M26 22 L24 20"/></svg>',
+  estructuras: '<svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.2"><line x1="8" y1="40" x2="40" y2="40" stroke-width="1.5"/><line x1="16" y1="40" x2="16" y2="16"/><line x1="32" y1="40" x2="32" y2="16"/><line x1="10" y1="16" x2="38" y2="16" stroke-width="1.5"/><line x1="16" y1="26" x2="22" y2="16"/><line x1="32" y1="26" x2="26" y2="16"/><path d="M16 16 L24 6 L32 16"/><line x1="24" y1="6" x2="24" y2="16"/></svg>',
+  gestion: '<svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M8 28 C8 15 15 10 24 10 C33 10 40 15 40 28 Z" stroke-width="1.5"/><path d="M6 28 H42 C44 28 44 32 40 32 H8 C4 32 4 28 6 28 Z"/><path d="M24 10 V18" stroke-width="1.5"/><path d="M18 12 C18 12 19 16 19 19"/><path d="M30 12 C30 12 29 16 29 19"/></svg>',
+};
+
+const ARROW_SVG = '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>';
+const CHECK_SVG = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>';
+const PIN_SVG = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"/><circle cx="12" cy="10" r="3"/></svg>';
+const LAYERS_SVG = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.83l8.58 3.91a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.83z"/><path d="m22 17.65-9.17 4.16a2 2 0 0 1-1.66 0L2 17.65"/><path d="m22 12.65-9.17 4.16a2 2 0 0 1-1.66 0L2 12.65"/></svg>';
+
+/* ════════════════════════════════════════════
+   STATE & HELPERS
+════════════════════════════════════════════ */
+let lang = 'es';
+const $ = (s, c) => (c || document).querySelector(s);
+const $$ = (s, c) => Array.from((c || document).querySelectorAll(s));
+const t = (path) => path.split('.').reduce((o, k) => (o ? o[k] : ''), TEXTS[lang]);
+
+function esc(s) { return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+
+/* ════════════════════════════════════════════
+   I18N APPLY + DYNAMIC RENDER
+════════════════════════════════════════════ */
+function applyLang() {
+  document.documentElement.lang = lang;
+  $$('[data-i18n]').forEach(el => { el.textContent = t(el.dataset.i18n); });
+  $$('.lang-label').forEach(el => { el.textContent = lang === 'es' ? 'EN' : 'ES'; });
+
+  // hero serif line (lowercase serif italic)
+  $('#heroSerifLine').textContent = lang === 'es' ? 'diseñamos' : 'we design';
+
+  // about title with <br> breaks
+  $('#aboutTitle').innerHTML = t('about.title').split('. ').map((s, i, a) => esc(i < a.length - 1 ? s + '.' : s)).join('<br>');
+
+  // about badges
+  $('#badge1').textContent = lang === 'es' ? 'GARANTÍA' : 'WARRANTY';
+  $('#badge2').textContent = lang === 'es' ? 'PRESTIGIO' : 'PRESTIGE';
+  $('#badge3').textContent = lang === 'es' ? 'SOPORTE' : 'LOCAL HUB';
+
+  // stats split labels
+  $('#statTeamBig').textContent = lang === 'es' ? 'EQUIPO' : 'EXPERT';
+  $('#statTeamSml').textContent = lang === 'es' ? 'CAPACITADO' : 'CRAFT TEAM';
+  $('#statQualBig').textContent = lang === 'es' ? 'CALIDAD EN' : 'QUALITY IN';
+  $('#statQualSml').textContent = lang === 'es' ? 'CADA DETALLE' : 'EVERY JOINT';
+
+  // form placeholders + select options
+  const m = TEXTS[lang].modal;
+  const f = $('#quoteForm');
+  f.elements.name.placeholder = lang === 'es' ? 'p. ej. Carlos Lozano' : 'e.g. Carlos Lozano';
+  f.elements.email.placeholder = lang === 'es' ? 'carlos@ejemplo.com' : 'carlos@example.com';
+  f.elements.budget.placeholder = lang === 'es' ? 'p. ej. $150,000 - $250,000' : 'e.g. $150,000 - $250,000';
+  f.elements.timeline.placeholder = lang === 'es' ? 'p. ej. Próximos 3 meses' : 'e.g. Next 3 months';
+  f.elements.description.placeholder = m.descriptionPlaceholder;
+  $('#btnSubmitLabel').textContent = m.submit;
+
+  const pTypes = lang === 'es'
+    ? ['Casa Personalizada','Remodelación de Cocina/Sala','Estructura de Madera (Timber Frame)','Pérgola o Terraza','Consulta de Diseño','Otro']
+    : ['Custom Signature House','Kitchen or Lounge Renovation','Timber Framing Structure','Outdoor Wood Pergola','Design Consultation','Other'];
+  const sel = $('#projectTypeSelect');
+  const current = sel.value;
+  sel.innerHTML = '<option value="">' + esc(m.typePlaceholder) + '</option>' +
+    pTypes.map(p => '<option value="' + esc(p) + '">' + esc(p) + '</option>').join('');
+  sel.value = current;
+
+  // footer link columns
+  const navItems = [
+    ['#inicio', lang === 'es' ? 'Inicio' : 'Home'],
+    ['#sobre-nosotros', lang === 'es' ? 'Sobre nosotros' : 'About us'],
+    ['#servicios', lang === 'es' ? 'Servicios' : 'Services'],
+    ['#proyectos', lang === 'es' ? 'Proyectos' : 'Projects'],
+  ];
+  $('#footNav').innerHTML = navItems.map(([h, l]) =>
+    '<li><a href="' + h + '" class="nav-link">' + esc(l) + '</a></li>').join('');
+
+  const svcItems = lang === 'es'
+    ? ['Casas a medida','Remodelaciones','Estructuras de madera','Gestión integral']
+    : ['Signature homes','Renovations','Timber structures','Project logistics'];
+  $('#footSvc').innerHTML = svcItems.map(l =>
+    '<li><a href="#servicios" class="nav-link">' + esc(l) + '</a></li>').join('');
+
+  // drawer footer
+  $('#drawerHeadLbl').textContent = lang === 'es' ? 'ESPECIFICACIONES DE SERVICIOS' : 'SERVICE SPECIFICATIONS';
+  $('#drawerFootText').textContent = lang === 'es'
+    ? 'Comienza a transformar tu visión con el equipo de ingenieros de Structalab.'
+    : 'Commence transforming your vision with the master builders at Structalab.';
+  $('#drawerQuoteBtn').textContent = lang === 'es' ? 'COTIZAR CONSULTA GRATUITA' : 'BOOK CO-DESIGN FORUM';
+
+  renderPillars();
+  renderProjects();
+  bindNavLinks();
+}
+
+function renderPillars() {
+  $('#pillarsGrid').innerHTML = PILLARS[lang].map(p => `
+    <div class="pillar reveal in" data-pillar="${p.id}">
+      <div class="ico-wrap">${PILLAR_ICONS[p.id]}</div>
+      <h3>${esc(p.title)}</h3>
+      <p>${esc(p.description)}</p>
+      <div class="more"><span>${esc(t('pillars.verMas'))}</span>${ARROW_SVG}</div>
+    </div>`).join('');
+  $$('#pillarsGrid .pillar').forEach(el =>
+    el.addEventListener('click', () => openDrawer(el.dataset.pillar)));
+}
+
+function renderProjects() {
+  $('#projGrid').innerHTML = PROJECTS[lang].map(p => `
+    <div class="proj-card reveal in" data-project="${p.id}">
+      <div class="frame">
+        <img src="${p.image}" alt="${esc(p.title)}" referrerpolicy="no-referrer">
+        <div class="hover-shade"></div>
+        <span class="cat">${esc(p.category)}</span>
+        ${p.details.year ? '<span class="year">EST. ' + esc(p.details.year) + '</span>' : ''}
+      </div>
+      <div class="meta">
+        <div>
+          <h3>${esc(p.title)} &ndash; ${esc(p.subtitle)}</h3>
+          <p class="desc">${esc(p.description)}</p>
+        </div>
+        <div class="view"><span>${esc(t('projects.verProyecto'))}</span>${ARROW_SVG}</div>
+      </div>
+    </div>`).join('');
+  $$('#projGrid .proj-card').forEach(el =>
+    el.addEventListener('click', () => openLightbox(el.dataset.project)));
+}
+
+/* ════════════════════════════════════════════
+   NAV / HEADER BEHAVIOR
+════════════════════════════════════════════ */
+function bindNavLinks() {
+  $$('.nav-link').forEach(a => {
+    a.onclick = (e) => {
+      const href = a.getAttribute('href');
+      if (href && href.startsWith('#')) {
+        e.preventDefault();
+        closeMobile();
+        const el = $(href);
+        if (el) el.scrollIntoView({ behavior: 'smooth' });
+      }
+    };
+  });
+}
+
+const header = $('#siteHeader');
+window.addEventListener('scroll', () => {
+  header.classList.toggle('scrolled', window.scrollY > 50);
+
+  // active section highlight
+  const sections = ['inicio','sobre-nosotros','servicios','proyectos','contacto'];
+  const pos = window.scrollY + 160;
+  for (const id of sections) {
+    const el = document.getElementById(id);
+    if (el && pos >= el.offsetTop && pos < el.offsetTop + el.offsetHeight) {
+      $$('#deskNav a').forEach(a => a.classList.toggle('active', a.dataset.section === id));
+      break;
+    }
+  }
+});
+
+/* mobile menu */
+const mobileDrawer = $('#mobileDrawer');
+let mobileOpen = false;
+function closeMobile() {
+  mobileOpen = false;
+  mobileDrawer.classList.remove('open');
+  $('#burgerOpen').style.display = '';
+  $('#burgerClose').style.display = 'none';
+}
+$('#burger').addEventListener('click', () => {
+  mobileOpen = !mobileOpen;
+  mobileDrawer.classList.toggle('open', mobileOpen);
+  $('#burgerOpen').style.display = mobileOpen ? 'none' : '';
+  $('#burgerClose').style.display = mobileOpen ? '' : 'none';
+});
+
+/* language toggles */
+$$('[data-lang-toggle]').forEach(b => b.addEventListener('click', () => {
+  lang = lang === 'es' ? 'en' : 'es';
+  applyLang();
+}));
+
+/* scroll buttons */
+$$('[data-scroll]').forEach(b => b.addEventListener('click', () => {
+  const el = $(b.dataset.scroll);
+  if (el) el.scrollIntoView({ behavior: 'smooth' });
+}));
+$('#btnTop').addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+/* toast */
+let toastTimer = null;
+function showToast(msg) {
+  $('#toastMsg').textContent = msg;
+  $('#toast').classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => $('#toast').classList.remove('show'), 4000);
+}
+$('#btnAllProjects').addEventListener('click', () => {
+  showToast(lang === 'es'
+    ? '¡Estás visualizando nuestro catálogo destacado completo! Haz clic en cualquier proyecto para explorar especificaciones técnicas.'
+    : 'You are currently viewing our complete premium catalog. Select any project card to review technical specifications!');
+});
+
+/* ════════════════════════════════════════════
+   QUOTE MODAL
+════════════════════════════════════════════ */
+const quoteModal = $('#quoteModal');
+function openQuote() {
+  $('#quoteForm').style.display = '';
+  $('#qmSuccess').classList.remove('show');
+  quoteModal.classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeQuote() {
+  quoteModal.classList.remove('open');
+  document.body.style.overflow = '';
+}
+$$('[data-open-quote]').forEach(b => b.addEventListener('click', () => { closeMobile(); openQuote(); }));
+$$('[data-close-quote]').forEach(b => b.addEventListener('click', closeQuote));
+
+$('#quoteForm').addEventListener('submit', (e) => {
+  e.preventDefault();
+  const f = e.target;
+  const err = $('#formErr');
+  if (!f.elements.name.value || !f.elements.email.value || !f.elements.description.value) {
+    $('#formErrMsg').textContent = lang === 'es'
+      ? 'Por favor completa los campos principales (Nombre, Email, Descripción)'
+      : 'Please fill in key details (Name, Email, Description)';
+    err.classList.add('show');
+    return;
+  }
+  err.classList.remove('show');
+  const btn = $('#btnSubmit');
+  btn.disabled = true;
+  $('#btnSubmitLabel').textContent = TEXTS[lang].modal.sending;
+  setTimeout(() => {
+    btn.disabled = false;
+    $('#btnSubmitLabel').textContent = TEXTS[lang].modal.submit;
+    f.style.display = 'none';
+    $('#refNumber').textContent = 'SL-' + Math.floor(100000 + Math.random() * 900000);
+    $('#qmSuccess').classList.add('show');
+  }, 1200);
+});
+$('#btnSuccessClose').addEventListener('click', () => {
+  $('#quoteForm').reset();
+  closeQuote();
+});
+
+/* ════════════════════════════════════════════
+   PROJECT LIGHTBOX
+════════════════════════════════════════════ */
+const lightbox = $('#lightbox');
+function openLightbox(id) {
+  const p = PROJECTS[lang].find(x => x.id === id);
+  if (!p) return;
+  const tr = TEXTS[lang].projects;
+  const specs = [
+    p.details.client && ['' + tr.client, p.details.client],
+    p.details.area && [tr.area, p.details.area],
+    p.details.year && [tr.year, p.details.year],
+    p.details.duration && [tr.duration, p.details.duration],
+  ].filter(Boolean);
+
+  $('#lbContent').innerHTML = `
+    <div class="lb-grid">
+      <div class="lb-photo">
+        <img src="${p.image}" alt="${esc(p.title)}" referrerpolicy="no-referrer">
+        <div class="fade-b"></div><div class="fade-r"></div>
+      </div>
+      <div class="lb-body">
+        <div>
+          <span class="lb-cat">${esc(p.category)}</span>
+          <h2>${esc(p.title)} &ndash; ${esc(p.subtitle)}</h2>
+          <div class="lb-loc">${PIN_SVG}<span>${esc(p.location)}</span></div>
+        </div>
+        <p class="lb-desc">${esc(p.fullDescription)}</p>
+        <div class="lb-sect">
+          <span class="lb-sect-lbl">${LAYERS_SVG}<span>${esc(tr.materials)}</span></span>
+          <div class="lb-chips">${(p.details.materials || []).map(m => '<span>' + esc(m) + '</span>').join('')}</div>
+        </div>
+        <div class="lb-sect">
+          <div class="lb-specs">
+            ${specs.map(([k, v]) => '<div class="lb-spec"><span class="k">' + esc(k) + '</span><span class="v">' + esc(v) + '</span></div>').join('')}
+          </div>
+        </div>
+      </div>
+    </div>
+    ${p.highlights && p.highlights.length ? `
+    <div class="lb-highlights">
+      <span class="hl-lbl">${esc(tr.highlightsLabel)}</span>
+      <div class="lb-hl-grid">
+        ${p.highlights.map(h => '<div class="lb-hl"><div class="chk">' + CHECK_SVG + '</div><span>' + esc(h) + '</span></div>').join('')}
+      </div>
+    </div>` : ''}`;
+
+  lightbox.classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeLightbox() {
+  lightbox.classList.remove('open');
+  document.body.style.overflow = '';
+}
+$$('[data-close-lightbox]').forEach(b => b.addEventListener('click', closeLightbox));
+
+/* ════════════════════════════════════════════
+   PILLAR DRAWER
+════════════════════════════════════════════ */
+const drawer = $('#drawer');
+function openDrawer(id) {
+  const p = PILLARS[lang].find(x => x.id === id);
+  if (!p) return;
+  const featLbl = lang === 'es' ? 'Protocolo y Características Clave' : 'Protocol & Key Capabilities';
+  $('#drawerBody').innerHTML = `
+    <div>
+      <div class="drawer-ico">${PILLAR_ICONS[p.id].replace('currentColor', 'currentColor')}</div>
+      <h2>${esc(p.detailsHeader)}</h2>
+    </div>
+    <p class="drawer-text">${esc(p.detailsText)}</p>
+    <div class="drawer-feats">
+      <span class="lbl">${esc(featLbl)}</span>
+      ${p.keyFeatures.map(f => '<div class="drawer-feat"><div class="chk">' + CHECK_SVG + '</div><span>' + esc(f) + '</span></div>').join('')}
+    </div>`;
+  // tint drawer icon teal
+  $('#drawerBody .drawer-ico svg').style.color = 'var(--gold)';
+  drawer.classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeDrawer() {
+  drawer.classList.remove('open');
+  document.body.style.overflow = '';
+}
+$$('[data-close-drawer]').forEach(b => b.addEventListener('click', closeDrawer));
+$('#drawerQuoteBtn').addEventListener('click', () => { closeDrawer(); openQuote(); });
+
+/* escape key closes everything */
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') { closeQuote(); closeLightbox(); closeDrawer(); closeMobile(); }
+});
+
+/* ════════════════════════════════════════════
+   REVEAL-ON-SCROLL
+════════════════════════════════════════════ */
+const io = new IntersectionObserver((entries) => {
+  entries.forEach(en => { if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); } });
+}, { rootMargin: '-50px' });
+$$('.reveal').forEach(el => io.observe(el));
+
+/* ════════════════════════════════════════════
+   INIT
+════════════════════════════════════════════ */
+applyLang();
+</script>
+</body>
+</html>

@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tefco — Sample 1 Mockup</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg:        #e8e6e1;   /* warm light gray page background */
+      --ink:       #181816;   /* near-black text */
+      --muted:     #76756f;   /* gray text */
+      --orange:    #ed6c2b;   /* accent */
+      --panel:     #1d1d1b;   /* dark panels / chips */
+      --panel-2:   #292926;   /* chip on dark panel */
+      --card:      #f6f5f2;   /* white-ish cards */
+      --hairline:  #d4d2cc;
+      --font: 'Inter', -apple-system, sans-serif;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: var(--font); background: var(--bg); color: var(--ink); line-height: 1.5; font-size: 14px; -webkit-font-smoothing: antialiased; }
+    img { max-width: 100%; display: block; }
+    a { color: inherit; text-decoration: none; }
+    .shell { max-width: 1320px; margin: 0 auto; padding: 0 20px; }
+
+    /* ── TOP BAR ── */
+    .topbar {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 10px 24px; border-bottom: 1px solid var(--hairline);
+      font-size: 9px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; color: var(--muted);
+    }
+
+    /* ── NAV ── */
+    .nav {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 18px 24px;
+    }
+    .brand { line-height: 1.1; }
+    .brand .name { font-size: 15px; font-weight: 800; letter-spacing: 1px; text-transform: uppercase; }
+    .brand .sub { font-size: 9px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--muted); margin-top: 2px; }
+    .nav-links { display: flex; gap: 34px; list-style: none; }
+    .nav-links a { font-size: 10px; font-weight: 600; letter-spacing: 1.8px; text-transform: uppercase; color: var(--ink); }
+    .nav-links a:hover { color: var(--orange); }
+    .burger { display: flex; flex-direction: column; gap: 4px; cursor: pointer; padding: 4px; }
+    .burger span { width: 22px; height: 1.5px; background: var(--ink); display: block; }
+
+    /* ── HERO ── */
+    .hero { position: relative; padding: 8px 24px 28px; }
+    .hero-photo {
+      position: absolute; top: 0; right: 24px; width: 54%; height: 96%;
+      border-radius: 20px 20px 20px 72px; overflow: hidden; z-index: 1;
+    }
+    .hero-photo img { width: 100%; height: 100%; object-fit: cover; }
+    .hero-photo .strip {
+      position: absolute; left: 50%; transform: translateX(-50%); bottom: 18px;
+      white-space: nowrap;
+      background: rgba(30,30,28,.42); backdrop-filter: blur(6px);
+      border: 1px solid rgba(255,255,255,.25); border-radius: 100px;
+      color: rgba(255,255,255,.92); font-size: 10px; letter-spacing: 1px; text-transform: uppercase;
+      padding: 9px 22px;
+    }
+    .hero-circle {
+      position: absolute; top: 26px; right: 30px; z-index: 3;
+      width: 92px; height: 92px; border-radius: 50%;
+      border: 1px solid rgba(255,255,255,.65);
+      color: white; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px;
+      font-size: 8.5px; font-weight: 600; letter-spacing: 1.6px; text-transform: uppercase; text-align: center;
+      background: rgba(30,30,28,.18); backdrop-filter: blur(4px);
+    }
+    .hero-circle .arr { font-size: 16px; }
+    .hero h1 {
+      position: relative; z-index: 2;
+      font-size: clamp(80px, 15.5vw, 215px);
+      font-weight: 700; line-height: .92; letter-spacing: -0.045em;
+      text-transform: uppercase; color: var(--ink);
+    }
+    .hero-row2 { position: relative; z-index: 2; display: flex; align-items: baseline; gap: 18px; margin-top: -6px; }
+    .hero-row2 .word {
+      color: var(--orange); font-size: clamp(44px, 7.5vw, 104px);
+      font-weight: 600; letter-spacing: -0.03em; line-height: 1;
+    }
+    .hero-row2 .since { font-size: 11px; color: var(--muted); letter-spacing: 1px; text-transform: uppercase; }
+    .hero-sub { max-width: 300px; margin-top: 28px; font-size: 13.5px; line-height: 1.55; color: var(--ink); position: relative; z-index: 2; }
+    .hero-chips { display: flex; gap: 10px; margin-top: 30px; position: relative; z-index: 2; }
+    .chip {
+      background: var(--panel); color: white; border-radius: 14px; padding: 16px 18px; min-width: 108px;
+    }
+    .chip .n { font-size: 22px; font-weight: 700; line-height: 1; }
+    .chip .l { font-size: 9.5px; color: rgba(255,255,255,.55); margin-top: 7px; line-height: 1.45; }
+
+    /* ── FULL PHOTO BAND ── */
+    .band { padding: 10px 24px; }
+    .band-inner { position: relative; border-radius: 20px; overflow: hidden; height: 330px; }
+    .band-inner img { width: 100%; height: 100%; object-fit: cover; }
+    .band-inner .tag {
+      position: absolute; top: 18px; left: 18px;
+      background: rgba(30,30,28,.4); backdrop-filter: blur(6px);
+      border: 1px solid rgba(255,255,255,.25); border-radius: 100px;
+      color: rgba(255,255,255,.95); font-size: 10px; letter-spacing: .8px;
+      padding: 9px 20px; display: flex; align-items: center; gap: 8px;
+    }
+
+    /* ── ABOUT CARD ── */
+    .about { padding: 10px 24px; }
+    .about-inner { background: var(--card); border-radius: 24px; padding: clamp(28px, 4vw, 56px); }
+    .label { font-size: 9px; font-weight: 700; letter-spacing: 2.2px; text-transform: uppercase; color: var(--muted); margin-bottom: 26px; }
+    .about-grid { display: grid; grid-template-columns: 1.15fr 1fr; gap: 56px; align-items: start; }
+    .about-grid h2 { font-size: clamp(26px, 3.2vw, 40px); font-weight: 700; letter-spacing: -0.02em; line-height: 1.15; }
+    .about-grid h2 .o { color: var(--orange); }
+    .about-right { position: relative; padding-right: 80px; }
+    .about-right p { font-size: 12.5px; line-height: 1.7; color: var(--muted); max-width: 330px; }
+    .about-right .deco { position: absolute; right: 0; top: -10px; opacity: .5; }
+    .about-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; margin-top: 44px; }
+    .acard h3 { font-size: 16.5px; font-weight: 600; letter-spacing: -0.01em; }
+    .acard .d { font-size: 11px; color: var(--muted); margin-top: 6px; min-height: 32px; line-height: 1.5; }
+    .acard .ph { position: relative; margin-top: 14px; border-radius: 16px; overflow: hidden; height: 210px; }
+    .acard .ph img { width: 100%; height: 100%; object-fit: cover; transition: transform .4s; }
+    .acard:hover .ph img { transform: scale(1.04); }
+    .acard .go {
+      position: absolute; left: 14px; bottom: 14px; width: 38px; height: 38px; border-radius: 50%;
+      border: 1px solid rgba(255,255,255,.7); color: white; background: rgba(30,30,28,.25); backdrop-filter: blur(4px);
+      display: flex; align-items: center; justify-content: center; font-size: 15px;
+    }
+
+    /* ── DARK FEATURE PANEL ── */
+    .feature { padding: 10px 24px; }
+    .feature-inner {
+      background: var(--panel); border-radius: 24px; overflow: hidden;
+      display: grid; grid-template-columns: 1.5fr 1fr;
+    }
+    .feature-photo { min-height: 340px; }
+    .feature-photo img { width: 100%; height: 100%; object-fit: cover; }
+    .feature-side { padding: 26px; display: flex; flex-direction: column; gap: 14px; justify-content: center; }
+    .fchip { background: var(--panel-2); border-radius: 16px; padding: 20px 22px; color: white; display: flex; gap: 16px; align-items: flex-start; }
+    .fchip .ic {
+      width: 38px; height: 38px; border-radius: 50%; border: 1px solid rgba(255,255,255,.3);
+      display: flex; align-items: center; justify-content: center; font-size: 15px; flex-shrink: 0; color: rgba(255,255,255,.85);
+    }
+    .fchip h4 { font-size: 14.5px; font-weight: 600; line-height: 1.3; }
+    .fchip p { font-size: 11px; color: rgba(255,255,255,.5); margin-top: 6px; line-height: 1.55; }
+
+    /* ── FORMATS / POPULAR PROJECTS ── */
+    .formats { padding: 36px 24px 10px; }
+    .formats .label { margin-bottom: 20px; }
+    .formats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+    .fmt { background: #efeee9; border-radius: 20px; padding: 22px 22px 14px; display: flex; flex-direction: column; }
+    .fmt h3 { font-size: 17px; font-weight: 600; letter-spacing: -0.01em; padding-bottom: 14px; border-bottom: 1px solid var(--hairline); }
+    .fmt p { font-size: 11.5px; color: var(--muted); line-height: 1.6; margin: 14px 0; flex: 1; }
+    .fmt .price { font-size: 13px; font-weight: 700; margin-bottom: 14px; }
+    .fmt .price span { font-weight: 400; color: var(--muted); font-size: 11px; }
+    .fmt .ph { border-radius: 14px; overflow: hidden; height: 150px; margin: 0 -8px 0; }
+    .fmt .ph img { width: 100%; height: 100%; object-fit: cover; }
+
+    /* ── STATS BAND ── */
+    .stats { padding: 24px; }
+    .stats-inner {
+      background: var(--panel); border-radius: 22px; padding: 30px 36px;
+      display: flex; align-items: center; justify-content: space-between; gap: 32px; color: white;
+    }
+    .stats-left { display: flex; gap: clamp(24px, 5vw, 72px); }
+    .stat { display: flex; gap: 12px; align-items: flex-start; }
+    .stat .ic { font-size: 16px; opacity: .6; padding-top: 4px; }
+    .stat .n { font-size: 24px; font-weight: 700; line-height: 1; }
+    .stat .l { font-size: 10px; color: rgba(255,255,255,.5); margin-top: 6px; }
+    .stats-right { display: flex; align-items: center; gap: 18px; text-align: right; }
+    .stats-right .t { font-size: 10.5px; letter-spacing: 1.5px; text-transform: uppercase; color: rgba(255,255,255,.75); line-height: 1.6; }
+    .stats-right .arr {
+      width: 40px; height: 40px; border-radius: 50%; border: 1px solid rgba(255,255,255,.35);
+      display: flex; align-items: center; justify-content: center; font-size: 15px; flex-shrink: 0;
+    }
+
+    /* ── CONTACT ── */
+    .contact { padding: 30px 24px 50px; }
+    .contact-grid { display: grid; grid-template-columns: 1fr 1.05fr; gap: 64px; align-items: start; }
+    .contact h2 { font-size: clamp(24px, 3vw, 36px); font-weight: 700; letter-spacing: -0.02em; line-height: 1.2; }
+    .contact h2 .o { color: var(--orange); }
+    .contact .meta { margin-top: 28px; display: grid; gap: 8px; }
+    .contact .meta a, .contact .meta span { font-size: 13px; color: var(--ink); display: flex; align-items: center; gap: 10px; }
+    .contact .meta .mi { color: var(--muted); font-size: 12px; }
+    .cform .row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px; }
+    .cform input {
+      width: 100%; background: var(--card); border: 1px solid var(--hairline); border-radius: 12px;
+      padding: 15px 16px; font-family: var(--font); font-size: 13px; color: var(--ink);
+    }
+    .cform input::placeholder { color: var(--muted); }
+    .cform input:focus { outline: 1.5px solid var(--orange); }
+    .cform .send-row { display: flex; gap: 16px; align-items: center; margin-top: 6px; }
+    .btn-orange {
+      background: var(--orange); color: white; border: none; cursor: pointer;
+      font-family: var(--font); font-size: 12px; font-weight: 600; letter-spacing: .5px;
+      padding: 16px 34px; border-radius: 12px; transition: filter .2s; flex-shrink: 0;
+    }
+    .btn-orange:hover { filter: brightness(1.08); }
+    .consent { font-size: 10px; color: var(--muted); line-height: 1.5; display: flex; gap: 8px; align-items: flex-start; }
+    .consent input { width: auto; margin-top: 2px; }
+
+    /* ── FOOTER ── */
+    .footer { background: var(--panel); color: rgba(255,255,255,.6); padding: 26px 24px; }
+    .footer-inner { display: flex; align-items: center; justify-content: space-between; gap: 20px; flex-wrap: wrap; }
+    .footer .brand .name { color: white; }
+    .footer .brand .sub { color: rgba(255,255,255,.4); }
+    .footer ul { display: flex; gap: 28px; list-style: none; }
+    .footer ul a { font-size: 9.5px; font-weight: 600; letter-spacing: 1.8px; text-transform: uppercase; color: rgba(255,255,255,.7); }
+    .footer ul a:hover { color: var(--orange); }
+    .footer .copy { font-size: 9px; letter-spacing: 1px; text-transform: uppercase; color: rgba(255,255,255,.35); text-align: right; line-height: 1.7; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 960px) {
+      .nav-links { display: none; }
+      .hero-photo { position: relative; right: auto; width: 100%; height: 320px; margin-top: 20px; border-radius: 20px; order: 5; }
+      .hero { display: flex; flex-direction: column; }
+      .hero-circle { top: auto; bottom: 26px; }
+      .about-grid, .contact-grid { grid-template-columns: 1fr; gap: 28px; }
+      .about-right { padding-right: 0; }
+      .about-cards, .formats-grid { grid-template-columns: 1fr; }
+      .feature-inner { grid-template-columns: 1fr; }
+      .stats-inner { flex-direction: column; align-items: flex-start; }
+      .stats-left { flex-wrap: wrap; gap: 28px; }
+      .cform .row { grid-template-columns: 1fr; }
+      .hero h1 { font-size: clamp(64px, 18vw, 120px); }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- top hairline bar -->
+  <div class="topbar">
+    <span>Ogden, Utah — Est. 1942</span>
+    <span>Free Estimates</span>
+  </div>
+
+  <!-- nav -->
+  <nav class="nav">
+    <div class="brand">
+      <div class="name">Tefco Fabrication</div>
+      <div class="sub">Ornamental Iron &amp; Metal Shop</div>
+    </div>
+    <ul class="nav-links">
+      <li><a href="#">About</a></li>
+      <li><a href="#">Services</a></li>
+      <li><a href="#">Powder Coating</a></li>
+      <li><a href="#">Gallery</a></li>
+      <li><a href="#">Contact</a></li>
+    </ul>
+    <div class="burger"><span></span><span></span><span></span></div>
+  </nav>
+
+  <!-- hero -->
+  <section class="hero">
+    <div class="hero-photo">
+      <img src="https://tefcofab.com/wp-content/uploads/2024/11/101810-003-scaled.jpg" alt="Custom iron railing on stone building">
+      <div class="strip">Craftsmanship · Quality · Built by hand in Ogden</div>
+      <div class="hero-circle"><span class="arr">↗</span>View<br>Our Work</div>
+    </div>
+    <h1>Tefco</h1>
+    <div class="hero-row2">
+      <span class="word">Fabrication</span>
+      <span class="since">/ since 1942</span>
+    </div>
+    <p class="hero-sub">A new standard in custom metalwork — where 80 years of hand craftsmanship meets modern design.</p>
+    <div class="hero-chips">
+      <div class="chip"><div class="n">80+</div><div class="l">years in business</div></div>
+      <div class="chip"><div class="n">1000s</div><div class="l">of projects — completed &amp; installed</div></div>
+      <div class="chip"><div class="n">5.0</div><div class="l">Google rating</div></div>
+    </div>
+  </section>
+
+  <!-- full-bleed photo band -->
+  <section class="band">
+    <div class="band-inner">
+      <img src="https://tefcofab.com/wp-content/uploads/2024/11/Tefcopics2011-008-scaled.jpg" alt="Tefco fabrication shop">
+      <div class="tag">✦&nbsp; Design, fabrication, finishing and installation — all under one roof</div>
+    </div>
+  </section>
+
+  <!-- about card -->
+  <section class="about">
+    <div class="about-inner">
+      <div class="label">About Tefco</div>
+      <div class="about-grid">
+        <h2>We build one-of-a-kind metalwork, defined by <span class="o">craft, quality and&nbsp;service.</span></h2>
+        <div class="about-right">
+          <p>TEFCO FABRICATION — serving Weber County with high-rated ornamental iron products since 1942. A unique combination of hand craftsmanship and attention to detail has earned us a reputation for quality and one-of-a-kind designs. We take pride in getting to know our customers and putting their needs first.</p>
+          <svg class="deco" width="70" height="46" viewBox="0 0 70 46" fill="none" stroke="#76756f" stroke-width="1">
+            <path d="M2 44 L20 12 L31 30 L44 4 L68 44" />
+            <circle cx="56" cy="10" r="4"/>
+          </svg>
+        </div>
+      </div>
+      <div class="about-cards">
+        <div class="acard">
+          <h3>Custom Railings</h3>
+          <div class="d">Interior and exterior iron railings crafted to your design — with views to match.</div>
+          <div class="ph">
+            <img src="https://tefcofab.com/wp-content/uploads/2024/11/IMG_0803-scaled.jpg" alt="Custom indoor railing">
+            <div class="go">→</div>
+          </div>
+        </div>
+        <div class="acard">
+          <h3>Security Doors</h3>
+          <div class="d">Heavy-gauge steel doors with decorative ironwork. Ideal security, unique designs.</div>
+          <div class="ph">
+            <img src="https://tefcofab.com/wp-content/uploads/2026/02/1000037064-1-scaled.jpg" alt="Custom security door">
+            <div class="go">→</div>
+          </div>
+        </div>
+        <div class="acard">
+          <h3>Metal Staircases</h3>
+          <div class="d">Exterior, interior and spiral staircases — engineered for a flawless fit.</div>
+          <div class="ph">
+            <img src="https://tefcofab.com/wp-content/uploads/2024/11/IMG_3051-scaled.jpg" alt="Metal staircase">
+            <div class="go">→</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- dark feature panel -->
+  <section class="feature">
+    <div class="feature-inner">
+      <div class="feature-photo">
+        <img src="https://tefcofab.com/wp-content/uploads/2026/05/image-77.png" alt="Ornamental security door with scrollwork">
+      </div>
+      <div class="feature-side">
+        <div class="fchip">
+          <div class="ic">◐</div>
+          <div>
+            <h4>Powder coating, in-house</h4>
+            <p>Hundreds of colors, oven capacity up to 24 ft. We coat for outside customers too.</p>
+          </div>
+        </div>
+        <div class="fchip">
+          <div class="ic">✦</div>
+          <div>
+            <h4>Sand &amp; shot blasting</h4>
+            <p>Professional surface prep for a finish that lasts in any weather, year round.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- popular projects -->
+  <section class="formats">
+    <div class="label">Popular Projects</div>
+    <div class="formats-grid">
+      <div class="fmt">
+        <h3>Railing Refresh</h3>
+        <p>Replace dated interior or exterior railings with a custom design — measured, built and installed by our crew.</p>
+        <div class="price">Free estimate <span>/ on-site</span></div>
+        <div class="ph"><img src="https://tefcofab.com/wp-content/uploads/2026/02/Indoor-modern-railing-system-e1770237188274.png" alt="Modern indoor railing system"></div>
+      </div>
+      <div class="fmt">
+        <h3>Security Upgrade</h3>
+        <p>A custom security door built to your exact opening — heavy-gauge steel that looks as good as it protects.</p>
+        <div class="price">Free estimate <span>/ on-site</span></div>
+        <div class="ph"><img src="https://tefcofab.com/wp-content/uploads/2026/02/1000037064-1-scaled.jpg" alt="Custom security door"></div>
+      </div>
+      <div class="fmt">
+        <h3>Powder Coat Job</h3>
+        <p>Wheels, frames, furniture, parts — bring it in and pick from hundreds of colors. Fast turnaround.</p>
+        <div class="price">Free quote <span>/ same day</span></div>
+        <div class="ph"><img src="https://tefcofab.com/wp-content/uploads/2026/02/wheelspowdercoat.jpg" alt="Powder coated wheels"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- stats band -->
+  <section class="stats">
+    <div class="stats-inner">
+      <div class="stats-left">
+        <div class="stat"><div class="ic">⚒</div><div><div class="n">80+</div><div class="l">years in business</div></div></div>
+        <div class="stat"><div class="ic">↻</div><div><div class="n">1000s</div><div class="l">projects completed</div></div></div>
+        <div class="stat"><div class="ic">★</div><div><div class="n">5.0</div><div class="l">Google rating</div></div></div>
+      </div>
+      <div class="stats-right">
+        <div class="t">Tefco — work that's<br>built to come home to</div>
+        <div class="arr">→</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- contact -->
+  <section class="contact">
+    <div class="label">Get In Touch</div>
+    <div class="contact-grid">
+      <div>
+        <h2>We'll help you plan your perfect project at <span class="o">TEFCO FABRICATION.</span></h2>
+        <div class="meta">
+          <a href="tel:8016211010"><span class="mi">✆</span> (801) 621-1010</a>
+          <span><span class="mi">⌖</span> 318 26th Street, Ogden, UT 84401</span>
+          <span><span class="mi">⏱</span> Mon – Fri: 7:00am – 3:30pm</span>
+        </div>
+      </div>
+      <form class="cform" onsubmit="return false;">
+        <div class="row">
+          <input type="text" placeholder="Name" aria-label="Name">
+          <input type="tel" placeholder="Phone" aria-label="Phone">
+        </div>
+        <div class="row">
+          <input type="email" placeholder="Email" aria-label="Email">
+          <input type="text" placeholder="Project type" aria-label="Project type">
+        </div>
+        <div class="send-row">
+          <button type="submit" class="btn-orange">Send Request</button>
+          <label class="consent">
+            <input type="checkbox" checked>
+            <span>By submitting this form you agree to be contacted about your project. We never share your information.</span>
+          </label>
+        </div>
+      </form>
+    </div>
+  </section>
+
+  <!-- footer -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="brand">
+        <div class="name">Tefco Fabrication</div>
+        <div class="sub">Ornamental Iron &amp; Metal Shop</div>
+      </div>
+      <ul>
+        <li><a href="#">About</a></li>
+        <li><a href="#">Services</a></li>
+        <li><a href="#">Powder Coating</a></li>
+        <li><a href="#">Gallery</a></li>
+        <li><a href="#">Contact</a></li>
+      </ul>
+      <div class="copy">© 2026 Tefco Fabrication<br>All rights reserved</div>
+    </div>
+  </footer>
+
+</body>
+</html>
