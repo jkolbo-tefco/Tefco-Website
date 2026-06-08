@@ -6,13 +6,17 @@
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
+    "dev:cms": "tinacms dev -c \"astro dev\"",
     "build": "astro build",
+    "build:cms": "tinacms build && astro build",
     "preview": "astro preview",
     "astro": "astro"
   },
   "dependencies": {
-    "astro": "^5.6.1",
+    "@astrojs/mdx": "^4.2.3",
     "@astrojs/sitemap": "^3.3.0",
-    "@astrojs/mdx": "^4.2.3"
+    "@tinacms/cli": "^2.4.4",
+    "astro": "^5.6.1",
+    "tinacms": "^3.9.1"
   }
 }

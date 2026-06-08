@@ -1,0 +1,61 @@
+---
+import { getCollection, render } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Photo from '../../components/Photo.astro';
+import CtaBand from '../../components/CtaBand.astro';
+import { services } from '../../data/site';
+import { breadcrumb } from '../../lib/schema';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog', (p) => !p.data.draft);
+  return posts.map((post) => ({ params: { slug: post.id }, props: { post } }));
+}
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+const path = `/blog/${post.id}/`;
+const fmt = (d: Date) => d.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+const related = services.find((s) => s.slug === post.data.relatedService);
+
+const article = {
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: post.data.title,
+  description: post.data.description,
+  datePublished: post.data.pubDate.toISOString(),
+  ...(post.data.updatedDate && { dateModified: post.data.updatedDate.toISOString() }),
+  ...(post.data.heroImage && { image: post.data.heroImage }),
+  author: { '@type': 'Organization', name: 'TEFCO' },
+  publisher: { '@id': 'https://tefcofab.com/#business' },
+  mainEntityOfPage: `https://tefcofab.com${path}`,
+};
+const schema = [article, breadcrumb([{ name: 'Home', path: '/' }, { name: 'Blog', path: '/blog/' }, { name: post.data.title, path }])];
+---
+<BaseLayout title={`${post.data.title} | TEFCO`} description={post.data.description} path={path} ogImage={post.data.heroImage} active="/about-us/" solidHeader schema={schema}>
+  <article class="features" style="padding-top:130px;">
+    <div class="wrap article-wrap">
+      <nav class="breadcrumb" style="position:static;margin-bottom:18px;">
+        <a href="/">Home</a><span class="sep">/</span>
+        <a href="/blog/">Blog</a><span class="sep">/</span>
+        <span>{post.data.category}</span>
+      </nav>
+      <div class="article-meta">{post.data.category} · {fmt(post.data.pubDate)}</div>
+      <h1 style="margin-bottom:24px;">{post.data.title}</h1>
+      {post.data.heroImage && (
+        <div class="article-hero">
+          <Photo src={post.data.heroImage} alt={post.data.heroAlt ?? post.data.title} loading="eager" />
+        </div>
+      )}
+      <div class="prose">
+        <Content />
+      </div>
+      {related && (
+        <p style="margin-top:32px;padding-top:24px;border-top:1px solid rgba(0,0,0,.1);">
+          <strong>Related service:</strong> <a href={related.href}>{related.title}</a>
+        </p>
+      )}
+    </div>
+  </article>
+
+  <CtaBand heading="Ready to start your project?" />
+</BaseLayout>

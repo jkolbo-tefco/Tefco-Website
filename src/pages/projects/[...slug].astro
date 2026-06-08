@@ -1,0 +1,87 @@
+---
+import { getCollection, render } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Photo from '../../components/Photo.astro';
+import CtaBand from '../../components/CtaBand.astro';
+import { services } from '../../data/site';
+import { breadcrumb } from '../../lib/schema';
+
+export async function getStaticPaths() {
+  const projects = await getCollection('projects', (p) => !p.data.draft);
+  return projects.map((proj) => ({ params: { slug: proj.id }, props: { proj } }));
+}
+
+const { proj } = Astro.props;
+const { Content } = await render(proj);
+const path = `/projects/${proj.id}/`;
+const related = services.find((s) => s.slug === proj.data.service);
+
+const article = {
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: proj.data.title,
+  description: proj.data.description,
+  datePublished: proj.data.pubDate.toISOString(),
+  ...(proj.data.heroImage && { image: proj.data.heroImage }),
+  author: { '@type': 'Organization', name: 'TEFCO' },
+  publisher: { '@id': 'https://tefcofab.com/#business' },
+  mainEntityOfPage: `https://tefcofab.com${path}`,
+};
+const video = proj.data.videoUrl
+  ? {
+      '@context': 'https://schema.org',
+      '@type': 'VideoObject',
+      name: proj.data.title,
+      description: proj.data.description,
+      uploadDate: proj.data.pubDate.toISOString(),
+      ...(proj.data.heroImage && { thumbnailUrl: proj.data.heroImage }),
+      contentUrl: proj.data.videoUrl,
+      embedUrl: proj.data.videoUrl,
+    }
+  : null;
+const schema = [article, ...(video ? [video] : []), breadcrumb([{ name: 'Home', path: '/' }, { name: 'Projects', path: '/projects/' }, { name: proj.data.title, path }])];
+---
+<BaseLayout title={`${proj.data.title} | TEFCO`} description={proj.data.description} path={path} ogImage={proj.data.heroImage} active="/gallery/" solidHeader schema={schema}>
+  <article class="features" style="padding-top:130px;">
+    <div class="wrap article-wrap">
+      <nav class="breadcrumb" style="position:static;margin-bottom:18px;">
+        <a href="/">Home</a><span class="sep">/</span>
+        <a href="/projects/">Projects</a><span class="sep">/</span>
+        <span>{proj.data.location}</span>
+      </nav>
+      <div class="article-meta">{proj.data.location}{related ? ` · ${related.title}` : ''}</div>
+      <h1 style="margin-bottom:24px;">{proj.data.title}</h1>
+      {proj.data.heroImage && (
+        <div class="article-hero">
+          <Photo src={proj.data.heroImage} alt={proj.data.heroAlt ?? proj.data.title} loading="eager" />
+        </div>
+      )}
+
+      {proj.data.videoUrl && (
+        <div class="article-video">
+          <iframe src={proj.data.videoUrl} title={proj.data.title} loading="lazy" allowfullscreen></iframe>
+        </div>
+      )}
+
+      <div class="prose">
+        <div class="cs-block"><h3>The challenge</h3><p>{proj.data.challenge}</p></div>
+        <div class="cs-block"><h3>What we built</h3><p>{proj.data.solution}</p></div>
+        <div class="cs-block"><h3>The result</h3><p>{proj.data.result}</p></div>
+
+        {proj.data.quote && (
+          <blockquote>"{proj.data.quote}"{proj.data.quoteAuthor && <><br /><strong>— {proj.data.quoteAuthor}</strong></>}</blockquote>
+        )}
+
+        <Content />
+      </div>
+
+      {related && (
+        <p style="margin-top:32px;padding-top:24px;border-top:1px solid rgba(0,0,0,.1);">
+          <strong>Related service:</strong> <a href={related.href}>{related.title}</a>
+        </p>
+      )}
+    </div>
+  </article>
+
+  <CtaBand heading="Let's build yours next." />
+</BaseLayout>

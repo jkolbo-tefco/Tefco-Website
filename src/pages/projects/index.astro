@@ -1,0 +1,44 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Photo from '../../components/Photo.astro';
+import CtaBand from '../../components/CtaBand.astro';
+import { breadcrumb } from '../../lib/schema';
+
+const path = '/projects/';
+const title = 'Project Case Studies — TEFCO Custom Iron, Ogden UT';
+const description = 'Real TEFCO projects across Ogden & Northern Utah — custom railings, gates, security doors & fabrication, from problem to finished install. (801) 621-1010.';
+
+const projects = (await getCollection('projects', (p) => !p.data.draft))
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+
+const schema = [breadcrumb([{ name: 'Home', path: '/' }, { name: 'Projects', path }])];
+---
+<BaseLayout title={title} description={description} path={path} active="/gallery/" solidHeader schema={schema}>
+  <section class="features" style="padding-top:140px;">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="eyebrow">Case Studies</span>
+        <h2>Real projects, start to finish</h2>
+        <p>A look at how we take on custom iron, gates, doors, and powder coating across Ogden and Northern Utah — the challenge, what we built, and the result.</p>
+      </div>
+      <div class="post-grid">
+        {projects.map((proj) => (
+          <article class="post-card reveal">
+            <a href={`/projects/${proj.id}/`} class="ph">
+              <Photo src={proj.data.heroImage} alt={proj.data.heroAlt ?? proj.data.title} note={proj.data.heroNote ?? proj.data.heroAlt} />
+            </a>
+            <div class="pc-body">
+              <div class="pc-meta">{proj.data.location}</div>
+              <h3><a href={`/projects/${proj.id}/`}>{proj.data.title}</a></h3>
+              <p>{proj.data.description}</p>
+              <a href={`/projects/${proj.id}/`} class="link-more">Read the story <span>→</span></a>
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <CtaBand heading="Want results like these?" />
+</BaseLayout>
