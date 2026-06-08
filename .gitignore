@@ -16,8 +16,10 @@ npm-debug.log*
 .env
 .env.production
 
-# Tooling scratch
+# Tooling scratch (root-level screenshots only; real assets live in public/)
 .playwright-mcp/
-*-parity.jpeg
-*-check.jpeg
-mobile-*.jpeg
+/*.jpeg
+
+# TinaCMS generated
+tina/__generated__/
+public/admin/

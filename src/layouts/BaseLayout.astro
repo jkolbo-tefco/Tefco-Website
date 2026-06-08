@@ -60,6 +60,18 @@ const schemaList = schema ? (Array.isArray(schema) ? schema : [schema]) : [];
     <slot />
   </main>
   <Footer />
+
+  {/* Hidden static form so Netlify detects the JS-injected quote modal form.
+      The visible modal (tefco.js) and the inline forms both POST to "estimate". */}
+  <form name="estimate" data-netlify="true" netlify-honeypot="bot-field" hidden>
+    <input type="text" name="name" />
+    <input type="tel" name="phone" />
+    <input type="email" name="email" />
+    <input type="text" name="address" />
+    <textarea name="description"></textarea>
+    <input name="bot-field" />
+  </form>
+
   <script>
     import '../scripts/tefco.js';
   </script>

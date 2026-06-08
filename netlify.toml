@@ -1,0 +1,39 @@
+# Netlify configuration for the TEFCO Astro site.
+
+[build]
+  command = "npm run build"
+  publish = "dist"
+  # For TinaCMS Cloud editing in production, switch the build command to:
+  #   command = "npm run build:cms"
+  # and set TINA_CLIENT_ID / TINA_TOKEN in the Netlify environment.
+
+[build.environment]
+  NODE_VERSION = "20"
+
+# ── Security / caching headers ──
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Content-Type-Options = "nosniff"
+    X-Frame-Options = "SAMEORIGIN"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+
+[[headers]]
+  for = "/video/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+# ── 301 redirects ──
+# The new routes mirror the live tefcofab.com paths (see CONTENT-MASTER §27),
+# so no path-change redirects are required at launch. Add any here if a URL
+# changes. Netlify serves folder routes with trailing slashes automatically.
+#
+# Example (uncomment + edit if a URL ever moves):
+# [[redirects]]
+#   from = "/old-path/"
+#   to = "/new-path/"
+#   status = 301
+#   force = true
+
+# SPA-style fallback is NOT used — this is a static multi-page site with a real
+# 404 page. Netlify serves /404.html automatically for unknown routes.

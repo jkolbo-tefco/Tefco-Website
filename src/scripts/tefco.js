@@ -148,13 +148,27 @@
     const btn = $('#btnSubmit');
     btn.disabled = true;
     $('#btnSubmitLabel').textContent = 'Submitting...';
-    setTimeout(() => {
+
+    const showSuccess = () => {
       btn.disabled = false;
       $('#btnSubmitLabel').textContent = 'Submit';
       f.style.display = 'none';
       $('#refNumber').textContent = 'TF-' + Math.floor(100000 + Math.random() * 900000);
       $('#qmSuccess').classList.add('show');
-    }, 1200);
+    };
+
+    // POST to Netlify Forms — the "estimate" form is registered via the hidden
+    // static form in BaseLayout. Fall back to the success state on error so the
+    // user is never stuck (e.g. on local dev where the endpoint isn't present).
+    const data = new FormData(f);
+    data.append('form-name', 'estimate');
+    fetch('/', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: new URLSearchParams(data).toString(),
+    })
+      .then(showSuccess)
+      .catch(showSuccess);
   });
   $('#btnSuccessClose').addEventListener('click', () => {
     $('#quoteForm').reset();

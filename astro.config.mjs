@@ -8,7 +8,13 @@ const SITE = 'https://tefcofab.com';
 
 export default defineConfig({
   site: SITE,
-  integrations: [sitemap(), mdx()],
+  integrations: [
+    sitemap({
+      // Keep thank-you (form target) out of search results.
+      filter: (page) => !page.includes('/thank-you'),
+    }),
+    mdx(),
+  ],
   // Build to static HTML for best SEO + Core Web Vitals.
   output: 'static',
   image: {

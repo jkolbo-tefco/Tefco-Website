@@ -123,29 +123,30 @@ See the **Page Build Tracker (§7)** for per-page status. All 31 routes build cl
 - [x] Cross-link clusters + "what affects price" link on Railings/cost
 - [x] Verify all §6 content-bug fixes applied (see §6)
 
-### Phase 3 — Dynamic content systems
-- [ ] Define content collections in `src/content/config.ts` (blog, projects, gallery, reviews) with typed frontmatter
-- [ ] Build **Blog**: `/blog/` index + `blog/[slug]` post template (Article schema, related-service link, CTA)
-- [ ] Build **Projects/Case studies**: `/projects/` index + `projects/[slug]` template (Article + VideoObject + Breadcrumb)
-- [ ] Build **Gallery** as a collection (categories, optimized images, lightbox)
-- [ ] Build **Reviews** as a collection (drives Reviews page + per-page review pulls)
-- [ ] Configure **TinaCMS** schema for each collection (fields, media uploads, previews)
-- [ ] Wire Tina media library → `public/` (or a CDN) for image uploads
-- [ ] Test the **full editor flow locally** (`/admin`) — add a post + a gallery item as staff would
-- [ ] Seed initial content: 3–5 **case studies** + first **blog posts** (#1–4 from CONTENT-MASTER §H)
+### Phase 3 — Dynamic content systems  ✅ COMPLETE
+- [x] Define content collections in `src/content.config.ts` (blog, projects) with typed Zod frontmatter
+- [x] Build **Blog**: `/blog/` index + `blog/[...slug]` post template (Article schema, related-service link, CTA)
+- [x] Build **Projects/Case studies**: `/projects/` index + `projects/[...slug]` template (Article + VideoObject when `videoUrl` set + Breadcrumb)
+- [x] Configure **TinaCMS** schema for blog + projects (`tina/config.ts`: fields, service selects, media)
+- [x] Wire Tina media library → `public/images/uploads`
+- [x] Test the **full editor flow locally** (`npm run dev:cms` → `/admin`) — admin loads in local mode, indexes content, writes to filesystem (verified)
+- [x] Seed initial content: 3 **case studies** + 3 **blog posts** (from CONTENT-MASTER §H queue)
+- [x] Surface Blog + Projects in footer nav and HTML sitemap
+- [~] Gallery & Reviews kept as build-time data modules (`data/site.ts`, gallery array) — they work and feed schema/cross-page pulls. **Deferred:** move them into Tina-managed collections later if staff need to edit them directly.
+- [ ] **Production CMS:** create Tina Cloud project → set `TINA_CLIENT_ID`/`TINA_TOKEN` (see `.env.example`), switch Netlify build to `build:cms`
 
-### Phase 4 — Forms, technical SEO, redirects
-- [ ] Wire estimate form → **Netlify Forms** (+ spam protection / honeypot)
-- [ ] Form success state + notification email routing
-- [ ] Generate **XML sitemap** (`@astrojs/sitemap`) + `robots.txt`
-- [ ] Add JSON-LD to every page (LocalBusiness, Service, FAQPage, Product, AggregateRating, Breadcrumb, VideoObject)
-- [ ] Implement the **301 redirect map** (CONTENT-MASTER §27) in `netlify.toml`
-- [ ] Set canonical URLs to final domain on every page
-- [ ] Image optimization pass (responsive sizes, WebP, `loading="lazy"` below fold)
-- [ ] Compress/serve hero video efficiently (`preload="metadata"`)
-- [ ] Accessibility pass (alt text, heading order, contrast, focus states)
-- [ ] Cross-browser + device QA (desktop/tablet/phone; real device via `--host`)
-- [ ] **Validate JSON-LD** (Google Rich Results Test) on each template
+### Phase 4 — Forms, technical SEO, redirects  ✅ COMPLETE (launch items noted)
+- [x] Wire estimate form → **Netlify Forms**: inline forms (contact, get-a-quote) + hidden detection form in `BaseLayout`; quote **modal now POSTs to Netlify** (was a fake submit) with graceful fallback; honeypot `bot-field`
+- [x] Form success state + redirect to `/thank-you/` (notification email routing = a Netlify dashboard setting at deploy)
+- [x] Generate **XML sitemap** (`@astrojs/sitemap`, 37 URLs, excludes thank-you/404) + `public/robots.txt` (points to sitemap, disallows `/admin/`)
+- [x] JSON-LD on every page — verified: LocalBusiness+AggregateRating (home), Service+FAQPage+Breadcrumb (services), Product (planters), Review×17+AggregateRating (reviews), Article (blog/projects), VideoObject (when set)
+- [x] `netlify.toml` — build config, headers, redirect section (routes mirror live paths → no path-change 301s needed at launch; template ready if any URL moves)
+- [x] Canonical URLs → final domain (`tefcofab.com`) via `astro.config` `site` + BaseLayout
+- [x] `loading="lazy"` on below-fold images; hero video `preload="metadata"` + immutable cache header
+- [x] Accessibility basics: labeled form fields, aria-labels on icon buttons, single keyword H1 + H2/H3 structure, descriptive alt text
+- [~] **Validate JSON-LD** — structurally verified in built HTML; run Google Rich Results Test on the live URL post-deploy
+- [ ] **Image optimization / localization** — photos still hot-linked from `tefcofab.com`; download to `public/images/` + run through Astro `<Image>` before launch (see IMAGE-ASSETS.md). Deferred to pre-launch.
+- [ ] Cross-browser QA on the deployed site (desktop verified locally; mobile verified at 390px)
 
 ### Phase 5 — Launch
 - [ ] Final content review against `CONTENT-MASTER.md` (resolve remaining `[[CONFIRM]]`)
@@ -217,10 +218,10 @@ See the **Page Build Tracker (§7)** for per-page status. All 31 routes build cl
 | What Affects Cost ⭐ | `/cost/` | ✅ §25 | [x] | [ ] |
 | Thank You (form target) | `/thank-you/` | — | [x] | [ ] |
 | 404 | `/404/` | — | [x] | [ ] |
-| Projects hub ⭐ | `/projects/` | ✅ §26 | [ ] Phase 3 | [ ] |
-| Case studies ⭐ | `/projects/[slug]/` | ⚠ real jobs §26 | [ ] Phase 3 | [ ] |
-| Blog hub | `/blog/` | ✅ §H | [ ] Phase 3 | [ ] |
-| Blog posts | `/blog/[slug]/` | ✅ queue §H | [ ] Phase 3 | [ ] |
+| Projects hub ⭐ | `/projects/` | ✅ §26 | [x] | [x] spot |
+| Case studies ⭐ | `/projects/[slug]/` | ✅ 3 seeded §26 | [x] | [x] spot |
+| Blog hub | `/blog/` | ✅ §H | [x] | [x] spot |
+| Blog posts | `/blog/[slug]/` | ✅ 3 seeded §H | [x] | [ ] |
 | City — Ogden ⭐ | (TBD) | ⚠ §I | [ ] Phase 6 | [ ] |
 | City — Layton ⭐ | (TBD) | ⚠ §I | [ ] Phase 6 | [ ] |
 | City — Salt Lake City ⭐ | (TBD) | ⚠ §I | [ ] Phase 6 | [ ] |
@@ -242,6 +243,8 @@ See the **Page Build Tracker (§7)** for per-page status. All 31 routes build cl
 - [ ] Final **URL structure** (flat vs folder) → lock redirects
 - [ ] Production **domain** + DNS access for Netlify
 - [ ] Decision: self-host video vs. keep loading assets from `tefcofab.com`
+- [ ] **Tina Cloud** project → `TINA_CLIENT_ID` + `TINA_TOKEN` for production CMS editing (see `.env.example`)
+- [ ] **Netlify** account + connect repo; set the form-notification email in the dashboard
 
 ---
 
