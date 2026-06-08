@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- ═══════════════════════════════════════════════════════════
+  TEFCO SECTION BLOCK KIT  ·  copy-paste source for building pages
+
+  This file is the MENU you assemble pages from. Each block below is
+  a clean, placeholder-filled section ready to copy into a page's
+  <main> (use tefco-page-scaffold.html for the shell).
+
+  HOW TO USE
+   1. Read the page's content first, then pick the blocks that fit it
+      — not every page needs every block, and order is up to the
+      content. Aim for 3–6 content sections between hero and CTA.
+   2. Copy a block (everything between its ▼ START / ▲ END markers).
+   3. Paste into <main>, replace [[PLACEHOLDERS]] with real content.
+   4. Vary backgrounds so two adjacent sections never match. Add a
+      background modifier class where noted: .sec-gray .sec-warm .sec-pale
+   5. Add `reveal` to elements you want to fade in on scroll; stagger
+      groups with style="transition-delay:70ms" (then 140, 210…).
+
+  This page also RENDERS each block so you can see it. The big labeled
+  bars are just dividers for this catalog — do not copy those.
+═══════════════════════════════════════════════════════════ -->
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TEFCO — Section Block Kit</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,400..700;1,400..700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="tefco.css">
+<style>
+  .kit-bar { background: var(--charcoal); color:#fff; padding: 20px 0; border-top: 4px solid var(--gold); }
+  .kit-bar .tag { font-family: var(--font-mono); font-size: 10px; letter-spacing: .3em; color: var(--gold); text-transform: uppercase; font-weight: 700; }
+  .kit-bar h2 { font-family: var(--font-display); font-size: 17px; font-weight: 700; text-transform: uppercase; margin-top: 4px; }
+  .kit-bar p { font-size: 12px; color: rgba(255,255,255,.55); font-weight: 300; margin-top: 4px; max-width: 760px; line-height: 1.6; }
+  .kit-bar code { font-family: var(--font-mono); font-size: 11px; color: var(--gold-light); }
+</style>
+</head>
+<body>
+
+<div class="kit-bar"><div class="wrap"><span class="tag">Block</span><h2>Page Hero</h2><p>Use once at the top of a page. <code>.page-hero</code> — dark photo background, breadcrumb, h1 with serif accent, lede, actions.</p></div></div>
+<!-- ▼ START page-hero ▼ -->
+<section class="page-hero">
+  <div class="bg">
+    <img src="[[hero-image.jpg]]" alt="[[Service + Ogden, Utah]]">
+  </div>
+  <div class="wrap inner">
+    <nav class="breadcrumb">
+      <a href="index.html">Home</a><span class="sep">/</span>
+      <a href="index.html#services">Services</a><span class="sep">/</span>
+      <span>[[Page Name]]</span>
+    </nav>
+    <h1 class="reveal">
+      [[Headline]]
+      <span class="serif-accent">[[serif accent phrase]]</span>
+    </h1>
+    <p class="lede reveal">[[1–2 sentence intro naming Ogden / Weber County.]]</p>
+    <div class="actions reveal">
+      <a href="tel:8016211010" class="btn btn-solid">Call (801) 621-1010</a>
+      <button class="btn btn-outline-light" data-open-quote>Free Estimate</button>
+    </div>
+  </div>
+</section>
+<!-- ▲ END page-hero ▲ -->
+
+
+<div class="kit-bar"><div class="wrap"><span class="tag">Block</span><h2>Light Split — text left / photo right</h2><p><code>.lsplit</code>. Add a background modifier to the section: nothing (white), <code>.sec-gray</code>, <code>.sec-warm</code>, or <code>.sec-pale</code>. Optional <code>.frame-offset</code> teal frame + <code>.chip-caption</code> on the photo.</p></div></div>
+<!-- ▼ START lsplit (text left / photo right) ▼ -->
+<section class="lsplit sec-gray">
+  <div class="wrap lsplit-grid">
+    <div class="copy">
+      <span class="eyebrow reveal">[[Eyebrow]]</span>
+      <h2 class="reveal">[[Heading.]]</h2>
+      <div class="divider reveal"></div>
+      <p class="reveal">[[Descriptive paragraph — keyword rich, name materials/styles/process.]]</p>
+      <div class="actions reveal">
+        <button class="btn btn-solid btn-sm" data-open-quote>Free Estimate</button>
+        <a href="[[/service-page/]]" class="btn btn-outline-dark">Learn More</a>
+      </div>
+    </div>
+    <div class="media frame-offset reveal">
+      <img src="[[photo.jpg]]" alt="[[Alt text]]" loading="lazy" referrerpolicy="no-referrer">
+      <span class="chip-caption">[[Caption]]</span>
+    </div>
+  </div>
+</section>
+<!-- ▲ END lsplit ▲ -->
+
+
+<div class="kit-bar"><div class="wrap"><span class="tag">Block</span><h2>Mirrored Split — photo left / text right</h2><p>Same block with <code>.flip</code> on the grid and <code>.frame-left</code> on the media. Shown here on <code>.sec-warm</code>.</p></div></div>
+<!-- ▼ START lsplit flipped (photo left / text right) ▼ -->
+<section class="lsplit sec-warm">
+  <div class="wrap lsplit-grid flip">
+    <div class="copy">
+      <span class="eyebrow reveal">[[Eyebrow]]</span>
+      <h2 class="reveal">[[Heading.]]</h2>
+      <div class="divider reveal"></div>
+      <p class="reveal">[[Descriptive paragraph.]]</p>
+      <div class="actions reveal">
+        <button class="btn btn-solid btn-sm" data-open-quote>Get a Quote</button>
+      </div>
+    </div>
+    <div class="media frame-offset frame-left reveal">
+      <img src="[[photo.jpg]]" alt="[[Alt text]]" loading="lazy" referrerpolicy="no-referrer">
+      <span class="chip-caption">[[Caption]]</span>
+    </div>
+  </div>
+</section>
+<!-- ▲ END lsplit flipped ▲ -->
+
+
+<div class="kit-bar"><div class="wrap"><span class="tag">Block</span><h2>Deep Teal Split</h2><p><code>.lsplit.sec-teal</code> — full brand-teal section, white text. Use <code>.btn-dark</code> here. A strong color moment; use at most once per page.</p></div></div>
+<!-- ▼ START lsplit sec-teal ▼ -->
+<section class="lsplit sec-teal">
+  <div class="wrap lsplit-grid">
+    <div class="copy">
+      <span class="eyebrow reveal">[[Eyebrow]]</span>
+      <h2 class="reveal">[[Heading.]]</h2>
+      <div class="divider reveal" style="background:#fff;"></div>
+      <p class="reveal">[[Paragraph — good for the promise / guarantee message.]]</p>
+      <div class="actions reveal">
+        <button class="btn btn-dark" data-open-quote>Get a Free Estimate</button>
+      </div>
+    </div>
+    <div class="media reveal">
+      <img src="[[photo.jpg]]" alt="[[Alt text]]" loading="lazy" referrerpolicy="no-referrer" style="box-shadow:0 24px 50px -16px rgba(0,0,0,.45);">
+      <span class="chip-caption">[[Caption]]</span>
+    </div>
+  </div>
+</section>
+<!-- ▲ END lsplit sec-teal ▲ -->
+
+
+<div class="kit-bar"><div class="wrap"><span class="tag">Block</span><h2>Feature Checklist</h2><p><code>.features</code> (white) or add <code>.sec-gray</code>/<code>.sec-warm</code>/<code>.sec-pale</code>. Repeat <code>.feature</code> for each item (4–6). Cards auto-gain a shadow on tinted backgrounds.</p></div></div>
+<!-- ▼ START features ▼ -->
+<section class="features sec-pale">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">[[Eyebrow]]</span>
+      <h2>[[Heading]]</h2>
+    </div>
+    <div class="feature-grid">
+      <div class="feature reveal">
+        <div class="chk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></div>
+        <div><h4>[[Feature title]]</h4><p>[[Feature description.]]</p></div>
+      </div>
+      <div class="feature reveal" style="transition-delay:70ms">
+        <div class="chk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></div>
+        <div><h4>[[Feature title]]</h4><p>[[Feature description.]]</p></div>
+      </div>
+      <div class="feature reveal" style="transition-delay:140ms">
+        <div class="chk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></div>
+        <div><h4>[[Feature title]]</h4><p>[[Feature description.]]</p></div>
+      </div>
+      <div class="feature reveal" style="transition-delay:210ms">
+        <div class="chk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></div>
+        <div><h4>[[Feature title]]</h4><p>[[Feature description.]]</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- ▲ END features ▲ -->
+
+
+<div class="kit-bar"><div class="wrap"><span class="tag">Block</span><h2>Stat Strip</h2><p><code>.stat-strip</code> — slim pale band of 2–4 numbers. Quick trust signals between bigger sections.</p></div></div>
+<!-- ▼ START stat-strip ▼ -->
+<section class="stat-strip">
+  <div class="wrap row">
+    <div class="reveal"><div class="n">[[80+]]</div><div class="l">[[Years in Business]]</div></div>
+    <div class="reveal" style="transition-delay:70ms"><div class="n">[[1942]]</div><div class="l">[[Family Owned Since]]</div></div>
+    <div class="reveal" style="transition-delay:140ms"><div class="n">[[100s]]</div><div class="l">[[Powder Coat Colors]]</div></div>
+    <div class="reveal" style="transition-delay:210ms"><div class="n">[[Free]]</div><div class="l">[[Detailed Estimates]]</div></div>
+  </div>
+</section>
+<!-- ▲ END stat-strip ▲ -->
+
+
+<div class="kit-bar"><div class="wrap"><span class="tag">Block</span><h2>Photo Banner — floating card</h2><p><code>.photo-banner</code> (add <code>.card-right</code> to float the card right). Full-bleed photo with a white content card. A dramatic mid-page break.</p></div></div>
+<!-- ▼ START photo-banner ▼ -->
+<section class="photo-banner">
+  <div class="bg">
+    <img src="[[background-photo.jpg]]" alt="[[Alt text]]">
+  </div>
+  <div class="wrap">
+    <div class="card reveal">
+      <span class="eyebrow">[[Eyebrow]]</span>
+      <h2>[[Heading]]</h2>
+      <p>[[Short supporting paragraph.]]</p>
+      <div class="actions">
+        <button class="btn btn-solid btn-sm" data-open-quote>Free Estimate</button>
+        <a href="[[/page/]]" class="btn btn-outline-dark">Learn More</a>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- ▲ END photo-banner ▲ -->
+
+
+<div class="kit-bar"><div class="wrap"><span class="tag">Block</span><h2>Overlap Panel</h2><p><code>.overlap-panel</code> on a light section. Charcoal panel (<code>.panel-box.bg-grid</code>) with the photo breaking past its edge on desktop.</p></div></div>
+<!-- ▼ START overlap-panel ▼ -->
+<section class="overlap-panel sec-gray">
+  <div class="wrap">
+    <div class="panel-box bg-grid">
+      <div class="panel-copy">
+        <span class="eyebrow reveal">[[Eyebrow]]</span>
+        <h2 class="reveal">[[Heading.]]</h2>
+        <p class="reveal">[[Paragraph.]]</p>
+        <div class="actions reveal">
+          <button class="btn btn-solid btn-sm" data-open-quote>Start a Project</button>
+        </div>
+      </div>
+      <div class="panel-media reveal">
+        <img src="[[photo.jpg]]" alt="[[Alt text]]" loading="lazy" referrerpolicy="no-referrer">
+      </div>
+    </div>
+  </div>
+</section>
+<!-- ▲ END overlap-panel ▲ -->
+
+
+<div class="kit-bar"><div class="wrap"><span class="tag">Block</span><h2>Gallery Tiles</h2><p><code>.tile-grid.cols-3</code> with <code>.proj-card</code>s. Put on a dark grid section (<code>.split.bg-grid</code>) or a light one. 3 or 6 tiles read best.</p></div></div>
+<!-- ▼ START gallery tiles ▼ -->
+<section class="split bg-grid" style="padding:72px 0;">
+  <div class="wrap">
+    <div class="sec-head on-dark">
+      <span class="eyebrow">[[Eyebrow]]</span>
+      <h2>[[Heading]]</h2>
+    </div>
+    <div class="tile-grid cols-3">
+      <div class="proj-card reveal">
+        <div class="frame"><img src="[[photo.jpg]]" alt="[[Alt]]" loading="lazy" referrerpolicy="no-referrer"></div>
+        <div class="shade"></div>
+        <span class="cat">[[Category]]</span>
+        <div class="plus">+</div>
+        <div class="inner"><h3>[[Project Title]]</h3><p class="desc">[[One-line description]]</p></div>
+      </div>
+      <div class="proj-card reveal" style="transition-delay:70ms">
+        <div class="frame"><img src="[[photo.jpg]]" alt="[[Alt]]" loading="lazy" referrerpolicy="no-referrer"></div>
+        <div class="shade"></div>
+        <span class="cat">[[Category]]</span>
+        <div class="plus">+</div>
+        <div class="inner"><h3>[[Project Title]]</h3><p class="desc">[[One-line description]]</p></div>
+      </div>
+      <div class="proj-card reveal" style="transition-delay:140ms">
+        <div class="frame"><img src="[[photo.jpg]]" alt="[[Alt]]" loading="lazy" referrerpolicy="no-referrer"></div>
+        <div class="shade"></div>
+        <span class="cat">[[Category]]</span>
+        <div class="plus">+</div>
+        <div class="inner"><h3>[[Project Title]]</h3><p class="desc">[[One-line description]]</p></div>
+      </div>
+    </div>
+    <div style="text-align:center; margin-top:32px;">
+      <a href="https://tefcofab.com/gallery/" class="btn btn-outline-light btn-sm">View Full Gallery</a>
+    </div>
+  </div>
+</section>
+<!-- ▲ END gallery tiles ▲ -->
+
+
+<div class="kit-bar"><div class="wrap"><span class="tag">Block · image-forward</span><h2>Photo Strip — cinematic image band</h2><p><code>.photo-strip</code> (add <code>.short</code> or <code>.tall</code>). Full-bleed image as a visual divider, with optional parallax (<code>data-parallax</code>) and a centered caption. A great way to add a big image moment between content zones.</p></div></div>
+<!-- ▼ START photo-strip ▼ -->
+<section class="photo-strip tall">
+  <img src="[[wide-photo.jpg]]" alt="[[Alt text]]" data-parallax="0.5" referrerpolicy="no-referrer">
+  <div class="veil"></div>
+  <div class="cap">
+    <span class="eyebrow reveal">[[Eyebrow]]</span>
+    <h2 class="reveal">[[Statement headline.]]</h2>
+    <p class="reveal">[[Optional supporting line.]]</p>
+    <div class="actions reveal">
+      <button class="btn btn-solid" data-open-quote>Get a Free Estimate</button>
+    </div>
+  </div>
+</section>
+<!-- ▲ END photo-strip ▲ -->
+
+
+<div class="kit-bar"><div class="wrap"><span class="tag">Block · image-forward</span><h2>Featured Gallery — mixed-size tiles</h2><p><code>.gallery-feature</code> with <code>.proj-card</code>s; add <code>.big</code> to the first card so it spans 2×2. Richer than equal tiles — use it to show more photos (5–6 reads well).</p></div></div>
+<!-- ▼ START featured gallery ▼ -->
+<section class="features sec-gray">
+  <div class="wrap">
+    <div class="sec-head"><span class="eyebrow">Our Work</span><h2>[[Heading]]</h2></div>
+    <div class="gallery-feature">
+      <div class="proj-card big reveal">
+        <div class="frame"><img src="[[photo.jpg]]" alt="[[Alt]]" loading="lazy" referrerpolicy="no-referrer"></div>
+        <div class="shade"></div><span class="cat">[[Category]]</span><div class="plus">+</div>
+        <div class="inner"><h3>[[Title]]</h3><p class="desc">[[One-line description]]</p></div>
+      </div>
+      <div class="proj-card reveal" style="transition-delay:70ms">
+        <div class="frame"><img src="[[photo.jpg]]" alt="[[Alt]]" loading="lazy" referrerpolicy="no-referrer"></div>
+        <div class="shade"></div><span class="cat">[[Category]]</span><div class="plus">+</div>
+        <div class="inner"><h3>[[Title]]</h3></div>
+      </div>
+      <div class="proj-card reveal" style="transition-delay:140ms">
+        <div class="frame"><img src="[[photo.jpg]]" alt="[[Alt]]" loading="lazy" referrerpolicy="no-referrer"></div>
+        <div class="shade"></div><span class="cat">[[Category]]</span><div class="plus">+</div>
+        <div class="inner"><h3>[[Title]]</h3></div>
+      </div>
+      <div class="proj-card reveal" style="transition-delay:210ms">
+        <div class="frame"><img src="[[photo.jpg]]" alt="[[Alt]]" loading="lazy" referrerpolicy="no-referrer"></div>
+        <div class="shade"></div><span class="cat">[[Category]]</span><div class="plus">+</div>
+        <div class="inner"><h3>[[Title]]</h3></div>
+      </div>
+      <div class="proj-card reveal" style="transition-delay:280ms">
+        <div class="frame"><img src="[[photo.jpg]]" alt="[[Alt]]" loading="lazy" referrerpolicy="no-referrer"></div>
+        <div class="shade"></div><span class="cat">[[Category]]</span><div class="plus">+</div>
+        <div class="inner"><h3>[[Title]]</h3></div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- ▲ END featured gallery ▲ -->
+
+
+<div class="kit-bar"><div class="wrap"><span class="tag">Block · image-forward</span><h2>Before / After Slider</h2><p><code>.ba-slider</code> — drag to reveal the "after" image. Ideal for <strong>powder coating</strong> and <strong>sandblasting</strong> pages. Behavior is handled by tefco.js.</p></div></div>
+<!-- ▼ START before/after slider ▼ -->
+<section class="features sec-gray">
+  <div class="wrap">
+    <div class="sec-head"><span class="eyebrow">See the Difference</span><h2>[[Heading]]</h2></div>
+    <div class="ba-slider">
+      <img class="ba-before" src="[[before.jpg]]" alt="[[Before — bare/rusted part]]">
+      <img class="ba-after" src="[[after.jpg]]" alt="[[After — finished part]]">
+      <span class="ba-label before">Before</span>
+      <span class="ba-label after">After</span>
+      <div class="ba-handle"></div>
+    </div>
+  </div>
+</section>
+<!-- ▲ END before/after slider ▲ -->
+
+
+<div class="kit-bar"><div class="wrap"><span class="tag">Block</span><h2>Reviews</h2><p><code>.rev-grid</code> with <code>.rev-card</code>s. Pick reviews relevant to the page's topic. On any background.</p></div></div>
+<!-- ▼ START reviews ▼ -->
+<section class="features">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">Reviews</span>
+      <h2>What Customers Say</h2>
+    </div>
+    <div class="rev-grid" style="max-width:880px; margin:0 auto;">
+      <div class="rev-card reveal">
+        <div class="stars">★★★★★</div>
+        <blockquote>"[[Review text relevant to this service.]]"</blockquote>
+        <div class="who">[[Name]]</div>
+        <div class="src">Google Review</div>
+      </div>
+      <div class="rev-card reveal" style="transition-delay:70ms">
+        <div class="stars">★★★★★</div>
+        <blockquote>"[[Review text.]]"</blockquote>
+        <div class="who">[[Name]]</div>
+        <div class="src">Google Review</div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- ▲ END reviews ▲ -->
+
+
+<div class="kit-bar"><div class="wrap"><span class="tag">Block</span><h2>FAQ</h2><p><code>.faqs</code> + <code>.faq-list</code>. Add a background modifier if it follows a white section. <strong>Always</strong> add a matching <code>FAQPage</code> JSON-LD block in the head.</p></div></div>
+<!-- ▼ START faqs ▼ -->
+<section class="faqs sec-gray">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">Questions</span>
+      <h2>[[Topic]] FAQs</h2>
+    </div>
+    <div class="faq-list">
+      <details open>
+        <summary>[[Question?]]<span class="pm">+</span></summary>
+        <div class="ans">[[Answer.]]</div>
+      </details>
+      <details>
+        <summary>[[Question?]]<span class="pm">+</span></summary>
+        <div class="ans">[[Answer.]]</div>
+      </details>
+      <details>
+        <summary>[[Question?]]<span class="pm">+</span></summary>
+        <div class="ans">[[Answer.]]</div>
+      </details>
+    </div>
+  </div>
+</section>
+<!-- ▲ END faqs ▲ -->
+
+
+<div class="kit-bar"><div class="wrap"><span class="tag">Block</span><h2>CTA Band</h2><p><code>.cta-band</code> — use once near the bottom of every page. Teal band that darkens on hover, with a <code>.btn-dark</code>.</p></div></div>
+<!-- ▼ START cta-band ▼ -->
+<section class="cta-band">
+  <div class="wrap inner">
+    <div>
+      <h2>[[CTA heading — e.g. Ready to start your project?]]</h2>
+      <p>Call us or fill out our online form — we'll provide a detailed free estimate so you can move forward with confidence.</p>
+    </div>
+    <button class="btn btn-dark" data-open-quote>Get a Free Estimate</button>
+  </div>
+</section>
+<!-- ▲ END cta-band ▲ -->
+
+<script src="tefco.js"></script>
+</body>
+</html>

@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- TEFCO Section Style Sampler — new section variants from tefco.css,
+     shown in a realistic page order so you can judge the rhythm. -->
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TEFCO — Section Styles Sampler</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,400..700;1,400..700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="tefco.css">
+<style>
+  .lib-banner { background: var(--charcoal); color: #fff; padding: 22px 0; border-top: 4px solid var(--gold); }
+  .lib-banner .tag { font-family: var(--font-mono); font-size: 10px; letter-spacing: .35em; color: var(--gold); text-transform: uppercase; font-weight: 700; }
+  .lib-banner h2 { font-family: var(--font-display); font-size: 18px; font-weight: 700; text-transform: uppercase; margin-top: 4px; }
+  .lib-banner p { font-size: 12px; color: rgba(255,255,255,.55); font-weight: 300; margin-top: 4px; max-width: 720px; line-height: 1.6; }
+  .lib-banner code { font-family: var(--font-mono); font-size: 11px; color: var(--gold-light); }
+</style>
+</head>
+<body>
+
+<!-- ════════ STYLE 1 ════════ -->
+<div class="lib-banner">
+  <div class="wrap">
+    <span class="tag">Style 1</span>
+    <h2>Light Split — text left / framed photo right</h2>
+    <p><code>.lsplit</code> on a white/slate section. The photo gets an offset teal frame (<code>.frame-offset</code>) and a caption chip. Calm, editorial, great after a dark hero.</p>
+  </div>
+</div>
+<section class="lsplit" style="background: var(--slate);">
+  <div class="wrap lsplit-grid">
+    <div class="copy">
+      <span class="eyebrow reveal">Powder Coating</span>
+      <h2 class="reveal">A finish that outlasts paint.</h2>
+      <div class="divider reveal"></div>
+      <p class="reveal">Powder coating creates a hard, long-lasting finish that resists chipping, scratching, and fading — and it comes in hundreds of colors and textures. From wheels and patio furniture to railings and commercial parts, our Ogden shop coats it all.</p>
+      <div class="actions reveal">
+        <button class="btn btn-solid btn-sm" data-open-quote>Get a Quote</button>
+        <a href="https://tefcofab.com/powder-coating/" class="btn btn-outline-dark">Learn More</a>
+      </div>
+    </div>
+    <div class="media frame-offset reveal">
+      <img src="https://tefcofab.com/wp-content/uploads/2026/02/wheelspowdercoat.jpg" alt="Powder coated wheels with gloss finish — TEFCO Ogden">
+      <span class="chip-caption">Gloss Powder Coat</span>
+    </div>
+  </div>
+</section>
+
+<!-- ════════ STYLE 2 ════════ -->
+<div class="lib-banner">
+  <div class="wrap">
+    <span class="tag">Style 2</span>
+    <h2>Warm Split — photo left / text right</h2>
+    <p>Same component mirrored with <code>.lsplit-grid.flip</code>, on the warm <code>.sec-warm</code> background (#f7f6f3). Different enough from Style 1 that they can sit near each other.</p>
+  </div>
+</div>
+<section class="lsplit sec-warm">
+  <div class="wrap lsplit-grid flip">
+    <div class="copy">
+      <span class="eyebrow reveal">Gates</span>
+      <h2 class="reveal">Entry &amp; security gates, made to order.</h2>
+      <div class="divider reveal"></div>
+      <p class="reveal">We specialize in all types of custom iron gates including entry gates and security gates. Every gate is designed around your property, fabricated in our shop, and finished with in-house powder coating.</p>
+      <div class="actions reveal">
+        <button class="btn btn-solid btn-sm" data-open-quote>Free Estimate</button>
+      </div>
+    </div>
+    <div class="media frame-offset frame-left reveal">
+      <img src="https://tefcofab.com/wp-content/uploads/2026/02/large-black-gate-1-scaled-e1770149579200.jpg" alt="Large custom black iron gate by TEFCO">
+      <span class="chip-caption">Custom Iron Gate</span>
+    </div>
+  </div>
+</section>
+
+<!-- ════════ STYLE 3 ════════ -->
+<div class="lib-banner">
+  <div class="wrap">
+    <span class="tag">Style 3</span>
+    <h2>Light Gray Section</h2>
+    <p><code>.sec-gray</code> — light gray (#f2f2f2). A soft "third color" between white and dark sections. Works with centered content or the feature grid.</p>
+  </div>
+</div>
+<section class="sec-gray" style="padding: 72px 0;">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">Why Tefco</span>
+      <h2>Craftsmanship you can count on</h2>
+    </div>
+    <div class="feature-grid">
+      <div class="feature reveal">
+        <div class="chk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></div>
+        <div><h4>Custom Designs</h4><p>Quality custom designs that are truly unique — from simple to lavish.</p></div>
+      </div>
+      <div class="feature reveal" style="transition-delay:70ms">
+        <div class="chk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></div>
+        <div><h4>Newest Technology</h4><p>We stay current on the latest trends and technology for the best results.</p></div>
+      </div>
+      <div class="feature reveal" style="transition-delay:140ms">
+        <div class="chk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></div>
+        <div><h4>High-Quality Products</h4><p>The knowledge and experience to handle any project, start to finish.</p></div>
+      </div>
+      <div class="feature reveal" style="transition-delay:210ms">
+        <div class="chk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></div>
+        <div><h4>Trusted Reputation</h4><p>A reputation built on beautiful custom ornamental iron since 1942.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════ STYLE 4 ════════ -->
+<div class="lib-banner">
+  <div class="wrap">
+    <span class="tag">Style 4</span>
+    <h2>Stat Strip — light numbers band</h2>
+    <p><code>.stat-strip</code> — a slim pale band for quick numbers. A lighter alternative to the dark stats banner on the homepage.</p>
+  </div>
+</div>
+<section class="stat-strip">
+  <div class="wrap row">
+    <div class="reveal"><div class="n">80+</div><div class="l">Years in Business</div></div>
+    <div class="reveal" style="transition-delay:70ms"><div class="n">1942</div><div class="l">Family Owned Since</div></div>
+    <div class="reveal" style="transition-delay:140ms"><div class="n">100s</div><div class="l">Powder Coat Colors</div></div>
+    <div class="reveal" style="transition-delay:210ms"><div class="n">Free</div><div class="l">Detailed Estimates</div></div>
+  </div>
+</section>
+
+<!-- ════════ STYLE 5 ════════ -->
+<div class="lib-banner">
+  <div class="wrap">
+    <span class="tag">Style 5</span>
+    <h2>Deep Teal Split</h2>
+    <p><code>.sec-teal</code> — the brand's dark teal (#0f766e) as a full section. Strong color moment that isn't charcoal. Shown with the mirrored split layout.</p>
+  </div>
+</div>
+<section class="lsplit sec-teal">
+  <div class="wrap lsplit-grid">
+    <div class="copy">
+      <span class="eyebrow reveal">Our Promise</span>
+      <h2 class="reveal">Our work is second to none.</h2>
+      <div class="divider reveal" style="background:#fff;"></div>
+      <p class="reveal">We promise. And behind that promise, we back our work with a satisfaction guarantee — we won't stop working until you like what we've done. Let TEFCO help you put a unique flare on your next project.</p>
+      <div class="actions reveal">
+        <button class="btn btn-dark" data-open-quote>Get a Free Estimate</button>
+      </div>
+    </div>
+    <div class="media reveal">
+      <img src="https://tefcofab.com/wp-content/uploads/2026/05/image-77.png" alt="Ornamental security door with custom scrollwork by TEFCO" style="box-shadow: 0 24px 50px -16px rgba(0,0,0,.45);">
+      <span class="chip-caption">Security Door — Scrollwork</span>
+    </div>
+  </div>
+</section>
+
+<!-- ════════ STYLE 6 ════════ -->
+<div class="lib-banner">
+  <div class="wrap">
+    <span class="tag">Style 6</span>
+    <h2>Photo Banner — floating content card</h2>
+    <p><code>.photo-banner</code> — full-bleed photo with a white card floating over it. Add <code>.card-right</code> to float it right. A strong mid-page break that's neither dark nor light.</p>
+  </div>
+</div>
+<section class="photo-banner">
+  <div class="bg">
+    <img src="https://tefcofab.com/wp-content/uploads/2026/02/house-with-rails-scaled.jpg" alt="Modern deck railing at dusk in Ogden, Utah">
+  </div>
+  <div class="wrap">
+    <div class="card reveal">
+      <span class="eyebrow">Railings</span>
+      <h2>Add beauty &amp; style to your home</h2>
+      <p>Add beauty and style to the outside of your home with a new railing system — ornamental, modern, rustic, or traditional, hand-crafted in Ogden and built to handle Utah weather.</p>
+      <div class="actions">
+        <button class="btn btn-solid btn-sm" data-open-quote>Free Estimate</button>
+        <a href="railings.html" class="btn btn-outline-dark">See Railings</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════ STYLE 7 ════════ -->
+<div class="lib-banner">
+  <div class="wrap">
+    <span class="tag">Style 7</span>
+    <h2>Overlap Panel — photo breaking the frame</h2>
+    <p><code>.overlap-panel</code> — a charcoal panel on a light section, with the photo escaping the panel's edge. Adds depth without a full dark section.</p>
+  </div>
+</div>
+<section class="overlap-panel" style="background: var(--slate);">
+  <div class="wrap">
+    <div class="panel-box bg-grid">
+      <div class="panel-copy">
+        <span class="eyebrow reveal">Custom Fabrication</span>
+        <h2 class="reveal">If you can sketch it,<br>we can build it.</h2>
+        <p class="reveal">Edging, fire pits, ladders, railings, roof racks, table frames, tool boxes, planters — our custom fabrication is nearly limitless. TIG, MIG, and stick welding in aluminum, corten, stainless, and steel.</p>
+        <div class="actions reveal">
+          <button class="btn btn-solid btn-sm" data-open-quote>Start a Project</button>
+        </div>
+      </div>
+      <div class="panel-media reveal">
+        <img src="https://tefcofab.com/wp-content/uploads/2024/11/IMG_1096.jpg" alt="Custom metal fabrication work at TEFCO Ogden">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- closing note -->
+<section class="cta-band">
+  <div class="wrap inner">
+    <div>
+      <h2>That's seven new section styles</h2>
+      <p>All of them live in tefco.css now — tell me which ones you like and I'll work them into the homepage and service template.</p>
+    </div>
+  </div>
+</section>
+
+<script src="tefco.js"></script>
+</body>
+</html>

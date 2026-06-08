@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- ═══════════════════════════════════════════════════════════
+  TEFCO PAGE SCAFFOLD
+  This is the SHELL only — head, header, footer, scripts. It does
+  NOT prescribe a section layout.
+
+  To build a page:
+   1. Copy this file, rename it (e.g. gates.html).
+   2. Fill in the head (title, meta, canonical, OG, schema).
+   3. Drop section blocks into <main> below — copy them from
+      tefco-blocks.html and choose the ones that fit THIS page's
+      content. Order them so backgrounds alternate (see STYLE-GUIDE §7).
+   4. Leave the header, footer, and <script> untouched.
+
+  Available blocks (see tefco-blocks.html for the markup):
+   • page-hero        — dark photo hero with breadcrumb (use once, first)
+   • lsplit           — text + framed photo (left or right via .flip)
+   • sec-teal lsplit  — deep-teal version of the split
+   • features         — checklist grid of options/benefits
+   • stat-strip       — slim band of big numbers
+   • photo-banner     — full-bleed photo + floating card
+   • overlap-panel    — charcoal panel with photo breaking out
+   • tile-grid        — gallery image tiles
+   • rev-grid         — review cards
+   • faqs             — FAQ accordion (pair with FAQPage schema)
+   • cta-band         — teal call-to-action band (use once, last)
+  Background modifiers for any section: .sec-gray .sec-warm .sec-pale
+═══════════════════════════════════════════════════════════ -->
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- [[TITLE — "<Keyword> in Ogden, UT — TEFCO", under 60 chars]] -->
+<title>[[Page Title]] — TEFCO</title>
+<!-- [[META DESCRIPTION — 150-160 chars: service + Ogden/Weber County + phone]] -->
+<meta name="description" content="[[Description with (801) 621-1010]]">
+<link rel="canonical" href="https://tefcofab.com/[[slug]]/">
+<meta property="og:type" content="website">
+<meta property="og:title" content="[[Page Title]] — TEFCO">
+<meta property="og:description" content="[[Same as meta description]]">
+<meta property="og:image" content="[[Hero image URL]]">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,400..700;1,400..700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="tefco.css">
+
+<!-- [[SCHEMA — pick what fits the page:
+     • Service page: a "Service" block whose provider @id is the homepage business
+     • Any page with an FAQ: add a matching "FAQPage" block
+     See STYLE-GUIDE §8. Example Service block: ]] -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Service",
+  "name": "[[Service Name]]",
+  "description": "[[One-sentence description]]",
+  "url": "https://tefcofab.com/[[slug]]/",
+  "provider": { "@id": "https://tefcofab.com/#business" },
+  "areaServed": [
+    { "@type": "City", "name": "Ogden" },
+    { "@type": "AdministrativeArea", "name": "Weber County" }
+  ]
+}
+</script>
+</head>
+<body>
+
+<!-- ═══════════ HEADER — do not edit (mark the current page's nav link with class="active") ═══════════ -->
+<header class="site-header">
+  <div class="wrap header-inner">
+    <a href="index.html" class="logo">
+      <img class="mark" src="https://tefcofab.com/wp-content/uploads/2026/02/Tefco_Primary_Logo_Clear-1.png" alt="Tefco">
+      <span class="strap">ORNAMENTAL IRON &bull; SINCE 1942</span>
+    </a>
+    <nav class="desk-nav">
+      <a href="index.html">Home</a>
+      <a href="index.html#about">About Us</a>
+      <a href="index.html#services" class="active">Services</a>
+      <a href="index.html#gallery">Gallery</a>
+      <a href="index.html#contact">Contact Us</a>
+    </nav>
+    <div class="header-actions">
+      <a class="quick-dial" href="tel:8016211010">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        <span class="num">(801) 621-1010</span>
+      </a>
+      <button class="btn-cta" data-open-quote>Get a Quote</button>
+    </div>
+    <div class="mobile-controls">
+      <button id="burger" aria-label="Menu">
+        <svg id="burgerOpen" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="18" y2="18"/></svg>
+        <svg id="burgerClose" style="display:none" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+      </button>
+    </div>
+  </div>
+  <div class="mobile-drawer" id="mobileDrawer">
+    <div class="inner">
+      <nav>
+        <a href="index.html">Home</a>
+        <a href="index.html#about">About Us</a>
+        <a href="index.html#services">Services</a>
+        <a href="index.html#gallery">Gallery</a>
+        <a href="index.html#contact">Contact Us</a>
+      </nav>
+      <button class="btn-cta" data-open-quote>Get a Quote</button>
+    </div>
+  </div>
+</header>
+
+<main>
+  <!-- ═══════════════════════════════════════════════════════
+       BUILD ZONE
+       Paste section blocks from tefco-blocks.html here.
+       Choose blocks that fit this page's content; reorder so no
+       two adjacent sections share a background. Typical flow:
+         page-hero → [3–6 content sections, mixed] → cta-band
+  ═══════════════════════════════════════════════════════════ -->
+
+</main>
+
+<!-- ═══════════ FOOTER — do not edit ═══════════ -->
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div>
+        <a href="index.html" class="footer-logo">
+          <img src="https://tefcofab.com/wp-content/uploads/2026/02/Tefco_Primary_Logo_Clear-1.png" alt="Tefco">
+        </a>
+        <p class="footer-byline">Welcome to TEFCO. We've been creating ornamental iron &amp; custom fabrication since 1942. Please call or use our online form to speak with a team member. We look forward to working with you!</p>
+      </div>
+      <div>
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="index.html#about">About Us</a></li>
+          <li><a href="index.html#services">Services</a></li>
+          <li><a href="index.html#gallery">Gallery</a></li>
+          <li><a href="index.html#contact">Contact Us</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Services</h4>
+        <ul>
+          <li><a href="https://tefcofab.com/powder-coating/">Powder Coating</a></li>
+          <li><a href="https://tefcofab.com/sand-shot-blasting/">Sand/Shot Blasting</a></li>
+          <li><a href="https://tefcofab.com/custom-fabrication/">Custom Fabrication</a></li>
+          <li><a href="https://tefcofab.com/gates/">Gates</a></li>
+          <li><a href="https://tefcofab.com/railings/">Railings</a></li>
+          <li><a href="https://tefcofab.com/security-doors/">Security Doors</a></li>
+          <li><a href="https://tefcofab.com/commercial/">Commercial</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Contact Us</h4>
+        <ul>
+          <li class="contact-li">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+            <a href="tel:8016211010" class="mono">(801) 621-1010</a>
+          </li>
+          <li class="contact-li">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+            <a href="mailto:info@tefcofab.com">info@tefcofab.com</a>
+          </li>
+          <li class="contact-li">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"/><circle cx="12" cy="10" r="3"/></svg>
+            <span>120 9th Street<br>Ogden, UT 84404</span>
+          </li>
+        </ul>
+        <h4 style="margin-top:24px;">Hours</h4>
+        <p class="hours-p">Monday – Friday<br>8:00AM – 4:30PM</p>
+      </div>
+    </div>
+    <hr class="footer-bottom-hr">
+    <div class="footer-bottom">
+      <span>copyright © 2026 Tefco | all rights reserved</span>
+      <span><a href="https://tefcofab.com/sitemap/">sitemap</a> | <a href="https://tefcofab.com/privacy/">privacy policy</a></span>
+    </div>
+  </div>
+</footer>
+
+<script src="tefco.js"></script>
+</body>
+</html>

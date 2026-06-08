@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- ═══════════════════════════════════════════════════════════
+  TEFCO SERVICE PAGE TEMPLATE
+  How to use: copy this file, rename it (e.g. gates.html), and
+  replace everything marked [[LIKE THIS]]. Sections you don't
+  need can be deleted — each one is independent.
+═══════════════════════════════════════════════════════════ -->
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- [[PAGE TITLE — "Service | Ogden, UT — TEFCO", under 60 chars]] -->
+<title>[[Service Name]] in Ogden, UT — TEFCO</title>
+<!-- [[META DESCRIPTION — 150-160 chars, include service + Ogden/Weber County + phone]] -->
+<meta name="description" content="[[Service description with location and (801) 621-1010]]">
+<link rel="canonical" href="https://tefcofab.com/[[service-slug]]/">
+<meta property="og:type" content="website">
+<meta property="og:title" content="[[Service Name]] in Ogden, UT — TEFCO">
+<meta property="og:description" content="[[Same as meta description]]">
+<meta property="og:image" content="[[Hero image URL]]">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,400..700;1,400..700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="tefco.css">
+
+<!-- Service schema — fill in name, description, and URL -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Service",
+  "name": "[[Service Name]]",
+  "description": "[[One-sentence service description]]",
+  "url": "https://tefcofab.com/[[service-slug]]/",
+  "provider": { "@id": "https://tefcofab.com/#business" },
+  "areaServed": [
+    { "@type": "City", "name": "Ogden" },
+    { "@type": "AdministrativeArea", "name": "Weber County" }
+  ]
+}
+</script>
+</head>
+<body>
+
+<!-- ════════════ HEADER (same on every page) ════════════ -->
+<header class="site-header">
+  <div class="wrap header-inner">
+    <a href="index.html" class="logo">
+      <img class="mark" src="https://tefcofab.com/wp-content/uploads/2026/02/Tefco_Primary_Logo_Clear-1.png" alt="Tefco">
+      <span class="strap">ORNAMENTAL IRON &bull; SINCE 1942</span>
+    </a>
+    <nav class="desk-nav">
+      <a href="index.html">Home</a>
+      <a href="index.html#about">About Us</a>
+      <a href="index.html#services" class="active">Services</a>
+      <a href="index.html#gallery">Gallery</a>
+      <a href="index.html#contact">Contact Us</a>
+    </nav>
+    <div class="header-actions">
+      <a class="quick-dial" href="tel:8016211010">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        <span class="num">(801) 621-1010</span>
+      </a>
+      <button class="btn-cta" data-open-quote>Get a Quote</button>
+    </div>
+    <div class="mobile-controls">
+      <button id="burger" aria-label="Menu">
+        <svg id="burgerOpen" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="18" y2="18"/></svg>
+        <svg id="burgerClose" style="display:none" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+      </button>
+    </div>
+  </div>
+  <div class="mobile-drawer" id="mobileDrawer">
+    <div class="inner">
+      <nav>
+        <a href="index.html">Home</a>
+        <a href="index.html#about">About Us</a>
+        <a href="index.html#services">Services</a>
+        <a href="index.html#gallery">Gallery</a>
+        <a href="index.html#contact">Contact Us</a>
+      </nav>
+      <button class="btn-cta" data-open-quote>Get a Quote</button>
+    </div>
+  </div>
+</header>
+
+<!-- ════════════ PAGE HERO ════════════ -->
+<section class="page-hero">
+  <div class="bg">
+    <!-- [[HERO IMAGE — landscape, ideally 1600px+ wide]] -->
+    <img src="[[hero-image.jpg]]" alt="[[Descriptive alt with service + Ogden, Utah]]">
+  </div>
+  <div class="wrap inner">
+    <nav class="breadcrumb">
+      <a href="index.html">Home</a><span class="sep">/</span>
+      <a href="index.html#services">Services</a><span class="sep">/</span>
+      <span>[[Service Name]]</span>
+    </nav>
+    <h1 class="reveal">
+      [[Headline Line One]]
+      <span class="serif-accent">[[serif accent line]]</span>
+    </h1>
+    <p class="lede reveal">[[1-2 sentence intro — what it is, who it's for, naming Ogden / Weber County.]]</p>
+    <div class="actions reveal">
+      <a href="tel:8016211010" class="btn btn-solid">Call (801) 621-1010</a>
+      <button class="btn btn-outline-light" data-open-quote>Free Estimate</button>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════ SPLIT: INTRO + PARALLAX PHOTO ════════════ -->
+<section class="split bg-grid">
+  <div class="split-grid">
+    <div class="split-copy">
+      <div class="inner">
+        <span class="eyebrow reveal">[[Eyebrow Label]]</span>
+        <h2 class="reveal">[[Section heading.]]</h2>
+        <div class="divider reveal"></div>
+        <p class="reveal">[[Main descriptive paragraph — keyword rich, mention materials, styles, process.]]</p>
+        <p class="reveal">[[Second paragraph — trust copy: since 1942, free estimates, guarantee.]]</p>
+        <div class="reveal" style="padding-top:8px;">
+          <button class="btn btn-outline-light" data-open-quote>Get a Free Estimate</button>
+        </div>
+      </div>
+    </div>
+    <div class="split-photo inset-shadow">
+      <!-- data-parallax enables scroll parallax; value = strength (0.3 subtle – 0.82 strong) -->
+      <img src="[[split-image.jpg]]" alt="[[Alt text]]" data-parallax="0.82">
+    </div>
+  </div>
+</section>
+
+<!-- ════════════ FEATURE CHECKLIST ════════════ -->
+<section class="features">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">What We Offer</span>
+      <h2>[[Features Heading]]</h2>
+    </div>
+    <div class="feature-grid">
+      <!-- repeat .feature for each item (4-6 recommended) -->
+      <div class="feature reveal">
+        <div class="chk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></div>
+        <div>
+          <h4>[[Feature title]]</h4>
+          <p>[[Feature description sentence.]]</p>
+        </div>
+      </div>
+      <div class="feature reveal" style="transition-delay:70ms">
+        <div class="chk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></div>
+        <div>
+          <h4>[[Feature title]]</h4>
+          <p>[[Feature description sentence.]]</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════ GALLERY TILES ════════════ -->
+<section class="split bg-grid" style="padding:72px 0;">
+  <div class="wrap">
+    <div class="sec-head on-dark">
+      <span class="eyebrow">Our Work</span>
+      <h2>[[Gallery Heading]]</h2>
+    </div>
+    <div class="tile-grid cols-3">
+      <!-- repeat .proj-card per photo (3 or 6 work best) -->
+      <div class="proj-card reveal">
+        <div class="frame"><img src="[[photo.jpg]]" alt="[[Alt]]" loading="lazy" referrerpolicy="no-referrer"></div>
+        <div class="shade"></div>
+        <span class="cat">[[Category]]</span>
+        <div class="plus">+</div>
+        <div class="inner">
+          <h3>[[Project Title]]</h3>
+          <p class="desc">[[One-line description]]</p>
+        </div>
+      </div>
+    </div>
+    <div style="text-align:center; margin-top:32px;">
+      <a href="https://tefcofab.com/gallery/" class="btn btn-outline-light btn-sm">View Full Gallery</a>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════ REVIEW + FAQ ════════════ -->
+<section class="features">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">Reviews</span>
+      <h2>What Customers Say</h2>
+    </div>
+    <div class="rev-grid" style="max-width:880px; margin:0 auto;">
+      <!-- pick 1-2 reviews relevant to THIS service -->
+      <div class="rev-card reveal">
+        <div class="stars">★★★★★</div>
+        <blockquote>"[[Review text]]"</blockquote>
+        <div class="who">[[Name]]</div>
+        <div class="src">Google Review</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="faqs" style="padding-top:0;">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">Questions</span>
+      <h2>FAQs</h2>
+    </div>
+    <div class="faq-list">
+      <!-- repeat per question; add matching FAQPage schema in head for SEO -->
+      <details open>
+        <summary>[[Question?]]<span class="pm">+</span></summary>
+        <div class="ans">[[Answer.]]</div>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════ CTA BAND ════════════ -->
+<section class="cta-band">
+  <div class="wrap inner">
+    <div>
+      <h2>[[CTA heading — e.g. Ready for your new railing?]]</h2>
+      <p>Call us or fill out our online form — we'll provide a detailed free estimate so you can move forward with confidence.</p>
+    </div>
+    <button class="btn btn-dark" data-open-quote>Get a Free Estimate</button>
+  </div>
+</section>
+
+<!-- ════════════ FOOTER (same on every page) ════════════ -->
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div>
+        <a href="index.html" class="footer-logo">
+          <img src="https://tefcofab.com/wp-content/uploads/2026/02/Tefco_Primary_Logo_Clear-1.png" alt="Tefco">
+        </a>
+        <p class="footer-byline">Welcome to TEFCO. We've been creating ornamental iron &amp; custom fabrication since 1942. Please call or use our online form to speak with a team member. We look forward to working with you!</p>
+      </div>
+      <div>
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="index.html#about">About Us</a></li>
+          <li><a href="index.html#services">Services</a></li>
+          <li><a href="index.html#gallery">Gallery</a></li>
+          <li><a href="index.html#contact">Contact Us</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Services</h4>
+        <ul>
+          <li><a href="https://tefcofab.com/powder-coating/">Powder Coating</a></li>
+          <li><a href="https://tefcofab.com/sand-shot-blasting/">Sand/Shot Blasting</a></li>
+          <li><a href="https://tefcofab.com/custom-fabrication/">Custom Fabrication</a></li>
+          <li><a href="https://tefcofab.com/gates/">Gates</a></li>
+          <li><a href="https://tefcofab.com/railings/">Railings</a></li>
+          <li><a href="https://tefcofab.com/security-doors/">Security Doors</a></li>
+          <li><a href="https://tefcofab.com/commercial/">Commercial</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Contact Us</h4>
+        <ul>
+          <li class="contact-li">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+            <a href="tel:8016211010" class="mono">(801) 621-1010</a>
+          </li>
+          <li class="contact-li">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+            <a href="mailto:info@tefcofab.com">info@tefcofab.com</a>
+          </li>
+          <li class="contact-li">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"/><circle cx="12" cy="10" r="3"/></svg>
+            <span>120 9th Street<br>Ogden, UT 84404</span>
+          </li>
+        </ul>
+        <h4 style="margin-top:24px;">Hours</h4>
+        <p class="hours-p">Monday – Friday<br>8:00AM – 4:30PM</p>
+      </div>
+    </div>
+    <hr class="footer-bottom-hr">
+    <div class="footer-bottom">
+      <span>copyright © 2026 Tefco | all rights reserved</span>
+      <span><a href="https://tefcofab.com/sitemap/">sitemap</a> | <a href="https://tefcofab.com/privacy/">privacy policy</a></span>
+    </div>
+  </div>
+</footer>
+
+<script src="tefco.js"></script>
+</body>
+</html>

@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- TEFCO Element Library — living style guide. Open in a browser to see
+     every shared component with the class names to use. -->
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TEFCO — Element Library</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,400..700;1,400..700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="tefco.css">
+<style>
+  /* library chrome only — not part of the design system */
+  .lib-section { padding: 48px 0; border-top: 3px solid var(--gold); }
+  .lib-section.light { background: var(--slate); color: var(--charcoal); }
+  .lib-section.dark { background: var(--charcoal); }
+  .lib-title {
+    font-family: var(--font-mono); font-size: 11px; letter-spacing: .3em;
+    text-transform: uppercase; color: var(--gold); margin-bottom: 6px; font-weight: 700;
+  }
+  .lib-note { font-size: 12px; opacity: .6; margin-bottom: 28px; font-weight: 300; max-width: 720px; line-height: 1.6; }
+  .lib-note code {
+    font-family: var(--font-mono); font-size: 11px; background: rgba(20,184,166,.12);
+    color: var(--gold-dark); padding: 1px 6px; border-radius: 2px;
+  }
+  .lib-section.dark .lib-note code { color: var(--gold-light); }
+  .swatches { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 14px; }
+  .swatch { border-radius: 2px; overflow: hidden; border: 1px solid rgba(0,0,0,.1); }
+  .swatch .chip { height: 64px; }
+  .swatch .meta { background: #fff; padding: 8px 10px; font-family: var(--font-mono); font-size: 10px; color: #333; line-height: 1.6; }
+  .type-row { display: flex; flex-direction: column; gap: 18px; }
+  .btn-row { display: flex; flex-wrap: wrap; gap: 14px; align-items: center; }
+</style>
+</head>
+<body>
+
+<!-- header so the library previews it too -->
+<header class="site-header solid" style="position:sticky;">
+  <div class="wrap header-inner">
+    <a href="#" class="logo">
+      <img class="mark" src="https://tefcofab.com/wp-content/uploads/2026/02/Tefco_Primary_Logo_Clear-1.png" alt="Tefco">
+      <span class="strap">ELEMENT LIBRARY</span>
+    </a>
+    <nav class="desk-nav">
+      <a href="#colors">Colors</a>
+      <a href="#type">Type</a>
+      <a href="#buttons">Buttons</a>
+      <a href="#cards">Cards</a>
+      <a href="#sections">Sections</a>
+    </nav>
+    <div class="header-actions">
+      <button class="btn-cta" data-open-quote>Modal Demo</button>
+    </div>
+    <div class="mobile-controls">
+      <button id="burger" aria-label="Menu">
+        <svg id="burgerOpen" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="18" y2="18"/></svg>
+        <svg id="burgerClose" style="display:none" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+      </button>
+    </div>
+  </div>
+  <div class="mobile-drawer" id="mobileDrawer"><div class="inner"><nav><a href="#colors">Colors</a></nav></div></div>
+</header>
+
+<!-- COLORS -->
+<section class="lib-section light" id="colors">
+  <div class="wrap">
+    <div class="lib-title">01 — Color Tokens</div>
+    <p class="lib-note">CSS variables defined in <code>tefco.css</code>. Always reference the variable, never the hex.</p>
+    <div class="swatches">
+      <div class="swatch"><div class="chip" style="background:#14b8a6"></div><div class="meta">--gold<br>#14b8a6</div></div>
+      <div class="swatch"><div class="chip" style="background:#0f766e"></div><div class="meta">--gold-dark<br>#0f766e</div></div>
+      <div class="swatch"><div class="chip" style="background:#2dd4bf"></div><div class="meta">--gold-light<br>#2dd4bf</div></div>
+      <div class="swatch"><div class="chip" style="background:#e6f4f2"></div><div class="meta">--gold-pale<br>#e6f4f2</div></div>
+      <div class="swatch"><div class="chip" style="background:#161719"></div><div class="meta">--charcoal<br>#161719</div></div>
+      <div class="swatch"><div class="chip" style="background:#1e1f22"></div><div class="meta">--wood-dark<br>#1e1f22</div></div>
+      <div class="swatch"><div class="chip" style="background:#f7f6f3"></div><div class="meta">--wood-light<br>#f7f6f3</div></div>
+      <div class="swatch"><div class="chip" style="background:#fdfdfc"></div><div class="meta">--slate<br>#fdfdfc</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- TYPE -->
+<section class="lib-section dark" id="type">
+  <div class="wrap">
+    <div class="lib-title">02 — Typography</div>
+    <p class="lib-note">Space Grotesk for display headings (<code>.h-display</code>), Playfair italic for accents (<code>.serif-accent</code>), Inter for body, mono for labels (<code>.eyebrow</code>).</p>
+    <div class="type-row">
+      <span class="eyebrow">Eyebrow Label — .eyebrow</span>
+      <div class="h-display" style="font-size:clamp(2rem,5vw,3.4rem); color:#fff;">Display Heading<br><span class="serif-accent">with serif accent</span></div>
+      <div class="divider"></div>
+      <p style="color:rgba(255,255,255,.7); font-size:13px; line-height:1.75; font-weight:300; max-width:560px;">Body copy — Inter 300, 13px, 1.75 line height on dark backgrounds at 70% white. Use for descriptive paragraphs in split sections and heroes.</p>
+      <span class="link-more">Text link with arrow — .link-more <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>
+    </div>
+  </div>
+</section>
+
+<!-- BUTTONS -->
+<section class="lib-section dark" id="buttons" style="border-top-color: rgba(255,255,255,.1);">
+  <div class="wrap">
+    <div class="lib-title">03 — Buttons</div>
+    <p class="lib-note">Base class <code>.btn</code> plus a variant. Any button with <code>data-open-quote</code> opens the shared quote modal (injected by <code>tefco.js</code>).</p>
+    <div class="btn-row">
+      <button class="btn btn-solid">.btn-solid</button>
+      <button class="btn btn-outline-light">.btn-outline-light</button>
+      <button class="btn btn-dark" style="border:1px solid rgba(255,255,255,.2);">.btn-dark</button>
+      <button class="btn btn-solid btn-sm">.btn-sm</button>
+      <button class="btn-cta">.btn-cta (header)</button>
+    </div>
+    <div class="btn-row" style="background:var(--slate); padding:20px; border-radius:2px; margin-top:16px;">
+      <button class="btn btn-outline-dark">.btn-outline-dark (light bg)</button>
+    </div>
+  </div>
+</section>
+
+<!-- CARDS -->
+<section class="lib-section light" id="cards">
+  <div class="wrap">
+    <div class="lib-title">04 — Cards</div>
+    <p class="lib-note">Service photo card <code>.pillar</code> (in <code>.card-grid</code>), gallery tile <code>.proj-card</code> (in <code>.tile-grid</code>), review card <code>.rev-card</code> (in <code>.rev-grid</code>), feature row <code>.feature</code> (in <code>.feature-grid</code>).</p>
+
+    <div class="card-grid" style="margin-bottom:32px;">
+      <div class="pillar">
+        <div class="ph">
+          <img src="https://tefcofab.com/wp-content/uploads/2024/11/IMG_0803-scaled.jpg" alt="Service card example">
+          <span class="num">01</span>
+        </div>
+        <div class="body">
+          <h3><a href="#">Service Card</a></h3>
+          <p>.pillar — photo, number chip, hover lift + teal underline sweep. Title links to the service page.</p>
+          <span class="link-more">Learn More <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>
+        </div>
+      </div>
+      <div class="proj-card">
+        <div class="frame"><img src="https://tefcofab.com/wp-content/uploads/2026/02/house-with-rails-scaled.jpg" alt="Gallery tile example"></div>
+        <div class="shade"></div>
+        <span class="cat">Category</span>
+        <div class="plus">+</div>
+        <div class="inner">
+          <h3>Gallery Tile</h3>
+          <p class="desc">.proj-card — hover slides this description up</p>
+        </div>
+      </div>
+      <div class="rev-card">
+        <div class="stars">★★★★★</div>
+        <blockquote>".rev-card — review card with stars, quote, attribution. Hover adds a soft premium shadow."</blockquote>
+        <div class="who">Customer Name</div>
+        <div class="src">Google Review</div>
+      </div>
+    </div>
+
+    <div class="feature-grid">
+      <div class="feature">
+        <div class="chk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></div>
+        <div>
+          <h4>Feature Row</h4>
+          <p>.feature — checkmark + title + description, used for service option lists.</p>
+        </div>
+      </div>
+      <div class="feature">
+        <div class="chk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></div>
+        <div>
+          <h4>Add .reveal</h4>
+          <p>Any element with class <code>reveal</code> fades up on scroll; stagger with inline <code>transition-delay</code>.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION PATTERNS -->
+<section class="lib-section dark" id="sections" style="padding-bottom:0;">
+  <div class="wrap">
+    <div class="lib-title">05 — Section Patterns</div>
+    <p class="lib-note">Split section with parallax photo (<code>.split</code> + <code>.bg-grid</code> texture + <code>data-parallax</code> image + <code>.inset-shadow</code>), CTA band (<code>.cta-band</code>), FAQ (<code>.faqs</code>). Below are live examples.</p>
+  </div>
+
+  <div class="split bg-grid" style="margin-top:24px;">
+    <div class="split-grid" style="min-height:420px;">
+      <div class="split-copy">
+        <div class="inner">
+          <span class="eyebrow">Split Section</span>
+          <h2>Text + parallax photo.</h2>
+          <div class="divider"></div>
+          <p>The image drifts as the page scrolls (set <code style="color:var(--gold-light); font-family:var(--font-mono); font-size:11px;">data-parallax="0.82"</code> on the img — lower is subtler). The frame uses .inset-shadow for the recessed window look, and the section uses .bg-grid for the blueprint texture.</p>
+          <div class="badges">
+            <div class="badge"><div class="bx"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></svg></div><span>Badge Row</span></div>
+            <div class="badge"><div class="bx"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z"/></svg></div><span>.badge</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="split-photo inset-shadow">
+        <img src="https://tefcofab.com/wp-content/uploads/2026/02/1000037064-1-scaled.jpg" alt="Parallax example" data-parallax="0.82">
+      </div>
+    </div>
+  </div>
+
+  <section class="faqs">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="eyebrow">FAQ Pattern</span>
+        <h2>.faqs + .faq-list</h2>
+      </div>
+      <div class="faq-list">
+        <details open>
+          <summary>How does the FAQ element work?<span class="pm">+</span></summary>
+          <div class="ans">Native &lt;details&gt;/&lt;summary&gt; — no JS needed. Pair every on-page FAQ with FAQPage schema in the head for SEO.</div>
+        </details>
+        <details>
+          <summary>Second question collapsed by default<span class="pm">+</span></summary>
+          <div class="ans">The plus rotates to an × when open.</div>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta-band">
+    <div class="wrap inner">
+      <div>
+        <h2>CTA Band — .cta-band</h2>
+        <p>Full-width teal band, darkens on hover. Pair with a .btn-dark button.</p>
+      </div>
+      <button class="btn btn-dark" data-open-quote>Open Quote Modal</button>
+    </div>
+  </section>
+</section>
+
+<script src="tefco.js"></script>
+</body>
+</html>
