@@ -1,0 +1,17 @@
+---
+interface Props { heading: string; text?: string; button?: string; }
+const {
+  heading,
+  text = "Call us or fill out our online form — we'll provide a detailed free estimate so you can move forward with confidence.",
+  button = 'Get a Free Estimate',
+} = Astro.props;
+---
+<section class="cta-band">
+  <div class="wrap inner">
+    <div>
+      <h2>{heading}</h2>
+      <p>{text}</p>
+    </div>
+    <button class="btn btn-dark" data-open-quote>{button}</button>
+  </div>
+</section>

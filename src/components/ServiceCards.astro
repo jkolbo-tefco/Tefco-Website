@@ -1,0 +1,39 @@
+---
+import Photo from './Photo.astro';
+import { services } from '../data/site';
+interface Props {
+  eyebrow?: string;
+  heading?: string;
+  sec?: '' | 'gray' | 'warm' | 'pale';
+  /** Limit to these slugs / order; default = all */
+  only?: string[];
+}
+const { eyebrow, heading, sec = '', only } = Astro.props;
+const list = only ? only.map((s) => services.find((x) => x.slug === s)!).filter(Boolean) : services;
+const secClass = sec ? ` sec-${sec}` : '';
+---
+<section class={`features${secClass}`}>
+  <div class="wrap">
+    {(eyebrow || heading) && (
+      <div class="sec-head">
+        {eyebrow && <span class="eyebrow">{eyebrow}</span>}
+        {heading && <h2>{heading}</h2>}
+      </div>
+    )}
+    <div class="card-grid">
+      {list.map((s, i) => (
+        <article class="pillar reveal" style={`transition-delay:${(i % 3) * 70}ms`}>
+          <div class="ph">
+            <Photo src={s.card} alt={s.cardNote} note={s.cardNote} />
+            <span class="num">{String(i + 1).padStart(2, '0')}</span>
+          </div>
+          <div class="body">
+            <h3><a href={s.href}>{s.title}</a></h3>
+            <p>{s.blurb}</p>
+            <a href={s.href} class="link-more">Learn more <span>→</span></a>
+          </div>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>

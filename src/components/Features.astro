@@ -1,0 +1,32 @@
+---
+interface Item { title: string; desc?: string; }
+interface Props {
+  eyebrow?: string;
+  heading?: string;
+  sec?: '' | 'gray' | 'warm' | 'pale';
+  items: Item[];
+}
+const { eyebrow, heading, sec = '', items } = Astro.props;
+const secClass = sec ? ` sec-${sec}` : '';
+---
+<section class={`features${secClass}`}>
+  <div class="wrap">
+    {(eyebrow || heading) && (
+      <div class="sec-head">
+        {eyebrow && <span class="eyebrow">{eyebrow}</span>}
+        {heading && <h2>{heading}</h2>}
+      </div>
+    )}
+    <div class="feature-grid">
+      {items.map((it, i) => (
+        <div class="feature reveal" style={`transition-delay:${i * 70}ms`}>
+          <div class="chk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></div>
+          <div>
+            <h4>{it.title}</h4>
+            {it.desc && <p>{it.desc}</p>}
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

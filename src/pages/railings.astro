@@ -1,0 +1,89 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/PageHero.astro';
+import LSplit from '../components/LSplit.astro';
+import Features from '../components/Features.astro';
+import GalleryFeature from '../components/GalleryFeature.astro';
+import ReviewGrid from '../components/ReviewGrid.astro';
+import FAQ from '../components/FAQ.astro';
+import CtaBand from '../components/CtaBand.astro';
+import { reviewsFor } from '../data/site';
+import { service, faqPage, breadcrumb } from '../lib/schema';
+
+const path = '/railings/';
+const title = 'Custom Iron Railings in Ogden, UT — TEFCO';
+const description = 'Custom iron railings in Ogden & Weber County, Utah — ornamental, modern, rustic or traditional, hand-crafted by TEFCO since 1942. Free estimates: (801) 621-1010.';
+const ogImage = 'https://tefcofab.com/wp-content/uploads/2026/02/house-with-rails-scaled.jpg';
+
+const faqs = [
+  { q: 'What railing styles can you build?', a: 'Whether you love ornamental, modern, rustic, or traditional, we can make it. We also build cable railing systems and floating stairs — if you can sketch it, we can fabricate it.' },
+  { q: 'Do you install the railings too?', a: 'Yes — we measure on site, fabricate in our Ogden shop, and our own crew handles installation for a perfect fit.' },
+  { q: 'How are the railings finished?', a: 'Railings are finished with our in-house powder coating — hundreds of colors, with a hard, long-lasting finish that resists chipping, scratching, and fading in Utah weather.' },
+  { q: 'What affects the price of a railing?', a: 'Length, material, design complexity, and installation access all factor in. The best way to get an accurate number is a free, no-obligation estimate.' },
+];
+
+const schema = [
+  service({ name: 'Custom Iron Railings', description: 'Custom iron railings for homes and businesses — ornamental, modern, rustic or traditional styles, plus cable railing and floating stairs.', path }),
+  faqPage(faqs),
+  breadcrumb([{ name: 'Home', path: '/' }, { name: 'Services', path: '/services/' }, { name: 'Railings', path }]),
+];
+
+const tiles = [
+  { img: 'https://tefcofab.com/wp-content/uploads/2026/02/house-with-rails-scaled.jpg', title: 'Modern Deck Railing', cat: 'Outdoor', desc: 'Horizontal-bar system, powder coated black', big: true },
+  { img: 'https://tefcofab.com/wp-content/uploads/2026/02/Indoor-modern-railing-system-e1770237188274.png', title: 'Indoor Railing System', cat: 'Indoor' },
+  { img: 'https://tefcofab.com/wp-content/uploads/2024/11/IMG_0230-scaled.jpg', title: 'Wrought Iron Staircase', cat: 'Staircase' },
+  { img: 'https://tefcofab.com/wp-content/uploads/2024/11/IMG_0803-scaled.jpg', title: 'Ornamental Railing', cat: 'Indoor' },
+  { img: 'https://tefcofab.com/wp-content/uploads/2024/11/IMG_0804-scaled.jpg', title: 'Scrollwork Detail', cat: 'Detail' },
+];
+---
+<BaseLayout title={title} description={description} path={path} ogImage={ogImage} active="/services/" schema={schema}>
+
+  <PageHero
+    eyebrow="Railings"
+    title="Custom Iron Railings"
+    accent="built for your home"
+    lede="Whether you love ornamental, modern, rustic, or traditional — TEFCO hand-crafts custom iron railings for homes and businesses across Ogden and Weber County."
+    bg="https://tefcofab.com/wp-content/uploads/2026/02/house-with-rails-scaled.jpg"
+    bgAlt="Modern iron deck railing on a home in Ogden, Utah at dusk"
+    breadcrumb={[{ label: 'Home', href: '/' }, { label: 'Services', href: '/services/' }, { label: 'Railings' }]}
+  />
+
+  <LSplit
+    eyebrow="Railings"
+    heading="Any style. Built to last."
+    flip
+    img="https://tefcofab.com/wp-content/uploads/2024/11/IMG_0803-scaled.jpg"
+    imgAlt="Custom indoor iron railing by TEFCO in Ogden, Utah"
+    caption="Custom Indoor Railing"
+  >
+    <p class="reveal">From classic ornamental scrollwork to clean modern systems, cable railing, and floating stairs — we design, fabricate, and install railings that fit your home and your style. Every railing is measured on site, built in our Ogden shop, and finished with our in-house powder coating for a finish that stands up to Utah weather.</p>
+    <p class="reveal">We've been crafting ornamental iron since 1942. We'll take the time to understand your vision, answer your questions, and provide a detailed free estimate — so you can move forward with confidence.</p>
+    <div class="actions reveal">
+      <button class="btn btn-solid btn-sm" data-open-quote>Get a Free Estimate</button>
+      <a href="/gallery/" class="btn btn-outline-dark">See the Gallery</a>
+    </div>
+  </LSplit>
+
+  <Features
+    eyebrow="What We Offer"
+    heading="Railing Options"
+    items={[
+      { title: 'Ornamental & Traditional', desc: 'Classic wrought iron with custom scrollwork — designs no one else can match.' },
+      { title: 'Modern Systems', desc: 'Clean horizontal-bar and minimal profiles for contemporary homes and decks.' },
+      { title: 'Cable Railing & Floating Stairs', desc: 'Open sightlines with engineered cable systems and statement staircase builds.' },
+      { title: 'Powder Coated In-House', desc: 'Hundreds of colors, durable against chipping and fading — finished in our own shop.' },
+    ]}
+  />
+
+  <GalleryFeature heading="Recent Railing Projects" tiles={tiles} />
+
+  <ReviewGrid heading="What Customers Say" items={reviewsFor('railings', 2)} narrow />
+
+  <FAQ heading="Railing FAQs" items={faqs} />
+
+  <CtaBand
+    heading="Ready for your new railing?"
+    text="Call us or fill out our online form — we'll provide a detailed free estimate so you can move forward with confidence."
+  />
+
+</BaseLayout>

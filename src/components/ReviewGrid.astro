@@ -1,0 +1,32 @@
+---
+import type { Review } from '../data/site';
+interface Props {
+  eyebrow?: string;
+  heading?: string;
+  sub?: string;
+  sec?: '' | 'gray' | 'warm' | 'pale';
+  items: Review[];
+  narrow?: boolean;
+}
+const { eyebrow = 'Reviews', heading = 'What Customers Say', sub, sec = '', items, narrow = false } = Astro.props;
+const secClass = sec ? ` sec-${sec}` : '';
+---
+<section class={`features${secClass}`}>
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">{eyebrow}</span>
+      <h2>{heading}</h2>
+      {sub && <p>{sub}</p>}
+    </div>
+    <div class="rev-grid" style={narrow ? 'max-width:880px;margin:0 auto;' : undefined}>
+      {items.map((r, i) => (
+        <div class="rev-card reveal" style={`transition-delay:${i * 70}ms`}>
+          <div class="stars">★★★★★</div>
+          <blockquote>"{r.quote}"</blockquote>
+          <div class="who">{r.name}</div>
+          <div class="src">{r.source}</div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

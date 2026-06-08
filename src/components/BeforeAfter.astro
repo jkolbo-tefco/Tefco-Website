@@ -1,0 +1,38 @@
+---
+interface Props {
+  eyebrow?: string;
+  heading?: string;
+  sec?: '' | 'gray' | 'warm' | 'pale';
+  before?: string | null;
+  after?: string | null;
+  beforeAlt: string;
+  afterAlt: string;
+  beforeNote?: string;
+  afterNote?: string;
+  caption?: string;
+}
+const { eyebrow, heading, sec = '', before, after, beforeAlt, afterAlt, beforeNote, afterNote, caption } = Astro.props;
+const secClass = sec ? ` sec-${sec}` : '';
+---
+<section class={`features${secClass}`}>
+  <div class="wrap">
+    {(eyebrow || heading) && (
+      <div class="sec-head">
+        {eyebrow && <span class="eyebrow">{eyebrow}</span>}
+        {heading && <h2>{heading}</h2>}
+      </div>
+    )}
+    <div class="ba-slider reveal">
+      {before
+        ? <img src={before} alt={beforeAlt} referrerpolicy="no-referrer" />
+        : <div class="img-ph" role="img" aria-label={beforeAlt}><span>{beforeNote ?? beforeAlt}</span></div>}
+      {after
+        ? <img class="ba-after" src={after} alt={afterAlt} referrerpolicy="no-referrer" />
+        : <div class="img-ph ba-after" role="img" aria-label={afterAlt}><span>{afterNote ?? afterAlt}</span></div>}
+      <span class="ba-label before">Before</span>
+      <span class="ba-label after">After</span>
+      <div class="ba-handle"></div>
+    </div>
+    {caption && <p style="text-align:center;margin-top:16px;font-size:13px;color:rgba(0,0,0,.55);">{caption}</p>}
+  </div>
+</section>

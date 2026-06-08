@@ -1,0 +1,28 @@
+---
+// Renders an <img> when src is provided; otherwise a labeled placeholder.
+// When you use a placeholder, add an entry to IMAGE-ASSETS.md describing it.
+interface Props {
+  src?: string | null;
+  alt: string;
+  /** Description shown in the placeholder when src is missing. */
+  note?: string;
+  class?: string;
+  loading?: 'lazy' | 'eager';
+  parallax?: number;
+}
+const { src, alt, note, class: cls, loading = 'lazy', parallax } = Astro.props;
+---
+{src ? (
+  <img
+    src={src}
+    alt={alt}
+    class={cls}
+    loading={loading}
+    referrerpolicy="no-referrer"
+    data-parallax={parallax}
+  />
+) : (
+  <div class={`img-ph ${cls ?? ''}`} role="img" aria-label={alt}>
+    <span>{note ?? alt}</span>
+  </div>
+)}

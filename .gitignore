@@ -6,3 +6,18 @@ desktop.ini
 *.swp
 .vscode/
 .idea/
+
+# Astro / Node
+node_modules/
+dist/
+.astro/
+.netlify/
+npm-debug.log*
+.env
+.env.production
+
+# Tooling scratch
+.playwright-mcp/
+*-parity.jpeg
+*-check.jpeg
+mobile-*.jpeg

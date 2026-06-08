@@ -1,0 +1,28 @@
+---
+interface Props {
+  img?: string | null;
+  alt: string;
+  note?: string;
+  eyebrow?: string;
+  heading?: string;
+  text?: string;
+  size?: '' | 'short' | 'tall';
+  parallax?: number;
+}
+const { img, alt, note, eyebrow, heading, text, size = '', parallax = 0.5 } = Astro.props;
+const sizeClass = size ? ` ${size}` : '';
+const hasCap = eyebrow || heading || text;
+---
+<section class={`photo-strip${sizeClass}${img ? '' : ' no-parallax'}`}>
+  {img
+    ? <img src={img} alt={alt} referrerpolicy="no-referrer" data-parallax={parallax} />
+    : <div class="img-ph" role="img" aria-label={alt} style="position:absolute;inset:0;height:100%;"><span>{note ?? alt}</span></div>}
+  <div class="veil"></div>
+  {hasCap && (
+    <div class="cap">
+      {eyebrow && <span class="eyebrow">{eyebrow}</span>}
+      {heading && <h2>{heading}</h2>}
+      {text && <p>{text}</p>}
+    </div>
+  )}
+</section>

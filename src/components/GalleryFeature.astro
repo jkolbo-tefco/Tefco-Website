@@ -1,0 +1,41 @@
+---
+import Photo from './Photo.astro';
+interface Tile { img?: string | null; title: string; cat?: string; desc?: string; note?: string; big?: boolean; }
+interface Props {
+  eyebrow?: string;
+  heading?: string;
+  sec?: '' | 'gray' | 'warm' | 'pale';
+  tiles: Tile[];
+  moreHref?: string;
+  moreLabel?: string;
+}
+const { eyebrow = 'Our Work', heading = 'Recent Projects', sec = 'gray', tiles, moreHref = '/gallery/', moreLabel = 'View Full Gallery' } = Astro.props;
+const secClass = sec ? ` sec-${sec}` : '';
+---
+<section class={`features${secClass}`}>
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">{eyebrow}</span>
+      <h2>{heading}</h2>
+    </div>
+    <div class="gallery-feature">
+      {tiles.map((t, i) => (
+        <div class={`proj-card${t.big ? ' big' : ''} reveal`} style={`transition-delay:${i * 70}ms`}>
+          <div class="frame"><Photo src={t.img} alt={t.title} note={t.note ?? t.title} /></div>
+          <div class="shade"></div>
+          {t.cat && <span class="cat">{t.cat}</span>}
+          <div class="plus">+</div>
+          <div class="inner">
+            <h3>{t.title}</h3>
+            {t.desc && <p class="desc">{t.desc}</p>}
+          </div>
+        </div>
+      ))}
+    </div>
+    {moreHref && (
+      <div style="text-align:center;margin-top:32px;">
+        <a href={moreHref} class="btn btn-outline-dark">{moreLabel}</a>
+      </div>
+    )}
+  </div>
+</section>

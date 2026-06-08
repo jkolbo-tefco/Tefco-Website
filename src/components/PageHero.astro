@@ -1,0 +1,39 @@
+---
+import Photo from './Photo.astro';
+import { business } from '../data/site';
+interface Props {
+  eyebrow?: string;
+  title: string;
+  accent?: string;
+  lede?: string;
+  bg?: string | null;
+  bgNote?: string;
+  bgAlt: string;
+  breadcrumb?: { label: string; href?: string }[];
+}
+const { eyebrow, title, accent, lede, bg, bgNote, bgAlt, breadcrumb } = Astro.props;
+---
+<section class="page-hero">
+  <div class="bg">
+    <Photo src={bg} alt={bgAlt} note={bgNote} loading="eager" />
+  </div>
+  <div class="wrap inner">
+    {breadcrumb && (
+      <nav class="breadcrumb">
+        {breadcrumb.map((b, i) => (
+          <>
+            {b.href ? <a href={b.href}>{b.label}</a> : <span>{b.label}</span>}
+            {i < breadcrumb.length - 1 && <span class="sep">/</span>}
+          </>
+        ))}
+      </nav>
+    )}
+    {eyebrow && <span class="eyebrow reveal">{eyebrow}</span>}
+    <h1 class="reveal">{title} {accent && <span class="serif-accent">{accent}</span>}</h1>
+    {lede && <p class="lede reveal">{lede}</p>}
+    <div class="actions reveal">
+      <a href={business.phoneHref} class="btn btn-solid">Call {business.phone}</a>
+      <button class="btn btn-outline-light" data-open-quote>Free Estimate</button>
+    </div>
+  </div>
+</section>

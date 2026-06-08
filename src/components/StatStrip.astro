@@ -1,0 +1,17 @@
+---
+interface Stat { n: string; l: string; }
+interface Props { items: Stat[]; }
+const { items } = Astro.props;
+---
+<section class="stat-strip">
+  <div class="wrap">
+    <div class="row">
+      {items.map((s) => (
+        <div class="reveal">
+          <div class="n">{s.n}</div>
+          <div class="l">{s.l}</div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

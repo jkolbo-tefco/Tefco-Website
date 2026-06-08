@@ -1,0 +1,41 @@
+---
+// Inline estimate form (Contact / Get a Quote pages).
+// Netlify Forms wiring (data-netlify) is finalized in Phase 4.
+interface Props { heading?: string; sub?: string; }
+const {
+  heading = 'Get a Free Estimate',
+  sub = "Tell us about your project — we'll get right back to you with a detailed, no-obligation quote.",
+} = Astro.props;
+---
+<div class="estimate-form">
+  {(heading || sub) && (
+    <div class="sec-head" style="text-align:left;margin-bottom:20px;">
+      {heading && <h2>{heading}</h2>}
+      {sub && <p>{sub}</p>}
+    </div>
+  )}
+  <form
+    class="inline-form"
+    name="estimate"
+    method="POST"
+    data-netlify="true"
+    netlify-honeypot="bot-field"
+    action="/thank-you/"
+  >
+    <input type="hidden" name="form-name" value="estimate" />
+    <p hidden><label>Don't fill this out: <input name="bot-field" /></label></p>
+    <div class="frow">
+      <div><label for="ef-name">Name *</label><input id="ef-name" type="text" name="name" required placeholder="e.g. John Smith" /></div>
+      <div><label for="ef-phone">Phone</label><input id="ef-phone" type="tel" name="phone" placeholder="(801) 555-0000" /></div>
+    </div>
+    <div class="frow">
+      <div><label for="ef-email">Email *</label><input id="ef-email" type="email" name="email" required placeholder="john@example.com" /></div>
+      <div><label for="ef-addr">Project Address</label><input id="ef-addr" type="text" name="address" placeholder="Street, City, UT" /></div>
+    </div>
+    <div><label for="ef-desc">Tell us about your project *</label><textarea id="ef-desc" name="description" rows="4" required placeholder="Tell us about your railing, gate, security door, powder coating, or custom fabrication project..."></textarea></div>
+    <div>
+      <button type="submit" class="btn btn-solid">Request My Free Estimate</button>
+      <p class="form-trust">Family owned since 1942 · Licensed &amp; insured · 4.6 ★ on Google</p>
+    </div>
+  </form>
+</div>

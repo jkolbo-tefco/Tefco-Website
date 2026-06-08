@@ -7,6 +7,18 @@ page links one stylesheet (`tefco.css`) and one script (`tefco.js`); this
 document explains the tokens, components, and section styles those files
 provide, and how to assemble a new page from them.
 
+> **Astro migration (June 2026):** the site is now built with Astro. The tokens,
+> colors, typography, and section *styles* in this guide are unchanged and still
+> authoritative — `tefco.css` is ported verbatim into `src/styles/`. What changed
+> is **assembly**: the copy-paste HTML "blocks" are now reusable `.astro`
+> **components** in `src/components/` (`PageHero`, `LSplit`, `Features`, `FAQ`,
+> `CtaBand`, `ReviewGrid`, `StatStrip`, `BeforeAfter`, `PhotoStrip`,
+> `GalleryFeature`, `ServiceCards`, `EstimateForm`, `Photo`). Pages live in
+> `src/pages/*.astro` wrapped in `BaseLayout`. The section-style reference below
+> still describes what each component renders. See `CLAUDE.md` for the file map
+> and `BUILD-PLAN.md` for status. The static `*.html` references
+> (`tefco-elements.html`, etc.) now live in `archive/static-prototype/`.
+
 **See it live:**
 - `tefco-elements.html` — every base component rendered with its class name
 - `tefco-sections.html` — every full-width section style in a realistic order

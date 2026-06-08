@@ -1,0 +1,32 @@
+---
+import Photo from './Photo.astro';
+interface Props {
+  eyebrow?: string;
+  heading: string;
+  flip?: boolean;
+  /** background modifier: '', 'gray', 'warm', 'pale', 'teal' */
+  sec?: '' | 'gray' | 'warm' | 'pale' | 'teal';
+  img?: string | null;
+  imgAlt: string;
+  imgNote?: string;
+  caption?: string;
+  noPadTop?: boolean;
+}
+const { eyebrow, heading, flip = false, sec = '', img, imgAlt, imgNote, caption } = Astro.props;
+const secClass = sec ? ` sec-${sec}` : '';
+const frameSide = flip ? 'frame-left' : '';
+---
+<section class={`lsplit${secClass}`}>
+  <div class={`wrap lsplit-grid${flip ? ' flip' : ''}`}>
+    <div class="copy">
+      {eyebrow && <span class="eyebrow reveal">{eyebrow}</span>}
+      <h2 class="reveal">{heading}</h2>
+      <div class="divider reveal"></div>
+      <slot />
+    </div>
+    <div class={`media frame-offset ${frameSide} reveal`}>
+      <Photo src={img} alt={imgAlt} note={imgNote} />
+      {caption && <span class="chip-caption">{caption}</span>}
+    </div>
+  </div>
+</section>
