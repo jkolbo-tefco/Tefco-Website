@@ -681,3 +681,60 @@ section.sec-teal { background: var(--gold-dark); color: #fff; }
   background: linear-gradient(to top, rgba(22,23,25,.06), transparent);
   pointer-events: none;
 }
+
+/* ── 26. PHOTO GALLERY — filterable masonry + full-screen lightbox ──
+   Used on gallery.html. Filtering + lightbox behavior in tefco.js
+   (activates only when `.gallery-masonry` is present). */
+.gallery-filter { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin-bottom: 36px; }
+.gallery-filter button {
+  font-family: var(--font-mono); font-size: 11px; letter-spacing: .15em; text-transform: uppercase;
+  font-weight: 700; color: var(--charcoal); background: transparent;
+  border: 1px solid rgba(0,0,0,.15); padding: 10px 18px; border-radius: 100px; transition: all .25s;
+}
+.gallery-filter button:hover { border-color: var(--gold); color: var(--gold-dark); }
+.gallery-filter button.active { background: var(--gold); border-color: var(--gold); color: #fff; }
+.gallery-filter .count { opacity: .55; font-weight: 600; }
+
+.gallery-masonry { columns: 1; column-gap: 14px; }
+@media (min-width: 560px)  { .gallery-masonry { columns: 2; } }
+@media (min-width: 1024px) { .gallery-masonry { columns: 3; } }
+@media (min-width: 1440px) { .gallery-masonry { columns: 4; } }
+.g-item {
+  break-inside: avoid; margin: 0 0 14px; position: relative; border-radius: 2px;
+  overflow: hidden; cursor: pointer; display: block; background: var(--wood-dark);
+}
+.g-item img { width: 100%; display: block; transition: transform .5s ease; }
+.g-item:hover img { transform: scale(1.05); }
+.g-item .g-ov {
+  position: absolute; inset: 0; display: flex; align-items: flex-end; padding: 16px;
+  background: linear-gradient(to top, rgba(10,10,12,.72), transparent 55%);
+  opacity: 0; transition: opacity .35s;
+}
+.g-item:hover .g-ov { opacity: 1; }
+.g-item .g-ov .cat { font-family: var(--font-mono); font-size: 9px; letter-spacing: .2em; text-transform: uppercase; color: #fff; }
+.g-item .g-ov .zoom {
+  position: absolute; top: 12px; right: 12px; width: 32px; height: 32px; border-radius: 50%;
+  border: 1px solid rgba(255,255,255,.5); color: #fff; display: flex; align-items: center;
+  justify-content: center; background: rgba(0,0,0,.25); backdrop-filter: blur(4px);
+}
+.g-item.hide { display: none; }
+.gallery-empty { text-align: center; color: rgba(0,0,0,.45); font-size: 13px; padding: 40px 0; display: none; }
+
+/* full-screen lightbox */
+#glb { position: fixed; inset: 0; z-index: 60; display: none; align-items: center; justify-content: center; background: rgba(10,10,12,.95); }
+#glb.open { display: flex; }
+#glb .glb-stage { position: relative; max-width: 92vw; max-height: 84vh; display: flex; align-items: center; justify-content: center; }
+#glb img { max-width: 92vw; max-height: 80vh; object-fit: contain; border-radius: 2px; box-shadow: var(--shadow-premium); }
+#glb .glb-cap { position: absolute; left: 0; right: 0; bottom: 18px; text-align: center; font-family: var(--font-mono); font-size: 11px; letter-spacing: .15em; text-transform: uppercase; color: rgba(255,255,255,.85); }
+#glb .glb-cap b { color: var(--gold-light); font-weight: 700; }
+#glb .glb-count { position: absolute; top: 22px; left: 24px; font-family: var(--font-mono); font-size: 11px; letter-spacing: .15em; color: rgba(255,255,255,.6); }
+#glb .glb-x { position: absolute; top: 16px; right: 20px; color: #fff; background: rgba(0,0,0,.3); border: 1px solid rgba(255,255,255,.25); width: 42px; height: 42px; border-radius: 50%; display: flex; align-items: center; justify-content: center; transition: all .25s; }
+#glb .glb-x:hover { background: var(--gold); border-color: var(--gold); }
+#glb .glb-nav {
+  position: absolute; top: 50%; transform: translateY(-50%); width: 52px; height: 52px; border-radius: 50%;
+  border: 1px solid rgba(255,255,255,.3); background: rgba(0,0,0,.3); color: #fff;
+  display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all .25s;
+}
+#glb .glb-nav:hover { background: var(--gold); border-color: var(--gold); }
+#glb .glb-prev { left: 18px; } #glb .glb-next { right: 18px; }
+@media (max-width: 640px) { #glb .glb-nav { width: 42px; height: 42px; } #glb .glb-prev { left: 8px; } #glb .glb-next { right: 8px; } }

@@ -11,6 +11,7 @@ provide, and how to assemble a new page from them.
 - `tefco-elements.html` — every base component rendered with its class name
 - `tefco-sections.html` — every full-width section style in a realistic order
 - `railings.html` / `gates.html` — complete service pages built from the system
+- `gallery.html` — filterable masonry gallery with full-screen lightbox
 - `tefco-page-scaffold.html` — the chrome-only shell for a new page
 - `tefco-blocks.html` — copy-paste section blocks to assemble a page
 
@@ -331,21 +332,28 @@ These are non-negotiable on each new page:
 
 ## 9. Brand facts (for copy & schema)
 
-- **Founded:** 1942 · **Family owned**
+- **Founded:** 1942 as a **railing, door & metal fabrication** business ·
+  **Family owned** · **Powder coating added in 2000** (don't claim powder coating
+  "since 1942" — company is 80+ yrs, powder coating ~25 yrs)
 - **Licensed & insured**
+- **Google rating:** **4.6 ★ · 29 reviews** (confirmed June 2026 — used in copy +
+  `AggregateRating` schema on the homepage; keep updated)
 - **Address:** 120 9th Street, Ogden, UT 84404
 - **Phone:** (801) 621-1010 · **Email:** info@tefcofab.com
 - **Hours:** Monday–Friday, 8:00 AM – 4:30 PM
-- **Service area (primary):** Ogden & Weber County, Utah
+- **Service area:** Northern Utah / the Wasatch Front. **Primary target: Salt
+  Lake City north to the Idaho border** (Salt Lake, Davis, Weber, Box Elder,
+  Cache counties — SLC, Bountiful, Layton, Clearfield, Roy, Ogden, Brigham City,
+  Logan). Takes some jobs as far south as **Spanish Fork**, but optimize for
+  SLC-and-north.
 - **Primary ranking focus:** custom iron railings & ironwork, then powder coating
 - **Voice:** confident, local, craftsmanship-first. "Free estimates,"
   "satisfaction guarantee," "since 1942," "second to none."
 - **Logo:** `Tefco_Primary_Logo_Clear-1.png.webp` (local) or the hosted
   `https://tefcofab.com/wp-content/uploads/2026/02/Tefco_Primary_Logo_Clear-1.png`
 
-> **Still to confirm with the client:** exact Google star rating + review count,
-> and any specific warranty wording beyond "satisfaction guarantee." Don't
-> publish numbers until confirmed.
+> **Still to confirm with the client:** specific warranty wording beyond
+> "satisfaction guarantee," and contractor license # / insurer for citing.
 
 ---
 

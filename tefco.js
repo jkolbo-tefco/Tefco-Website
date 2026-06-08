@@ -215,6 +215,51 @@
     window.addEventListener('touchend', end);
   });
 
+  /* ── photo gallery: category filter + full-screen lightbox ── */
+  const gMasonry = $('#galleryMasonry');
+  if (gMasonry) {
+    const items = $$('.g-item', gMasonry);
+    const glb = $('#glb');
+    const glbImg = $('#glbImg');
+    const glbCap = $('#glbCap');
+    const glbCount = $('#glbCount');
+    const empty = $('#galleryEmpty');
+    let visible = items.slice();
+    let idx = 0;
+
+    $$('.gallery-filter button').forEach((btn) => btn.addEventListener('click', () => {
+      const cat = btn.dataset.cat;
+      $$('.gallery-filter button').forEach((b) => b.classList.toggle('active', b === btn));
+      items.forEach((it) => it.classList.toggle('hide', cat !== 'all' && it.dataset.cat !== cat));
+      visible = items.filter((it) => !it.classList.contains('hide'));
+      if (empty) empty.style.display = visible.length ? 'none' : 'block';
+    }));
+
+    const render = () => {
+      const it = visible[idx];
+      const img = it.querySelector('img');
+      glbImg.src = img.dataset.full || img.src;
+      glbImg.alt = img.alt;
+      glbCap.innerHTML = (it.dataset.title ? '<b>' + it.dataset.title + '</b> — ' : '') + (it.dataset.cat || '');
+      glbCount.textContent = (idx + 1) + ' / ' + visible.length;
+    };
+    const openGlb = (i) => { idx = i; render(); glb.classList.add('open'); document.body.style.overflow = 'hidden'; };
+    const closeGlb = () => { glb.classList.remove('open'); document.body.style.overflow = ''; };
+    const navGlb = (d) => { idx = (idx + d + visible.length) % visible.length; render(); };
+
+    items.forEach((it) => it.addEventListener('click', () => openGlb(visible.indexOf(it))));
+    $('#glbX').addEventListener('click', closeGlb);
+    $('#glbPrev').addEventListener('click', (e) => { e.stopPropagation(); navGlb(-1); });
+    $('#glbNext').addEventListener('click', (e) => { e.stopPropagation(); navGlb(1); });
+    glb.addEventListener('click', (e) => { if (e.target === glb) closeGlb(); });
+    document.addEventListener('keydown', (e) => {
+      if (!glb.classList.contains('open')) return;
+      if (e.key === 'Escape') closeGlb();
+      else if (e.key === 'ArrowLeft') navGlb(-1);
+      else if (e.key === 'ArrowRight') navGlb(1);
+    });
+  }
+
   /* ── ESC closes everything ── */
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') { closeQuote(); closeMobile(); }
