@@ -1,0 +1,98 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/PageHero.astro';
+import LSplit from '../components/LSplit.astro';
+import Features from '../components/Features.astro';
+import BeforeAfter from '../components/BeforeAfter.astro';
+import ReviewGrid from '../components/ReviewGrid.astro';
+import FAQ from '../components/FAQ.astro';
+import CtaBand from '../components/CtaBand.astro';
+import { reviewsFor } from '../data/site';
+import { service, faqPage, breadcrumb } from '../lib/schema';
+
+const path = '/powder-coating/';
+const title = 'Powder Coating in Ogden, UT — Custom Colors | TEFCO';
+const description = 'Professional powder coating in Ogden, Utah — wheels, parts, furniture, railings & more. Durable, custom-matched finishes from TEFCO. Free quotes: (801) 621-1010.';
+const ogImage = 'https://tefcofab.com/wp-content/uploads/2026/02/wheelspowdercoat.jpg';
+
+const faqs = [
+  { q: 'How does powder coating work?', a: 'A dry pigment is electrostatically sprayed onto clean metal, then cured in an oven so it melts into a hard, even shell — far more durable than liquid paint.' },
+  { q: 'What are the benefits of powder coating?', a: "It's more durable, more eco-friendly (no solvents), and available in far more colors and textures than paint — and it resists chips, scratches, and fading." },
+  { q: 'How do I maintain powder-coated surfaces?', a: 'Just wash with mild soap and water; avoid abrasive pads and harsh solvents. The finish does the rest.' },
+  { q: 'What can you powder coat?', a: 'Wheels, automotive and UTV parts, railings, gates, furniture, fencing, machinery, and most metal — bring it in or call for a quote.' },
+];
+
+const schema = [
+  service({ name: 'Powder Coating', description: 'In-house powder coating for wheels, parts, furniture, railings and more in hundreds of custom colors.', path }),
+  faqPage(faqs),
+  breadcrumb([{ name: 'Home', path: '/' }, { name: 'Services', path: '/services/' }, { name: 'Powder Coating', path }]),
+];
+---
+<BaseLayout title={title} description={description} path={path} ogImage={ogImage} active="/services/" schema={schema}>
+  <PageHero
+    eyebrow="Residential & Commercial"
+    title="Powder Coating"
+    accent="in hundreds of colors"
+    lede="Ogden's go-to powder coating shop — a tougher, longer-lasting finish than paint, for everything from a single set of wheels to thousands of parts."
+    bg="https://tefcofab.com/wp-content/uploads/2026/02/wheelspowdercoat.jpg"
+    bgAlt="Freshly powder-coated wheels at TEFCO in Ogden, Utah"
+    breadcrumb={[{ label: 'Home', href: '/' }, { label: 'Services', href: '/services/' }, { label: 'Powder Coating' }]}
+  />
+
+  <BeforeAfter
+    eyebrow="See The Difference"
+    heading="Bare metal → durable finish"
+    before={null}
+    after="https://tefcofab.com/wp-content/uploads/2026/02/wheelspowdercoat.jpg"
+    beforeAlt="Bare, unfinished metal wheels before powder coating"
+    beforeNote="BEFORE photo: a set of bare/rusty or stripped metal wheels (or parts) on the shop floor, unfinished — pairs with the coated 'after' wheels shot."
+    afterAlt="The same wheels after a glossy powder-coat finish, Ogden Utah"
+    caption="Drag the handle: bare metal vs. a durable powder-coated finish. Ogden, Utah."
+  />
+
+  <LSplit
+    eyebrow="Powder Coating"
+    heading="Quality powder coating in Utah"
+    flip
+    img="https://tefcofab.com/wp-content/uploads/2026/02/wheelspowdercoat.jpg"
+    imgAlt="Powder-coated automotive wheels by TEFCO, Ogden Utah"
+    caption="Powder-Coated Wheels"
+  >
+    <p class="reveal">TEFCO is your go-to powder coating company for residential and commercial work — wheels, automotive and UTV parts, patio furniture, railings, fencing, machinery, and more. From a single piece to a production run, we deliver an unparalleled, even finish and a fast turnaround.</p>
+    <div class="actions reveal">
+      <button class="btn btn-solid btn-sm" data-open-quote>Get a Free Quote</button>
+    </div>
+  </LSplit>
+
+  <Features
+    eyebrow="Why Powder Coat"
+    heading="Benefits of powder coating"
+    items={[
+      { title: 'Wide application', desc: 'Wheels, parts, furniture, railings, fencing, machinery and more.' },
+      { title: 'Custom color matching', desc: 'Hundreds of colors and textures to match your project.' },
+      { title: 'Superior durability', desc: 'A hard finish that commonly lasts 15–20 years.' },
+      { title: 'Uniform finish', desc: 'Even coverage with no runs, drips, or thin spots.' },
+      { title: 'Enhanced protection', desc: 'Strong corrosion resistance for the Utah outdoors.' },
+      { title: 'Efficient & fast', desc: 'Quick turnaround, even on large batches.' },
+    ]}
+  />
+
+  <LSplit
+    sec="gray"
+    eyebrow="Prepped Right"
+    heading="Blasted clean first"
+    img="https://tefcofab.com/wp-content/uploads/2021/09/Depositphotos_442109094_l-2015.jpg"
+    imgAlt="Sandblasting a part before powder coating, Ogden Utah"
+  >
+    <p class="reveal">A great finish starts with great prep. Every part we coat is first cleaned with our in-house <a href="/sand-shot-blasting/">sand &amp; shot blasting</a> so the powder bonds tight and lasts. It's why our finishes hold up the way they do.</p>
+    <div class="actions reveal">
+      <button class="btn btn-solid btn-sm" data-open-quote>Get a Free Quote</button>
+    </div>
+  </LSplit>
+
+  <ReviewGrid heading="What Customers Say" items={reviewsFor('powder-coating', 3)} narrow />
+
+  <FAQ heading="Powder Coating FAQs" items={faqs} />
+
+  <CtaBand heading="Give us something to coat." text="Bring in your wheels, parts, or furniture — or call for a fast, free quote." button="Get a Free Quote" />
+</BaseLayout>

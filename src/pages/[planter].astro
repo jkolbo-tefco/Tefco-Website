@@ -1,0 +1,101 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/PageHero.astro';
+import LSplit from '../components/LSplit.astro';
+import Features from '../components/Features.astro';
+import CtaBand from '../components/CtaBand.astro';
+import { planters, planterImageNote } from '../data/planters';
+import { breadcrumb } from '../lib/schema';
+
+export function getStaticPaths() {
+  return planters.map((p) => ({ params: { planter: p.slug }, props: { p } }));
+}
+
+const { p } = Astro.props;
+const title = `${p.title} — Custom Metal Planters Utah | TEFCO`;
+const description = `Custom ${p.title.toLowerCase()} in ${p.metaExtra}. Built in Ogden by TEFCO since 1942. Free estimates: (801) 621-1010.`;
+
+const productSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Product',
+  name: p.title,
+  description: `Custom ${p.title.toLowerCase()} in aluminum, mild steel, or corten — any size and powder-coat color.`,
+  brand: { '@type': 'Brand', name: 'TEFCO' },
+  material: ['Aluminum', 'Mild steel', 'Corten steel'],
+  offers: { '@type': 'Offer', availability: 'https://schema.org/InStock', priceCurrency: 'USD', url: `https://tefcofab.com${p.path}` },
+};
+const schema = [productSchema, breadcrumb([
+  { name: 'Home', path: '/' },
+  { name: 'Planters', path: '/planters/' },
+  { name: p.title, path: p.path },
+])];
+---
+<BaseLayout title={title} description={description} path={p.path} active="/services/" schema={schema}>
+  <PageHero
+    eyebrow="Custom Metal Planters"
+    title={p.title}
+    accent="in any size or color"
+    lede={p.angle}
+    bg={null}
+    bgAlt={`${p.title} by TEFCO, Ogden Utah`}
+    bgNote={planterImageNote(p.title)}
+    breadcrumb={[{ label: 'Home', href: '/' }, { label: 'Planters', href: '/planters/' }, { label: p.title }]}
+  />
+
+  <LSplit
+    eyebrow={p.title}
+    heading="Made your way"
+    flip
+    img={null}
+    imgAlt={`${p.title} styled with plants, Utah`}
+    imgNote={planterImageNote(p.title)}
+  >
+    <p class="reveal">{p.angle} Built in our Ogden shop in aluminum, mild steel, or corten, in any size and any powder-coat color — with removable drain holes designed in.</p>
+    <div class="actions reveal">
+      <button class="btn btn-solid btn-sm" data-open-quote>Get a Free Estimate</button>
+      <a href="/planters/" class="btn btn-outline-dark">All Planters</a>
+    </div>
+  </LSplit>
+
+  <section class="features sec-gray">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="eyebrow">Sizes</span>
+        <h2>{p.title} options</h2>
+        {p.pull && <p>Exact dimensions are being finalized — call for current sizes.</p>}
+      </div>
+      <table class="cmp-table reveal">
+        <thead><tr><th>Style</th><th>Sizes (W × D × H)</th></tr></thead>
+        <tbody>
+          {p.varieties.map((v) => <tr><td>{v.name}</td><td>{v.sizes}</td></tr>)}
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <Features
+    eyebrow="Make It Custom"
+    heading="Customize every detail"
+    items={[
+      { title: 'Colors', desc: 'Hundreds of in-house powder-coat colors — see Planter Colors.' },
+      { title: 'Accessories', desc: 'Irrigation, LED lighting, casters, and more.' },
+      { title: 'Shapes & sizes', desc: 'Any size, or a completely custom shape.' },
+      { title: 'Three metals', desc: 'Aluminum, mild steel, or weathered corten.' },
+    ]}
+  />
+
+  <LSplit
+    eyebrow="Beyond Planters"
+    heading="More custom metal pieces"
+    img={null}
+    imgAlt="Custom metal furniture and fire features by TEFCO"
+    imgNote="Photo: a styled outdoor scene mixing TEFCO planters with other custom metal pieces — a fire pit, bench, or metal trellis."
+  >
+    <p class="reveal">Planters are just the start. We also build custom planter pots, metal and aluminum planters, metal furniture, benches, fire pits, water features, and metal trellises. Explore <a href="/planter-colors/">colors</a>, add <a href="/accessories/">accessories</a>, or see all <a href="/planters/">planter styles</a>.</p>
+    <div class="actions reveal">
+      <button class="btn btn-solid btn-sm" data-open-quote>Get a Free Estimate</button>
+    </div>
+  </LSplit>
+
+  <CtaBand heading={`Customize your ${p.title.toLowerCase()}.`} />
+</BaseLayout>

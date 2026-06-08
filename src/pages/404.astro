@@ -1,0 +1,17 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { business } from '../data/site';
+---
+<BaseLayout title="Page Not Found — TEFCO" description="That page couldn't be found. Explore TEFCO's custom iron, fabrication, and powder coating services in Ogden, Utah." path="/404/" active="" solidHeader>
+  <section class="features" style="padding-top:160px;text-align:center;">
+    <div class="wrap" style="max-width:560px;">
+      <span class="eyebrow">404</span>
+      <h1>We couldn't find that page</h1>
+      <p style="margin-top:16px;">It may have moved. Try our <a href="/services/">services</a>, browse the <a href="/gallery/">gallery</a>, or call <a href={business.phoneHref}>{business.phone}</a>.</p>
+      <div style="margin-top:28px;">
+        <a href="/" class="btn btn-solid">Back to Home</a>
+        <button class="btn btn-outline-dark" data-open-quote>Get a Free Estimate</button>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

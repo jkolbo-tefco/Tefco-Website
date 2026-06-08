@@ -1,0 +1,45 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { services } from '../data/site';
+import { planters } from '../data/planters';
+
+const path = '/sitemap/';
+const title = 'Sitemap — TEFCO';
+const description = 'A full list of pages on the TEFCO of Utah website.';
+
+const sections = [
+  { h: 'Main', links: [
+    { l: 'Home', href: '/' }, { l: 'About Us', href: '/about-us/' }, { l: 'Our Process', href: '/our-process/' },
+    { l: 'Services', href: '/services/' }, { l: 'Gallery', href: '/gallery/' }, { l: 'Reviews', href: '/reviews/' },
+    { l: 'FAQs', href: '/faqs/' }, { l: 'What Affects Cost', href: '/cost/' },
+    { l: 'Contact Us', href: '/contact-us/' }, { l: 'Get a Quote', href: '/get-a-quote/' },
+  ] },
+  { h: 'Services', links: services.map((s) => ({ l: s.title, href: s.href })) },
+  { h: 'Planters', links: [
+    { l: 'Planters', href: '/planters/' },
+    ...planters.map((p) => ({ l: p.title, href: p.path })),
+    { l: 'Planter Colors', href: '/planter-colors/' }, { l: 'Accessories', href: '/accessories/' },
+  ] },
+  { h: 'Legal', links: [{ l: 'Privacy Policy', href: '/privacy/' }] },
+];
+---
+<BaseLayout title={title} description={description} path={path} active="" solidHeader>
+  <section class="features" style="padding-top:140px;">
+    <div class="wrap" style="max-width:860px;">
+      <div class="sec-head" style="text-align:left;">
+        <span class="eyebrow">Sitemap</span>
+        <h2>All pages</h2>
+      </div>
+      <div style="display:grid;gap:32px;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));">
+        {sections.map((s) => (
+          <div>
+            <h4 style="margin-bottom:10px;">{s.h}</h4>
+            <ul style="list-style:none;padding:0;line-height:2;">
+              {s.links.map((l) => <li><a href={l.href}>{l.l}</a></li>)}
+            </ul>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+</BaseLayout>

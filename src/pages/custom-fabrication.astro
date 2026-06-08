@@ -1,0 +1,122 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/PageHero.astro';
+import LSplit from '../components/LSplit.astro';
+import Features from '../components/Features.astro';
+import ReviewGrid from '../components/ReviewGrid.astro';
+import FAQ from '../components/FAQ.astro';
+import CtaBand from '../components/CtaBand.astro';
+import { reviewsFor } from '../data/site';
+import { service, faqPage, breadcrumb } from '../lib/schema';
+
+const path = '/custom-fabrication/';
+const title = 'Custom Metal Fabrication in Ogden, UT | TEFCO';
+const description = 'Custom metal fabrication & welding in Ogden, Utah — from 3D design to machining and one-off builds. TEFCO since 1942. Free estimates: (801) 621-1010.';
+const ogImage = 'https://tefcofab.com/wp-content/uploads/2026/02/Custom-outdoor-railing-system.png';
+
+const faqs = [
+  { q: 'What custom fabrication services do you offer?', a: 'Design (including 3D), cutting, welding, machining, assembly, and finishing — for residential, commercial, and repair work.' },
+  { q: 'What metals do you work with?', a: 'Alloy steel, aluminum, carbon steel, copper and copper alloys, galvanized steel, iron, nickel, silicon bronze, stainless, steel, tool steel, and corten.' },
+  { q: 'What can you build for me?', a: 'Edging, fire pits, ladders, radius containers, railings, roof racks, table frames, tool boxes, planters, and more — if you can describe it, we can fabricate it.' },
+];
+
+const metals = [
+  { m: 'Aluminum', best: 'Lightweight builds, rust-free outdoor use' },
+  { m: 'Mild / carbon steel', best: 'Strong, weldable, great for most structures' },
+  { m: 'Stainless steel', best: 'Corrosion resistance, food-safe & clean looks' },
+  { m: 'Wrought / cast iron', best: 'Ornamental detail and classic ironwork' },
+  { m: 'Galvanized steel', best: 'Outdoor durability with built-in rust protection' },
+  { m: 'Corten', best: 'Modern weathered-patina look for landscape pieces' },
+  { m: 'Copper / silicon bronze', best: 'Decorative accents and specialty fabrication' },
+];
+
+const schema = [
+  service({ name: 'Custom Metal Fabrication', description: 'Custom metal fabrication and welding — design, cutting, welding, machining, and finishing for any project.', path }),
+  faqPage(faqs),
+  breadcrumb([{ name: 'Home', path: '/' }, { name: 'Services', path: '/services/' }, { name: 'Custom Fabrication', path }]),
+];
+---
+<BaseLayout title={title} description={description} path={path} ogImage={ogImage} active="/services/" schema={schema}>
+  <PageHero
+    eyebrow="Residential & Commercial"
+    title="Custom Metal Fabrication"
+    accent="if you can sketch it"
+    lede="From 3D design and welding to machining and one-off builds, TEFCO turns raw metal into finished products that are tough, precise, and made to exceed expectations."
+    bg="https://tefcofab.com/wp-content/uploads/2026/02/Custom-outdoor-railing-system.png"
+    bgAlt="Custom metal fabrication work by TEFCO in Ogden, Utah"
+    breadcrumb={[{ label: 'Home', href: '/' }, { label: 'Services', href: '/services/' }, { label: 'Custom Fabrication' }]}
+  />
+
+  <LSplit
+    eyebrow="Custom Fabrication"
+    heading="Quality metal fabrication in Utah"
+    flip
+    img="https://tefcofab.com/wp-content/uploads/2026/02/Custom-outdoor-railing-system.png"
+    imgAlt="Custom fabricated metalwork by TEFCO, Ogden Utah"
+    caption="Custom Fabrication"
+  >
+    <p class="reveal">We've got every need covered. Bring us a drawing, a photo, or just an idea — our crew handles design, cutting, welding, machining, and finishing in-house. Whatever you need built, it leaves our shop not just tough and durable, but made to last.</p>
+    <div class="actions reveal">
+      <button class="btn btn-solid btn-sm" data-open-quote>Get a Free Estimate</button>
+    </div>
+  </LSplit>
+
+  <Features
+    eyebrow="What We Build"
+    heading="A few of the things we make"
+    items={[
+      { title: 'Railings & gates', desc: 'Custom ornamental and modern ironwork.' },
+      { title: 'Fire pits & water features', desc: 'Statement pieces for patios and yards.' },
+      { title: 'Ladders & roof racks', desc: 'Rugged, made-to-spec utility builds.' },
+      { title: 'Table frames & benches', desc: 'Steel furniture bases and seating.' },
+      { title: 'Tool boxes & containers', desc: 'Radius containers, boxes, and edging.' },
+      { title: 'Planters & trellises', desc: 'Metal planters and garden structures.' },
+    ]}
+  />
+
+  <Features
+    sec="gray"
+    eyebrow="Why Fabricate"
+    heading="Advantages of metal fabrication"
+    items={[
+      { title: 'Strength & durability', desc: 'Built to outlast off-the-shelf alternatives.' },
+      { title: 'Precision', desc: 'Made to your exact measurements and specs.' },
+      { title: 'Corrosion resistance', desc: 'With the right metal and finish for the environment.' },
+      { title: 'Scalable', desc: 'One custom piece or a full production run.' },
+    ]}
+  />
+
+  <section class="features">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="eyebrow">Materials</span>
+        <h2>Metals we work with</h2>
+      </div>
+      <table class="cmp-table reveal">
+        <thead><tr><th>Metal</th><th>Best for</th></tr></thead>
+        <tbody>
+          {metals.map((r) => <tr><td>{r.m}</td><td>{r.best}</td></tr>)}
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <LSplit
+    sec="gray"
+    eyebrow="Finished Your Way"
+    heading="Built, blasted, and coated in-house"
+    img="https://tefcofab.com/wp-content/uploads/2026/02/wheelspowdercoat.jpg"
+    imgAlt="In-house powder coating of fabricated metal, Ogden Utah"
+  >
+    <p class="reveal">Because we finish everything ourselves, your fabricated piece can go straight from the weld table to our <a href="/sand-shot-blasting/">sand &amp; shot blasting</a> and <a href="/powder-coating/">powder coating</a> — no shipping it out, no waiting on a third party.</p>
+    <div class="actions reveal">
+      <button class="btn btn-solid btn-sm" data-open-quote>Get a Free Estimate</button>
+    </div>
+  </LSplit>
+
+  <ReviewGrid heading="What Customers Say" items={reviewsFor('custom-fabrication', 2)} narrow />
+
+  <FAQ heading="Fabrication FAQs" items={faqs} />
+
+  <CtaBand heading="Got a project no one else will take?" />
+</BaseLayout>

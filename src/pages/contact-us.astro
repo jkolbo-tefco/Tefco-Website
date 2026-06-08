@@ -1,0 +1,60 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/PageHero.astro';
+import EstimateForm from '../components/EstimateForm.astro';
+import CtaBand from '../components/CtaBand.astro';
+import { business } from '../data/site';
+import { breadcrumb } from '../lib/schema';
+
+const path = '/contact-us/';
+const title = 'Contact TEFCO — Custom Iron Shop in Ogden, UT';
+const description = "Contact TEFCO of Utah — Ogden's custom iron & fabrication shop since 1942. Call (801) 621-1010 or request a free estimate. 120 9th Street, Ogden, UT 84404.";
+const schema = [breadcrumb([{ name: 'Home', path: '/' }, { name: 'Contact Us', path }])];
+---
+<BaseLayout title={title} description={description} path={path} active="/contact-us/" schema={schema}>
+  <PageHero
+    eyebrow="Get In Touch"
+    title="Contact us"
+    accent="let's talk about your project"
+    lede="Need to talk to a fabrication specialist? Call us or request a free estimate — we'll walk you through your options."
+    bg="https://tefcofab.com/wp-content/uploads/2024/11/Tefcopics2011-008-scaled.jpg"
+    bgAlt="The TEFCO custom iron shop in Ogden, Utah"
+    breadcrumb={[{ label: 'Home', href: '/' }, { label: 'Contact Us' }]}
+  />
+
+  <section class="features">
+    <div class="wrap contact-grid">
+      <div>
+        <span class="eyebrow">Visit · Call · Email</span>
+        <h2>TEFCO of Utah</h2>
+        <div class="divider"></div>
+        <ul class="contact-detail" style="list-style:none;padding:0;margin-top:20px;">
+          <li>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+            <span><strong>Phone</strong><br><a href={business.phoneHref}>{business.phone}</a></span>
+          </li>
+          <li>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+            <span><strong>Email</strong><br><a href={`mailto:${business.email}`}>{business.email}</a></span>
+          </li>
+          <li>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"/><circle cx="12" cy="10" r="3"/></svg>
+            <span><strong>Address</strong><br>{business.street}, {business.city}, {business.state} {business.zip}<br><a href={business.mapUrl}>Get directions →</a></span>
+          </li>
+          <li>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+            <span><strong>Hours</strong><br>Monday – Friday, 8:00 AM – 4:30 PM</span>
+          </li>
+        </ul>
+        <iframe class="map-embed" title="TEFCO location map" loading="lazy" referrerpolicy="no-referrer-when-downgrade"
+          src="https://www.google.com/maps?q=120%209th%20St,%20Ogden,%20UT%2084404&output=embed"></iframe>
+        <p style="font-size:11px;color:rgba(0,0,0,.5);margin-top:16px;">To stop receiving SMS messages, reply STOP. See our <a href="/privacy/">Privacy Policy</a>.</p>
+      </div>
+      <div>
+        <EstimateForm />
+      </div>
+    </div>
+  </section>
+
+  <CtaBand heading={`Prefer to talk it through? Call ${business.phone}.`} text="We're happy to answer questions and help you scope your project." />
+</BaseLayout>

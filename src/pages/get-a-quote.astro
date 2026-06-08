@@ -1,0 +1,26 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import EstimateForm from '../components/EstimateForm.astro';
+import { business } from '../data/site';
+import { breadcrumb } from '../lib/schema';
+
+const path = '/get-a-quote/';
+const title = 'Get a Free Estimate — TEFCO Custom Iron, Ogden UT';
+const description = 'Request a free, no-obligation estimate from TEFCO of Utah — custom iron, fabrication & powder coating in Ogden. Or call (801) 621-1010.';
+const schema = [breadcrumb([{ name: 'Home', path: '/' }, { name: 'Get a Quote', path }])];
+---
+<BaseLayout title={title} description={description} path={path} active="/contact-us/" solidHeader schema={schema}>
+  <section class="features" style="padding-top:140px;">
+    <div class="wrap" style="max-width:760px;">
+      <div class="sec-head" style="text-align:left;">
+        <span class="eyebrow">Free Estimate</span>
+        <h2>Tell us about your project</h2>
+        <p>No obligation, no pressure. We're family owned since 1942 — and we respond fast. Fill out the form below or call <a href={business.phoneHref}>{business.phone}</a>.</p>
+      </div>
+      <EstimateForm heading="" sub="" />
+      <p style="margin-top:28px;font-size:13px;color:rgba(0,0,0,.55);">
+        TEFCO · {business.street}, {business.city}, {business.state} {business.zip} · Mon–Fri 8:00 AM – 4:30 PM
+      </p>
+    </div>
+  </section>
+</BaseLayout>

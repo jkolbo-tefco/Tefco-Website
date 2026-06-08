@@ -1,0 +1,102 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/PageHero.astro';
+import Photo from '../components/Photo.astro';
+import LSplit from '../components/LSplit.astro';
+import ReviewGrid from '../components/ReviewGrid.astro';
+import FAQ from '../components/FAQ.astro';
+import CtaBand from '../components/CtaBand.astro';
+import { reviewsFor } from '../data/site';
+import { planters, planterImageNote } from '../data/planters';
+import { faqPage, breadcrumb } from '../lib/schema';
+
+const path = '/planters/';
+const title = 'Custom Metal Planters — Aluminum, Steel & Corten | TEFCO';
+const description = 'Custom metal planters in aluminum, mild steel & corten — cube, rectangle, pillar & more. Any size, shape or powder-coat color. Built in Ogden by TEFCO. (801) 621-1010.';
+
+const faqs = [
+  { q: 'What are your planters made from?', a: 'Aluminum, mild steel, or corten — each finished and built to handle the outdoors.' },
+  { q: 'What accessories can I add?', a: 'Irrigation, LED lighting, casters, and even integrated sound systems.' },
+  { q: 'Can I use them for large plants or small trees?', a: 'Yes — we build larger and reinforced sizes with proper drainage for trees and big plantings.' },
+];
+
+const schema = [
+  faqPage(faqs),
+  breadcrumb([{ name: 'Home', path: '/' }, { name: 'Planters', path }]),
+];
+
+const metals = [
+  { m: 'Aluminum', look: 'Lightweight, clean', best: 'Rooftops, balconies, frequent moves' },
+  { m: 'Mild steel', look: 'Solid, powder-coated any color', best: 'Most residential & commercial use' },
+  { m: 'Corten', look: 'Natural weathered rust patina', best: 'Modern/landscape designs, outdoors' },
+];
+---
+<BaseLayout title={title} description={description} path={path} active="/services/" schema={schema}>
+  <PageHero
+    eyebrow="Beautiful · Custom · Unique"
+    title="Custom Metal Planters"
+    accent="in any size or color"
+    lede="Don't see exactly what you need? No problem — we customize any of our planters or design a brand-new one in aluminum, mild steel, or corten, in any powder-coat color."
+    bg={null}
+    bgAlt="Custom metal planters by TEFCO, Ogden Utah"
+    bgNote="Hero photo: a row of custom metal planters (cube + pillar) with greenery, styled outside a modern home or commercial entry in Utah."
+    breadcrumb={[{ label: 'Home', href: '/' }, { label: 'Planters' }]}
+  />
+
+  <section class="features">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="eyebrow">Our Styles</span>
+        <h2>Our planter styles</h2>
+      </div>
+      <div class="card-grid">
+        {planters.map((p, i) => (
+          <article class="pillar reveal" style={`transition-delay:${(i % 3) * 70}ms`}>
+            <div class="ph">
+              <Photo src={null} alt={p.title} note={planterImageNote(p.title)} />
+              <span class="num">{String(i + 1).padStart(2, '0')}</span>
+            </div>
+            <div class="body">
+              <h3><a href={p.path}>{p.title}</a></h3>
+              <p>{p.angle}</p>
+              <a href={p.path} class="link-more">View sizes <span>→</span></a>
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="features sec-gray">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="eyebrow">Materials</span>
+        <h2>Choose your metal</h2>
+      </div>
+      <table class="cmp-table reveal">
+        <thead><tr><th>Metal</th><th>Look</th><th>Best for</th></tr></thead>
+        <tbody>{metals.map((r) => <tr><td>{r.m}</td><td>{r.look}</td><td>{r.best}</td></tr>)}</tbody>
+      </table>
+    </div>
+  </section>
+
+  <LSplit
+    eyebrow="Made For Your Space"
+    heading="Sized, finished, and accessorized to fit"
+    flip
+    img={null}
+    imgAlt="Custom planters styled with plants and lighting, Utah"
+    imgNote="Photo: a styled planter with an accessory shown — e.g. integrated LED lighting at dusk, or casters on an elevated planter."
+  >
+    <p class="reveal">Choose from a range of sizes and three metals, then pick a powder-coat color to match your project. Every planter is built in our Ogden shop and can be customized — drain holes, casters, irrigation, lighting, and more. Browse <a href="/planter-colors/">planter colors</a> and <a href="/accessories/">accessories</a>.</p>
+    <div class="actions reveal">
+      <button class="btn btn-solid btn-sm" data-open-quote>Get a Free Estimate</button>
+    </div>
+  </LSplit>
+
+  <ReviewGrid heading="What Customers Say" items={reviewsFor('planters', 2)} narrow />
+
+  <FAQ heading="Planter FAQs" items={faqs} />
+
+  <CtaBand heading="Let's design your planters." />
+</BaseLayout>

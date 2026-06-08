@@ -1,0 +1,110 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ServiceCards from '../components/ServiceCards.astro';
+import LSplit from '../components/LSplit.astro';
+import StatStrip from '../components/StatStrip.astro';
+import GalleryFeature from '../components/GalleryFeature.astro';
+import Features from '../components/Features.astro';
+import ReviewGrid from '../components/ReviewGrid.astro';
+import FAQ from '../components/FAQ.astro';
+import CtaBand from '../components/CtaBand.astro';
+import { business, reviewsFor } from '../data/site';
+import { localBusiness, faqPage } from '../lib/schema';
+
+const path = '/';
+const title = 'Custom Iron Fabrication in Ogden, UT — TEFCO Since 1942';
+const description = 'Custom iron railings, gates, security doors & powder coating in Ogden, Utah. Family-owned metal fabrication since 1942. Free estimates — call (801) 621-1010.';
+
+const faqs = [
+  { q: 'What does TEFCO make?', a: 'We design and build custom ironwork — railings, gates, security doors, and staircases — plus powder coating, sandblasting, and general metal fabrication, all in our Ogden shop.' },
+  { q: 'What metals do you work with?', a: 'Aluminum, mild and carbon steel, stainless, wrought and cast iron, galvanized steel, copper and copper alloys, corten, and more — matched to the job.' },
+  { q: 'Do you serve my area?', a: 'We serve Ogden, Weber County, and Northern Utah from Salt Lake City to the Idaho border, and take select projects farther south. Call (801) 621-1010 to check your address.' },
+];
+
+const schema = [localBusiness(), faqPage(faqs)];
+
+const tiles = [
+  { img: 'https://tefcofab.com/wp-content/uploads/2026/02/house-with-rails-scaled.jpg', title: 'Modern Deck Railing', cat: 'Railings', desc: 'Powder-coated horizontal-bar system', big: true },
+  { img: 'https://tefcofab.com/wp-content/uploads/2026/02/Iron-gate-Utah.jpg', title: 'Custom Iron Gate', cat: 'Gates' },
+  { img: 'https://tefcofab.com/wp-content/uploads/2024/12/Tefcopics2011-002-1-scaled.jpg', title: 'Security Door', cat: 'Doors' },
+  { img: 'https://tefcofab.com/wp-content/uploads/2026/02/wheelspowdercoat.jpg', title: 'Powder-Coated Wheels', cat: 'Powder Coating' },
+  { img: 'https://tefcofab.com/wp-content/uploads/2024/11/IMG_0803-scaled.jpg', title: 'Ornamental Railing', cat: 'Railings' },
+];
+---
+<BaseLayout title={title} description={description} path={path} active="/" schema={schema}>
+
+  <!-- Video hero (home-only) -->
+  <section class="page-hero">
+    <div class="bg">
+      <video autoplay muted loop playsinline preload="metadata" poster="https://tefcofab.com/wp-content/uploads/2024/11/101810-003-scaled.jpg">
+        <source src="/video/hero.mp4" type="video/mp4" />
+      </video>
+    </div>
+    <div class="wrap inner">
+      <span class="eyebrow reveal">Welcome to TEFCO · Ornamental Iron Since 1942</span>
+      <h1 class="reveal">Northern Utah's trusted custom iron <span class="serif-accent">& metal fabrication</span></h1>
+      <p class="lede reveal">Custom iron railings, gates, security doors, staircases, powder coating and metal fabrication — designed, built, and finished in our Ogden shop. Family owned for over 80 years, and our work is second to none.</p>
+      <div class="actions reveal">
+        <a href={business.phoneHref} class="btn btn-solid">Call {business.phone}</a>
+        <button class="btn btn-outline-light" data-open-quote>Get a Free Estimate</button>
+      </div>
+    </div>
+  </section>
+
+  <ServiceCards eyebrow="Our Services" heading="What we build" />
+
+  <LSplit
+    eyebrow="Ogden & The Wasatch Front"
+    heading="A real fabrication shop — not a catalog"
+    flip
+    img="https://tefcofab.com/wp-content/uploads/2024/11/Tefcopics2011-008-scaled.jpg"
+    imgAlt="TEFCO metal fabrication shop floor in Ogden, Utah"
+    caption="Our Ogden Shop"
+  >
+    <p class="reveal">We've got every need covered: residential, commercial, repairs, and everything in between. From custom iron railings and gates to powder coating, sandblasting, and full metal fabrication, it's all done in-house by our own crew.</p>
+    <p class="reveal">Eighty years of quality craftsmanship is why homeowners, builders, and contractors across Ogden and Northern Utah keep coming back.</p>
+    <div class="actions reveal">
+      <a href="/about-us/" class="link-more">Meet the shop <span>→</span></a>
+    </div>
+  </LSplit>
+
+  <StatStrip items={[
+    { n: '80+', l: 'Years In The Trade' },
+    { n: '4.6 ★', l: '29 Google Reviews' },
+    { n: 'In-House', l: 'Design → Install' },
+    { n: 'Free', l: 'Estimates' },
+  ]} />
+
+  <LSplit
+    sec="teal"
+    eyebrow="Our Promise"
+    heading="Our work is second to none. We promise."
+    img="https://tefcofab.com/wp-content/uploads/2024/11/101810-003-scaled.jpg"
+    imgAlt="Custom ornamental ironwork by TEFCO, Ogden Utah"
+  >
+    <p class="reveal">Behind that promise is a 100% satisfaction guarantee and a free, detailed estimate before any work begins. Tell us your vision — we'll tell you exactly how we'll build it.</p>
+    <div class="actions reveal">
+      <button class="btn btn-dark" data-open-quote>Get a Free Estimate</button>
+    </div>
+  </LSplit>
+
+  <GalleryFeature eyebrow="Our Work" heading="See our latest work" tiles={tiles} />
+
+  <Features
+    sec="gray"
+    eyebrow="Why TEFCO"
+    heading="Why people choose TEFCO"
+    items={[
+      { title: '80+ years in the trade', desc: 'The equipment and skill to get it right the first time.' },
+      { title: 'Truly custom', desc: 'One-of-a-kind designs — not stock, off-the-shelf parts.' },
+      { title: 'Local & family owned', desc: 'You talk to the people actually doing the work.' },
+      { title: 'Finished to last', desc: 'In-house powder coating built for Utah weather.' },
+    ]}
+  />
+
+  <ReviewGrid heading="What our neighbors say" sub="4.6 ★ from 29 Google reviews" items={reviewsFor('home', 3)} narrow />
+
+  <FAQ heading="Frequently Asked Questions" items={faqs} />
+
+  <CtaBand heading="Let's build something that lasts." />
+</BaseLayout>

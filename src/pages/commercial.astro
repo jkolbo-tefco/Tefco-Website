@@ -1,0 +1,84 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/PageHero.astro';
+import ServiceCards from '../components/ServiceCards.astro';
+import LSplit from '../components/LSplit.astro';
+import Features from '../components/Features.astro';
+import ReviewGrid from '../components/ReviewGrid.astro';
+import CtaBand from '../components/CtaBand.astro';
+import { reviewsFor } from '../data/site';
+import { service, breadcrumb } from '../lib/schema';
+
+const path = '/commercial/';
+const title = 'Commercial Metal Fabrication in Ogden, UT | TEFCO';
+const description = 'Commercial metal fabrication for Utah contractors, architects & builders — railings, doors, gates, powder coating & custom work. TEFCO since 1942. (801) 621-1010.';
+const ogImage = 'https://tefcofab.com/wp-content/uploads/2024/11/101810-003-scaled.jpg';
+
+const schema = [
+  service({ name: 'Commercial Metal Fabrication', description: 'Commercial railings, gates, security doors, powder coating, and custom fabrication for contractors, architects, and builders.', path }),
+  breadcrumb([{ name: 'Home', path: '/' }, { name: 'Services', path: '/services/' }, { name: 'Commercial', path }]),
+];
+---
+<BaseLayout title={title} description={description} path={path} ogImage={ogImage} active="/services/" schema={schema}>
+  <PageHero
+    eyebrow="Custom · Reliable · Durable"
+    title="Commercial Metal Fabrication"
+    accent="built to spec, on schedule"
+    lede="Since 1942, TEFCO has supplied commercial railings, gates, security doors, staircases, powder coating, sandblasting, and custom fabrication for Utah's contractors, architects, and builders."
+    bg="https://tefcofab.com/wp-content/uploads/2024/11/101810-003-scaled.jpg"
+    bgAlt="Commercial metal fabrication and ornamental ironwork by TEFCO, Ogden Utah"
+    breadcrumb={[{ label: 'Home', href: '/' }, { label: 'Services', href: '/services/' }, { label: 'Commercial' }]}
+  />
+
+  <ServiceCards
+    eyebrow="Capabilities"
+    heading="Why contractors choose TEFCO"
+    only={['railings', 'gates', 'security-doors', 'powder-coating', 'sand-shot-blasting', 'custom-fabrication']}
+  />
+
+  <LSplit
+    sec="gray"
+    eyebrow="Who We Serve"
+    heading="Industries we work with"
+    flip
+    img={null}
+    imgAlt="TEFCO commercial fabrication for Utah builders"
+    imgNote="Commercial project photo: a finished architectural metalwork install — e.g. a long prefabricated railing run on a commercial stairwell or balcony, or a contractor job site with TEFCO ironwork."
+  >
+    <p class="reveal">We work hand-in-hand with architects, commercial contractors, home and commercial builders, landscape designers, and property managers. We read plans, hit specs, and communicate clearly — so your project stays on schedule.</p>
+    <div class="actions reveal">
+      <button class="btn btn-solid btn-sm" data-open-quote>Request a Quote</button>
+    </div>
+  </LSplit>
+
+  <Features
+    eyebrow="Easy To Build With"
+    heading="What you can count on"
+    items={[
+      { title: 'Attention to detail', desc: 'Specs met and finishes done right the first time.' },
+      { title: 'Punctual', desc: 'We respect your timeline and your trades.' },
+      { title: 'Customized quotes', desc: 'Clear, itemized pricing for your scope.' },
+      { title: 'Open communication', desc: 'You always know where your job stands.' },
+      { title: 'High-quality craftsmanship', desc: 'Eighty years of doing it well.' },
+      { title: 'Unique designs', desc: 'Custom fabrication, not catalog parts.' },
+    ]}
+  />
+
+  <LSplit
+    sec="gray"
+    eyebrow="What We Can Do"
+    heading="Sandblasting, powder coating & fabrication at volume"
+    img={null}
+    imgAlt="Volume commercial powder coating and fabrication, Ogden Utah"
+    imgNote="Photo: the TEFCO shop handling a commercial-scale batch — racks of parts being powder coated, or a run of prefabricated railings/metal doors staged for delivery."
+  >
+    <p class="reveal">Prefabricated railings, metal and custom doors, metal furniture, aluminum planters, benches, trellises, water features, fire pits, and sheet metal fabrication — produced at commercial volume and finished in-house with <a href="/sand-shot-blasting/">blasting</a> and <a href="/powder-coating/">powder coating</a>.</p>
+    <div class="actions reveal">
+      <button class="btn btn-solid btn-sm" data-open-quote>Request a Quote</button>
+    </div>
+  </LSplit>
+
+  <ReviewGrid heading="Trusted by repeat clients" items={reviewsFor('commercial', 2)} narrow />
+
+  <CtaBand heading="Let's talk about your next build." text="Send us your plans or give us a call — we'll put together a customized commercial quote." button="Request a Quote" />
+</BaseLayout>

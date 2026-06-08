@@ -1,0 +1,41 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/PageHero.astro';
+import LSplit from '../components/LSplit.astro';
+import CtaBand from '../components/CtaBand.astro';
+import { breadcrumb } from '../lib/schema';
+
+const path = '/planter-colors/';
+const title = 'Planter Colors — Powder-Coat Finishes | TEFCO';
+const description = 'Choose from hundreds of powder-coat colors and textures for your custom TEFCO metal planters. Finished in-house in Ogden, Utah. (801) 621-1010.';
+const schema = [breadcrumb([{ name: 'Home', path: '/' }, { name: 'Planters', path: '/planters/' }, { name: 'Planter Colors', path }])];
+---
+<BaseLayout title={title} description={description} path={path} active="/services/" schema={schema}>
+  <PageHero
+    eyebrow="Custom Finishes"
+    title="Planter Colors"
+    accent="hundreds to choose from"
+    lede="Every planter is finished with our in-house powder coating — choose from hundreds of colors and textures to match your project."
+    bg={null}
+    bgAlt="Powder-coat color swatches for TEFCO planters"
+    bgNote="Hero photo: a fan/grid of powder-coat color swatches, or several planters in different finishes lined up."
+    breadcrumb={[{ label: 'Home', href: '/' }, { label: 'Planters', href: '/planters/' }, { label: 'Colors' }]}
+  />
+
+  <LSplit
+    eyebrow="Colors"
+    heading="Match any palette"
+    flip
+    img={null}
+    imgAlt="Powder-coat color options for custom metal planters"
+    imgNote="Photo/graphic: the actual TEFCO planter color swatch set — pull the swatch images from tefcofab.com/planter-colors/."
+  >
+    <p class="reveal">From matte charcoal to bright accent tones and natural metallics, our powder-coat finishes are hard-wearing and UV-stable for the Utah outdoors. Pick a color when you order, or bring us a sample to match.</p>
+    <div class="actions reveal">
+      <button class="btn btn-solid btn-sm" data-open-quote>Get a Free Estimate</button>
+      <a href="/planters/" class="btn btn-outline-dark">Back to Planters</a>
+    </div>
+  </LSplit>
+
+  <CtaBand heading="Found your color?" text="Tell us the style, size, and finish — we'll build it." />
+</BaseLayout>

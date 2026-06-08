@@ -1,0 +1,94 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/PageHero.astro';
+import LSplit from '../components/LSplit.astro';
+import Features from '../components/Features.astro';
+import PhotoStrip from '../components/PhotoStrip.astro';
+import ReviewGrid from '../components/ReviewGrid.astro';
+import FAQ from '../components/FAQ.astro';
+import CtaBand from '../components/CtaBand.astro';
+import { reviewsFor } from '../data/site';
+import { service, faqPage, breadcrumb } from '../lib/schema';
+
+const path = '/cable-railing/';
+const title = 'Cable Railing in Ogden, UT — Modern Stainless Systems | TEFCO';
+const description = 'Sleek stainless cable railing for decks, stairs & balconies in Ogden, Utah. Custom-built and installed by TEFCO since 1942. Free estimates: (801) 621-1010.';
+const ogImage = 'https://tefcofab.com/wp-content/uploads/2025/01/outdoor-railing-system-1.jpg';
+
+const faqs = [
+  { q: 'How does cable railing work?', a: 'A rigid powder-coated frame holds horizontal stainless cables under tension; the cables provide a safe barrier while keeping sightlines open.' },
+  { q: 'Is cable railing safe?', a: 'Yes — when posts are spaced and cables tensioned to code, cable railing meets the same safety requirements as traditional railing. We build and install to code.' },
+  { q: 'How much maintenance does cable railing need?', a: 'Very little — an occasional wipe-down and a yearly check of cable tension. Powder-coated frames resist rust and fading.' },
+];
+
+const schema = [
+  service({ name: 'Cable Railing', description: 'Modern stainless cable railing systems for decks, stairs, and balconies, custom-built and installed.', path }),
+  faqPage(faqs),
+  breadcrumb([{ name: 'Home', path: '/' }, { name: 'Services', path: '/services/' }, { name: 'Cable Railing', path }]),
+];
+---
+<BaseLayout title={title} description={description} path={path} ogImage={ogImage} active="/services/" schema={schema}>
+  <PageHero
+    eyebrow="Residential & Commercial"
+    title="Cable Railing"
+    accent="with the view left in"
+    lede="Enhance your home or business with sleek, modern cable railing — ideal for decks, staircases, and balconies where you want unobstructed views and clean lines."
+    bg="https://tefcofab.com/wp-content/uploads/2025/01/outdoor-railing-system-1.jpg"
+    bgAlt="Stainless cable railing on a Utah deck with mountain views"
+    breadcrumb={[{ label: 'Home', href: '/' }, { label: 'Services', href: '/services/' }, { label: 'Cable Railing' }]}
+  />
+
+  <LSplit
+    eyebrow="Cable Railing"
+    heading="Modern lines, open views"
+    flip
+    img="https://tefcofab.com/wp-content/uploads/2025/01/outdoor-railing-system-1.jpg"
+    imgAlt="Custom stainless cable railing system installed in Utah"
+    caption="Stainless Cable Railing"
+  >
+    <p class="reveal">Cable railing pairs a powder-coated steel or aluminum frame with taut stainless cables, so your railing protects without blocking the view. We design, tension, and install every system ourselves — engineered to code and built to stay tight through Utah's seasons.</p>
+    <div class="actions reveal">
+      <button class="btn btn-solid btn-sm" data-open-quote>Get a Free Estimate</button>
+      <a href="/gallery/" class="btn btn-outline-dark">See the Gallery</a>
+    </div>
+  </LSplit>
+
+  <Features
+    eyebrow="Why Cable"
+    heading="Benefits of cable railing"
+    items={[
+      { title: 'Stylish modern look', desc: 'Clean, minimal lines that suit contemporary homes.' },
+      { title: 'Unobstructed views', desc: 'Thin cables nearly disappear, keeping your sightlines open.' },
+      { title: 'Durable & long-lasting', desc: 'Stainless cable and powder-coated frames built to endure.' },
+      { title: 'Low maintenance', desc: 'No spindles to paint — just an occasional wipe-down.' },
+      { title: 'Increased safety', desc: 'Code-compliant spacing and tension keep everyone secure.' },
+      { title: 'Versatility', desc: 'Decks, stairs, balconies — interior or exterior.' },
+    ]}
+  />
+
+  <PhotoStrip
+    img="https://tefcofab.com/wp-content/uploads/2025/01/470600498_1148356203958053_3132734559770478428_n.jpg"
+    alt="Interior stainless cable railing on a staircase, Utah"
+    eyebrow="Clean Lines"
+    heading="Protect the edge — not the view."
+  />
+
+  <LSplit
+    sec="gray"
+    eyebrow="Pairs Well With"
+    heading="Part of the railing family"
+    img="https://tefcofab.com/wp-content/uploads/2026/02/Indoor-modern-railing-system-e1770237188274.png"
+    imgAlt="Modern indoor railing system in a Utah home"
+  >
+    <p class="reveal">Love the modern look? Cable railing pairs beautifully with our other work — classic <a href="/railings/">iron railings</a>, statement <a href="/floating-stairs/">floating stairs</a>, and a durable in-house <a href="/powder-coating/">powder-coat finish</a>.</p>
+    <div class="actions reveal">
+      <button class="btn btn-solid btn-sm" data-open-quote>Get a Free Estimate</button>
+    </div>
+  </LSplit>
+
+  <ReviewGrid heading="What Customers Say" items={reviewsFor('railings', 2)} narrow />
+
+  <FAQ heading="Cable Railing FAQs" items={faqs} />
+
+  <CtaBand heading="Want the view and the railing?" />
+</BaseLayout>

@@ -1,0 +1,103 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/PageHero.astro';
+import LSplit from '../components/LSplit.astro';
+import Features from '../components/Features.astro';
+import PhotoStrip from '../components/PhotoStrip.astro';
+import ReviewGrid from '../components/ReviewGrid.astro';
+import FAQ from '../components/FAQ.astro';
+import CtaBand from '../components/CtaBand.astro';
+import { reviewsFor } from '../data/site';
+import { service, faqPage, breadcrumb } from '../lib/schema';
+
+const path = '/gates/';
+const title = 'Custom Iron Gates in Ogden, UT — Entry & Security Gates | TEFCO';
+const description = 'Custom iron entry & security gates in Ogden, Utah — built and powder-coated by TEFCO since 1942. Driveway, walk & security gates. Free estimates: (801) 621-1010.';
+const ogImage = 'https://tefcofab.com/wp-content/uploads/2026/02/Iron-gate-Utah.jpg';
+
+const faqs = [
+  { q: 'What types of gates do you build?', a: 'Entry gates, driveway gates (swing or slide), garden and walk gates, and security gates — all custom-fabricated in iron, steel, or aluminum.' },
+  { q: 'Can my gate be automated?', a: 'Yes — we build gates ready for automatic openers and access controls, and can coordinate the operator and gate as one system. <em>[[CONFIRM: do we install openers ourselves or partner?]]</em>' },
+  { q: 'How are the gates finished so they last?', a: 'Every gate is powder-coated in-house in your choice of hundreds of colors — a hard finish that resists rust, chipping, and fading through Utah weather.' },
+];
+
+const schema = [
+  service({ name: 'Custom Iron Gates', description: 'Custom iron entry, driveway, and security gates for homes and businesses, powder-coated in-house.', path }),
+  faqPage(faqs),
+  breadcrumb([{ name: 'Home', path: '/' }, { name: 'Services', path: '/services/' }, { name: 'Gates', path }]),
+];
+---
+<BaseLayout title={title} description={description} path={path} ogImage={ogImage} active="/services/" schema={schema}>
+  <PageHero
+    eyebrow="Residential & Commercial"
+    title="Custom Iron Gates"
+    accent="that make an entrance"
+    lede="Entry gates, driveway gates, and security gates — quality ornamental iron and custom fabrication for homes and businesses across Northern Utah."
+    bg="https://tefcofab.com/wp-content/uploads/2026/02/Iron-gate-Utah.jpg"
+    bgAlt="Custom iron driveway gate in Utah"
+    breadcrumb={[{ label: 'Home', href: '/' }, { label: 'Services', href: '/services/' }, { label: 'Gates' }]}
+  />
+
+  <LSplit
+    eyebrow="Iron Gates"
+    heading="Quality custom iron gates in Northern Utah"
+    flip
+    img="https://tefcofab.com/wp-content/uploads/2026/02/Iron-gate-Utah.jpg"
+    imgAlt="Ornamental iron entry gate built by TEFCO in Ogden, Utah"
+    caption="Custom Iron Gate"
+  >
+    <p class="reveal">For over 80 years we've built beautiful custom iron gates for our Ogden-area customers. We specialize in every type — grand entry gates, driveway gates, and security gates — designed to your property and finished with in-house powder coating so they look great and hold up for decades.</p>
+    <div class="actions reveal">
+      <button class="btn btn-solid btn-sm" data-open-quote>Get a Free Estimate</button>
+      <a href="/gallery/" class="btn btn-outline-dark">See the Gallery</a>
+    </div>
+  </LSplit>
+
+  <Features
+    eyebrow="What To Expect"
+    heading="Built for your property"
+    items={[
+      { title: 'Residential or commercial', desc: 'From a single home entry gate to large commercial and gated-community runs.' },
+      { title: 'Custom designs', desc: 'Built to your property and style — not pulled off a shelf.' },
+      { title: 'The right metal', desc: 'Aluminum, steel, wrought iron, cast iron, or galvanized steel to suit the job.' },
+    ]}
+  />
+
+  <Features
+    sec="gray"
+    eyebrow="Why Iron"
+    heading="Benefits of a custom iron gate"
+    items={[
+      { title: 'Enhanced security', desc: 'A solid, well-built barrier that controls access to your property.' },
+      { title: 'Customization options', desc: 'Swing or slide, manual or automated, ornamental or modern.' },
+      { title: 'Minimal maintenance', desc: 'Powder-coated iron shrugs off Utah weather with little upkeep.' },
+      { title: 'Versatility', desc: 'Driveways, entries, gardens, and commercial perimeters.' },
+    ]}
+  />
+
+  <PhotoStrip
+    img="https://tefcofab.com/wp-content/uploads/2026/02/Iron-gate-Utah.jpg"
+    alt="Custom powder-coated iron gate at a Utah property"
+    eyebrow="Form & Function"
+    heading="A gate should be the best-looking thing on the street."
+  />
+
+  <LSplit
+    sec="gray"
+    eyebrow="Pairs Well With"
+    heading="Match your gate to the rest of your ironwork"
+    img="https://tefcofab.com/wp-content/uploads/2026/02/house-with-rails-scaled.jpg"
+    imgAlt="Matching iron railing and gate on an Ogden, Utah home"
+  >
+    <p class="reveal">A gate looks its best when it ties into the rest of your home. We can match your new gate to custom <a href="/railings/">iron railings</a> and <a href="/security-doors/">security doors</a>, all finished in the same <a href="/powder-coating/">powder-coat color</a> in our own shop.</p>
+    <div class="actions reveal">
+      <button class="btn btn-solid btn-sm" data-open-quote>Get a Free Estimate</button>
+    </div>
+  </LSplit>
+
+  <ReviewGrid heading="What Customers Say" items={reviewsFor('gates', 2)} narrow />
+
+  <FAQ heading="Gate FAQs" items={faqs} />
+
+  <CtaBand heading="Ready to upgrade your entrance?" />
+</BaseLayout>

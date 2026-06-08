@@ -1,0 +1,30 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { business } from '../data/site';
+
+const path = '/privacy/';
+const title = 'Privacy Policy — TEFCO';
+const description = 'TEFCO of Utah privacy policy — how we handle the information you share when you contact us or request an estimate.';
+---
+<BaseLayout title={title} description={description} path={path} active="" solidHeader>
+  <section class="features" style="padding-top:140px;">
+    <div class="wrap" style="max-width:760px;">
+      <div class="sec-head" style="text-align:left;">
+        <span class="eyebrow">Legal</span>
+        <h2>Privacy Policy</h2>
+      </div>
+      <div style="font-size:14px;line-height:1.8;color:rgba(0,0,0,.7);">
+        <p><em>[[CONFIRM: confirm or replace this with TEFCO's official privacy policy text before launch.]]</em></p>
+        <p>TEFCO ("we," "us") respects your privacy. This page explains what information we collect and how we use it.</p>
+        <h4 style="margin-top:24px;">Information we collect</h4>
+        <p>When you call us, email us, or submit an estimate request, we collect the details you provide — such as your name, phone number, email address, project address, and project description — so we can respond and prepare your estimate.</p>
+        <h4 style="margin-top:24px;">How we use it</h4>
+        <p>We use your information only to contact you about your project and provide our services. We do not sell your information.</p>
+        <h4 style="margin-top:24px;">SMS messaging</h4>
+        <p>If you opt in to text messaging, message and data rates may apply. To stop receiving SMS messages, reply STOP at any time.</p>
+        <h4 style="margin-top:24px;">Contact</h4>
+        <p>Questions about this policy? Contact us at <a href={`mailto:${business.email}`}>{business.email}</a> or <a href={business.phoneHref}>{business.phone}</a>.</p>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

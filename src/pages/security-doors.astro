@@ -1,0 +1,80 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/PageHero.astro';
+import LSplit from '../components/LSplit.astro';
+import Features from '../components/Features.astro';
+import PhotoStrip from '../components/PhotoStrip.astro';
+import ReviewGrid from '../components/ReviewGrid.astro';
+import FAQ from '../components/FAQ.astro';
+import CtaBand from '../components/CtaBand.astro';
+import { reviewsFor } from '../data/site';
+import { service, faqPage, breadcrumb } from '../lib/schema';
+
+const path = '/security-doors/';
+const title = 'Custom Security Doors in Ogden, UT — Iron & Screen | TEFCO';
+const description = 'Custom iron security doors & security screen doors in Ogden, Utah — beauty plus protection, built by TEFCO since 1942. Free estimates: (801) 621-1010.';
+const ogImage = 'https://tefcofab.com/wp-content/uploads/2024/12/Tefcopics2011-002-1-scaled.jpg';
+
+const faqs = [
+  { q: 'What makes a security door different from a regular door?', a: 'A security door uses a heavy steel or iron frame, reinforced corners, and a secure lock so it resists forced entry — while a screen or grille still lets in air and light.' },
+  { q: 'What are the benefits of a security door?', a: 'Protection from intruders and weather, better ventilation, longer life than a stock door, and added home value — in a custom design that matches your house.' },
+  { q: 'Can a security door match my home’s style?', a: 'Yes — we build to your opening and finish each door with in-house powder coating in your choice of colors, so it complements your home instead of looking like an add-on.' },
+];
+
+const schema = [
+  service({ name: 'Custom Security Doors', description: 'Custom iron and screen security doors that add protection without sacrificing curb appeal.', path }),
+  faqPage(faqs),
+  breadcrumb([{ name: 'Home', path: '/' }, { name: 'Services', path: '/services/' }, { name: 'Security Doors', path }]),
+];
+---
+<BaseLayout title={title} description={description} path={path} ogImage={ogImage} active="/services/" schema={schema}>
+  <PageHero
+    eyebrow="Residential & Commercial"
+    title="Custom Security Doors"
+    accent="secure, and beautiful"
+    lede="Our custom security doors add real protection from weather, insects, and intruders — without sacrificing the look of your home. Built and finished in our Ogden shop."
+    bg="https://tefcofab.com/wp-content/uploads/2024/12/Tefcopics2011-002-1-scaled.jpg"
+    bgAlt="Custom iron security door built by TEFCO in Ogden, Utah"
+    breadcrumb={[{ label: 'Home', href: '/' }, { label: 'Services', href: '/services/' }, { label: 'Security Doors' }]}
+  />
+
+  <LSplit
+    eyebrow="Security Doors"
+    heading="Northern Utah's best security doors"
+    flip
+    img="https://tefcofab.com/wp-content/uploads/2024/12/Tefcopics2011-002-1-scaled.jpg"
+    imgAlt="Powder-coated iron security door on an Ogden, Utah home"
+    caption="Custom Security Door"
+  >
+    <p class="reveal">A TEFCO security door does two jobs at once: it secures your home and looks like it belongs there. We build to your opening, add features like custom kickplates and screen options, and powder coat the finish to match — so you get protection that actually improves your curb appeal.</p>
+    <div class="actions reveal">
+      <button class="btn btn-solid btn-sm" data-open-quote>Get a Free Estimate</button>
+    </div>
+  </LSplit>
+
+  <Features
+    eyebrow="What To Expect"
+    heading="More than a door"
+    items={[
+      { title: 'Improved durability', desc: 'Heavy steel and iron construction that outlasts a stock door.' },
+      { title: 'Added protection', desc: 'A real barrier against intruders, weather, and pests.' },
+      { title: 'Beauty & functionality', desc: 'Custom designs that look intentional, not bolted-on.' },
+      { title: 'Weather resistance', desc: 'Powder-coated to resist rust and fading in Utah seasons.' },
+      { title: 'Better ventilation', desc: 'Screen options let the breeze in while staying secure.' },
+      { title: 'Increased home value', desc: 'A quality custom door adds curb appeal and resale value.' },
+    ]}
+  />
+
+  <PhotoStrip
+    img="https://tefcofab.com/wp-content/uploads/2024/12/Tefcopics2011-002-1-scaled.jpg"
+    alt="Detail of a custom iron security door by TEFCO, Ogden Utah"
+    eyebrow="Protection With Curb Appeal"
+    heading="Security that looks like it belongs on your home."
+  />
+
+  <ReviewGrid heading="What Customers Say" items={reviewsFor('security-doors', 3)} narrow />
+
+  <FAQ heading="Security Door FAQs" items={faqs} />
+
+  <CtaBand heading="Protect your home in style." />
+</BaseLayout>

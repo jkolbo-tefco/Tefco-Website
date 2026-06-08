@@ -1,0 +1,93 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/PageHero.astro';
+import LSplit from '../components/LSplit.astro';
+import Features from '../components/Features.astro';
+import BeforeAfter from '../components/BeforeAfter.astro';
+import FAQ from '../components/FAQ.astro';
+import CtaBand from '../components/CtaBand.astro';
+import { service, faqPage, breadcrumb } from '../lib/schema';
+
+const path = '/sand-shot-blasting/';
+const title = 'Sandblasting & Shot Blasting in Ogden, UT | TEFCO';
+const description = 'Professional sand & shot blasting in Ogden, Utah — fast rust and coating removal, surface prep done right. TEFCO since 1942. Free quotes: (801) 621-1010.';
+const ogImage = 'https://tefcofab.com/wp-content/uploads/2021/09/Depositphotos_442109094_l-2015.jpg';
+
+const faqs = [
+  { q: 'What is sandblasting?', a: 'Sandblasting (or media/shot blasting) propels an abrasive at high pressure to strip rust, paint, and coatings off a surface, leaving clean bare metal ready for finishing.' },
+  { q: 'What surfaces can be blasted?', a: 'Metal, wood, glass, concrete, and stone — we match the media and pressure to the material.' },
+  { q: 'Is blasting the best way to prep for coating?', a: 'Yes — for metal, blasting gives the cleanest, best-bonding surface, which is why we blast before powder coating.' },
+];
+
+const schema = [
+  service({ name: 'Sand & Shot Blasting', description: 'Professional sand and shot blasting for rust removal and surface prep before coating.', path }),
+  faqPage(faqs),
+  breadcrumb([{ name: 'Home', path: '/' }, { name: 'Services', path: '/services/' }, { name: 'Sand/Shot Blasting', path }]),
+];
+---
+<BaseLayout title={title} description={description} path={path} ogImage={ogImage} active="/services/" schema={schema}>
+  <PageHero
+    eyebrow="Residential & Commercial"
+    title="Sand & Shot Blasting"
+    accent="back to bare metal"
+    lede="Strip rust, paint, and corrosion fast with professional sand and shot blasting — no chemicals, no scrubbing. The right first step before any coating."
+    bg="https://tefcofab.com/wp-content/uploads/2021/09/Depositphotos_442109094_l-2015.jpg"
+    bgAlt="Shot blasting a metal part in the TEFCO shop, Ogden Utah"
+    breadcrumb={[{ label: 'Home', href: '/' }, { label: 'Services', href: '/services/' }, { label: 'Sand/Shot Blasting' }]}
+  />
+
+  <BeforeAfter
+    eyebrow="See The Difference"
+    heading="Rusty → ready to finish"
+    before={null}
+    after={null}
+    beforeAlt="A rusty, corroded metal part before blasting"
+    beforeNote="BEFORE photo: a rusty / painted / corroded metal part (railing, bumper, gate, or machinery) before blasting."
+    afterAlt="The same part blasted clean to bright bare metal"
+    afterNote="AFTER photo: the same part blasted to clean, bright bare metal, ready for powder coating."
+    caption="Drag the handle: corroded surface vs. clean bare metal, ready to coat."
+  />
+
+  <LSplit
+    eyebrow="Sand & Shot Blasting"
+    heading="Residential & commercial blasting in Weber County"
+    flip
+    img="https://tefcofab.com/wp-content/uploads/2021/09/Depositphotos_442109094_l-2015.jpg"
+    imgAlt="Sand and shot blasting service in Ogden, Utah"
+    caption="Surface Prep"
+  >
+    <p class="reveal">We've got your prep covered. Sandblasting is fast, thorough, and chemical-free — perfect for removing rust, old paint, and scale from metal before powder coating or refinishing. From a single part to large commercial jobs, we blast it clean and ready.</p>
+    <div class="actions reveal">
+      <button class="btn btn-solid btn-sm" data-open-quote>Get a Free Quote</button>
+    </div>
+  </LSplit>
+
+  <Features
+    eyebrow="Why Blasting"
+    heading="Benefits of blasting"
+    items={[
+      { title: 'Removes corrosion', desc: 'Strips rust, paint, and scale right down to bare metal.' },
+      { title: 'Saves time', desc: 'Far faster than sanding or chemical stripping.' },
+      { title: 'Non-toxic', desc: 'No harsh chemicals — a cleaner process.' },
+      { title: 'Versatile', desc: 'Works on metal, wood, glass, concrete, and stone.' },
+      { title: 'Extremely effective', desc: 'The best foundation for a finish that lasts.' },
+    ]}
+  />
+
+  <LSplit
+    sec="gray"
+    eyebrow="Then Finish It"
+    heading="Blast, then powder coat"
+    img="https://tefcofab.com/wp-content/uploads/2026/02/wheelspowdercoat.jpg"
+    imgAlt="Powder coating after blasting, Ogden Utah"
+  >
+    <p class="reveal">Blasting is step one. Once your part is clean, finish it with our in-house <a href="/powder-coating/">powder coating</a> for a hard, even, long-lasting finish in your choice of color.</p>
+    <div class="actions reveal">
+      <button class="btn btn-solid btn-sm" data-open-quote>Get a Free Quote</button>
+    </div>
+  </LSplit>
+
+  <FAQ heading="Blasting FAQs" items={faqs} />
+
+  <CtaBand heading="Need it stripped and prepped?" text="From a single part to a commercial run — call for a fast, free quote." button="Get a Free Quote" />
+</BaseLayout>

@@ -1,0 +1,82 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/PageHero.astro';
+import StatStrip from '../components/StatStrip.astro';
+import LSplit from '../components/LSplit.astro';
+import FAQ from '../components/FAQ.astro';
+import CtaBand from '../components/CtaBand.astro';
+import { faqPage, breadcrumb } from '../lib/schema';
+
+const path = '/our-process/';
+const title = 'Our Process — How TEFCO Builds Your Project | Ogden, UT';
+const description = 'From free estimate to installation — see how TEFCO designs, fabricates, powder coats & installs your custom iron in Ogden, Utah. Call (801) 621-1010.';
+
+const steps = [
+  { t: 'Free estimate & consult', d: 'Call or send the form. We learn your goal, measure if needed, and give you a clear, no-obligation quote — no surprises.' },
+  { t: 'Design', d: 'We turn your idea (or sketch, or photo) into a buildable design — including 3D when it helps — and confirm materials, finish, and color with you.' },
+  { t: 'Fabricate', d: 'Our crew cuts, welds, and builds your project by hand in our Ogden shop — the same way we have since 1942.' },
+  { t: 'Finish', d: 'We sandblast and powder coat in-house for a hard, even, long-lasting finish in your chosen color.' },
+  { t: 'Install', d: 'Our own team installs for a precise fit and stands behind the work with our satisfaction guarantee.' },
+];
+
+const faqs = [
+  { q: 'How long does a project take?', a: 'It depends on scope and our current schedule — we give you a realistic timeline with your estimate. <em>[[CONFIRM: typical lead times]]</em>' },
+  { q: 'Do you handle installation?', a: 'Yes — our own crew installs everything we build.' },
+  { q: 'What does an estimate cost?', a: 'Nothing — estimates are always free and no-obligation.' },
+];
+
+const schema = [faqPage(faqs), breadcrumb([{ name: 'Home', path: '/' }, { name: 'Our Process', path }])];
+---
+<BaseLayout title={title} description={description} path={path} active="/about-us/" schema={schema}>
+  <PageHero
+    eyebrow="What To Expect"
+    title="From idea to installed"
+    accent="our process"
+    lede="Working with a custom shop shouldn't be a mystery. Here's exactly how your project goes from first call to finished install — five clear steps."
+    bg="https://tefcofab.com/wp-content/uploads/2024/11/Tefcopics2011-008-scaled.jpg"
+    bgAlt="The TEFCO shop where custom ironwork is built, Ogden Utah"
+    breadcrumb={[{ label: 'Home', href: '/' }, { label: 'About Us', href: '/about-us/' }, { label: 'Our Process' }]}
+  />
+
+  <section class="features">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="eyebrow">Five Steps</span>
+        <h2>How it works</h2>
+      </div>
+      <div class="process-steps">
+        {steps.map((s, i) => (
+          <div class="pstep reveal" style={`transition-delay:${(i % 2) * 70}ms`}>
+            <div class="pnum">{i + 1}</div>
+            <div><h4>{s.t}</h4><p>{s.d}</p></div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <StatStrip items={[
+    { n: 'In-House', l: 'Design → Install' },
+    { n: '80+', l: 'Years In The Trade' },
+    { n: 'Free', l: 'Estimates' },
+    { n: '4.6 ★', l: '29 Google Reviews' },
+  ]} />
+
+  <LSplit
+    sec="gray"
+    eyebrow="One Roof"
+    heading="One shop, start to finish"
+    flip
+    img="https://tefcofab.com/wp-content/uploads/2026/02/Custom-outdoor-railing-system.png"
+    imgAlt="TEFCO crew fabricating custom ironwork in Ogden, Utah"
+  >
+    <p class="reveal">Because we design, build, finish, and install under one roof, nothing gets lost between vendors — and you talk to the people actually doing the work. It's how we keep quality high and timelines honest.</p>
+    <div class="actions reveal">
+      <button class="btn btn-solid btn-sm" data-open-quote>Get a Free Estimate</button>
+    </div>
+  </LSplit>
+
+  <FAQ heading="Process FAQs" items={faqs} />
+
+  <CtaBand heading="Ready for step one?" text="It starts with a free, no-obligation estimate." />
+</BaseLayout>

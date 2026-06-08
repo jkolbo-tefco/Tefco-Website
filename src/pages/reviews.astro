@@ -1,0 +1,51 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import CtaBand from '../components/CtaBand.astro';
+import { reviews, business } from '../data/site';
+import { breadcrumb } from '../lib/schema';
+
+const path = '/reviews/';
+const title = 'Reviews — TEFCO Custom Iron & Powder Coating, Ogden UT';
+const description = 'Read reviews of TEFCO of Utah from Ogden-area homeowners, builders & businesses — 4.6 ★ on Google. Custom iron, fabrication & powder coating since 1942.';
+
+const aggregate = {
+  '@context': 'https://schema.org',
+  '@type': 'LocalBusiness',
+  '@id': 'https://tefcofab.com/#business',
+  name: business.name,
+  aggregateRating: { '@type': 'AggregateRating', ratingValue: business.rating, reviewCount: business.reviewCount },
+  review: reviews.map((r) => ({
+    '@type': 'Review',
+    author: { '@type': 'Person', name: r.name },
+    reviewRating: { '@type': 'Rating', ratingValue: 5, bestRating: 5 },
+    reviewBody: r.quote,
+  })),
+};
+const schema = [aggregate, breadcrumb([{ name: 'Home', path: '/' }, { name: 'Reviews', path }])];
+---
+<BaseLayout title={title} description={description} path={path} active="/reviews/" solidHeader schema={schema}>
+  <section class="features" style="padding-top:140px;">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="eyebrow">Reviews</span>
+        <h2>What our customers say</h2>
+        <p>{business.rating} ★ from {business.reviewCount} Google reviews — and counting. From homeowners to builders to commercial clients, here's what working with TEFCO is like.</p>
+      </div>
+      <div class="rev-grid cols-3">
+        {reviews.map((r, i) => (
+          <div class="rev-card reveal" style={`transition-delay:${(i % 3) * 70}ms`}>
+            <div class="stars">★★★★★</div>
+            <blockquote>"{r.quote}"</blockquote>
+            <div class="who">{r.name}</div>
+            <div class="src">{r.source}</div>
+          </div>
+        ))}
+      </div>
+      <div style="text-align:center;margin-top:36px;">
+        <a href={business.social.google} class="btn btn-outline-dark">Leave Us a Review</a>
+      </div>
+    </div>
+  </section>
+
+  <CtaBand heading="Want to be our next 5-star review?" />
+</BaseLayout>

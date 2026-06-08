@@ -1,0 +1,89 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/PageHero.astro';
+import LSplit from '../components/LSplit.astro';
+import Features from '../components/Features.astro';
+import PhotoStrip from '../components/PhotoStrip.astro';
+import FAQ from '../components/FAQ.astro';
+import CtaBand from '../components/CtaBand.astro';
+import { service, faqPage, breadcrumb } from '../lib/schema';
+
+const path = '/floating-stairs/';
+const title = 'Floating Stairs in Ogden, UT — Custom Open-Riser Staircases | TEFCO';
+const description = 'Custom floating staircases for Utah homes & businesses — sleek, open-riser steel stairs designed, built & installed by TEFCO since 1942. (801) 621-1010.';
+const ogImage = 'https://tefcofab.com/wp-content/uploads/2025/01/shutterstock_2433528987.jpg';
+
+const faqs = [
+  { q: 'Are floating stairs safe?', a: 'Yes — properly engineered floating stairs meet all building codes. The open look comes from hidden structural supports, not from cutting corners on strength.' },
+  { q: 'How much weight can floating stairs hold?', a: 'Each stair is engineered to meet or exceed residential load codes; we size the steel and connections to your specific span and use.' },
+  { q: 'Do floating stairs need a wall?', a: 'Not always — they can mount to a wall, a hidden central stringer, or a steel structure we build, depending on your layout. We engineer the right support for your space.' },
+];
+
+const schema = [
+  service({ name: 'Floating Stairs', description: 'Custom open-riser floating staircases, engineered and installed for homes and businesses.', path }),
+  faqPage(faqs),
+  breadcrumb([{ name: 'Home', path: '/' }, { name: 'Services', path: '/services/' }, { name: 'Floating Stairs', path }]),
+];
+---
+<BaseLayout title={title} description={description} path={path} ogImage={ogImage} active="/services/" schema={schema}>
+  <PageHero
+    eyebrow="Timeless · Elegant · Unique"
+    title="Floating Stairs"
+    accent="a centerpiece, not just a path"
+    lede="Floating stairs are more than a way between levels — they're a design statement. We engineer and build custom open-riser staircases that look like they defy gravity, for a sleek, open feel."
+    bg="https://tefcofab.com/wp-content/uploads/2025/01/shutterstock_2433528987.jpg"
+    bgAlt="Modern floating open-riser staircase in a Utah home"
+    breadcrumb={[{ label: 'Home', href: '/' }, { label: 'Services', href: '/services/' }, { label: 'Floating Stairs' }]}
+  />
+
+  <LSplit
+    eyebrow="Floating Stairs"
+    heading="From design to installation"
+    flip
+    img="https://tefcofab.com/wp-content/uploads/2025/01/shutterstock_2433528987.jpg"
+    imgAlt="Custom steel floating staircase with open risers, Utah"
+    caption="Floating Staircase"
+  >
+    <p class="reveal">Raise the bar with a floating staircase built around your space. We handle the structural engineering, fabrication, and installation so the finished stair is as safe as it is striking — open risers, hidden stringers, and a finish to match your home.</p>
+    <div class="actions reveal">
+      <button class="btn btn-solid btn-sm" data-open-quote>Get a Free Estimate</button>
+    </div>
+  </LSplit>
+
+  <Features
+    eyebrow="Why Floating Stairs"
+    heading="Benefits of floating stairs"
+    items={[
+      { title: 'Sleek modern aesthetic', desc: 'An open, airy look that becomes the focal point of a room.' },
+      { title: 'Space-saving design', desc: 'Less visual bulk than a closed staircase.' },
+      { title: 'More natural light', desc: 'Open risers let light flow between levels.' },
+      { title: 'Customizable features', desc: 'Tread material, railing, and finish all built to your taste.' },
+      { title: 'Increases home value', desc: 'A statement staircase elevates the whole space.' },
+      { title: 'Durable & strong', desc: 'Engineered steel structure built to code and to last.' },
+    ]}
+  />
+
+  <PhotoStrip
+    img="https://tefcofab.com/wp-content/uploads/2025/01/shutterstock_2433528987.jpg"
+    alt="Floating staircase detail showing hidden stringer support"
+    eyebrow="Engineered To Impress"
+    heading="It should look impossible — and be perfectly safe."
+  />
+
+  <LSplit
+    sec="gray"
+    eyebrow="Pairs Well With"
+    heading="Finish the look"
+    img="https://tefcofab.com/wp-content/uploads/2025/01/outdoor-railing-system-1.jpg"
+    imgAlt="Cable railing complementing a modern staircase, Utah"
+  >
+    <p class="reveal">Floating stairs pair naturally with open <a href="/cable-railing/">cable railing</a> or custom <a href="/railings/">iron railings</a>, all finished in your color with our in-house <a href="/powder-coating/">powder coating</a>.</p>
+    <div class="actions reveal">
+      <button class="btn btn-solid btn-sm" data-open-quote>Get a Free Estimate</button>
+    </div>
+  </LSplit>
+
+  <FAQ heading="Floating Stairs FAQs" items={faqs} />
+
+  <CtaBand heading="Ready to make a statement?" />
+</BaseLayout>

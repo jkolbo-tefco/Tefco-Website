@@ -1,0 +1,28 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { business } from '../data/site';
+
+const path = '/thank-you/';
+---
+<BaseLayout
+  title="Thank You — TEFCO"
+  description="Thanks for contacting TEFCO of Utah. We'll be in touch shortly about your free estimate."
+  path={path}
+  active=""
+  solidHeader
+>
+  <section class="features" style="padding-top:160px;text-align:center;">
+    <div class="wrap" style="max-width:620px;">
+      <div class="big-check" style="margin:0 auto 24px;width:72px;height:72px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:var(--gold-pale);color:var(--gold-dark);">
+        <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg>
+      </div>
+      <h1>Request received!</h1>
+      <p style="margin-top:16px;">Thank you for choosing TEFCO. One of our experienced team members will be in touch shortly to discuss your vision and provide a free estimate.</p>
+      <p style="margin-top:16px;">Need us sooner? Call <a href={business.phoneHref}>{business.phone}</a>, Monday–Friday 8:00 AM – 4:30 PM.</p>
+      <div style="margin-top:28px;">
+        <a href="/" class="btn btn-solid">Back to Home</a>
+        <a href="/gallery/" class="btn btn-outline-dark">See Our Work</a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

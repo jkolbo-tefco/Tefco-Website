@@ -1,0 +1,76 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/PageHero.astro';
+import Features from '../components/Features.astro';
+import LSplit from '../components/LSplit.astro';
+import FAQ from '../components/FAQ.astro';
+import CtaBand from '../components/CtaBand.astro';
+import { faqPage, breadcrumb } from '../lib/schema';
+
+const path = '/cost/';
+const title = 'What Affects the Cost of Custom Iron Work | TEFCO Ogden';
+const description = 'What drives the price of custom railings, gates, powder coating & fabrication in Utah — and how to get an accurate free estimate from TEFCO. (801) 621-1010.';
+
+const faqs = [
+  { q: 'How much does a custom iron railing cost in Utah?', a: 'It varies with length, material, and design — we give a firm number in a free estimate. <em>[[CONFIRM: typical estimate response time]]</em>' },
+  { q: 'Do you offer free estimates?', a: 'Always — free and no-obligation.' },
+  { q: 'Is powder coating worth the added cost?', a: 'Yes — it lasts far longer than paint, so it lowers your long-term cost. Learn more on our <a href="/powder-coating/">powder coating</a> page.' },
+];
+
+const schema = [faqPage(faqs), breadcrumb([{ name: 'Home', path: '/' }, { name: 'What Affects Cost', path }])];
+---
+<BaseLayout title={title} description={description} path={path} active="/services/" schema={schema}>
+  <PageHero
+    eyebrow="Buyer's Guide"
+    title="What affects the cost of custom iron work"
+    accent="and how to budget"
+    lede="Most custom iron projects are priced by size, material, design complexity, finish, and installation — here's how each factor moves the number, and why a free estimate is the only accurate quote."
+    bg="https://tefcofab.com/wp-content/uploads/2026/02/Custom-outdoor-railing-system.png"
+    bgAlt="Custom ironwork being fabricated by TEFCO, Ogden Utah"
+    breadcrumb={[{ label: 'Home', href: '/' }, { label: 'Services', href: '/services/' }, { label: 'Cost' }]}
+  />
+
+  <Features
+    eyebrow="Cost Factors"
+    heading="Five things that drive the price"
+    items={[
+      { title: 'Size & quantity', desc: 'More linear feet or more pieces means more material and labor.' },
+      { title: 'Material', desc: 'Aluminum, steel, stainless, and corten each price differently.' },
+      { title: 'Design complexity', desc: 'Simple modern lines cost less than detailed ornamental scrollwork.' },
+      { title: 'Finish', desc: 'Powder-coat color/texture and blasting prep add to the base.' },
+      { title: 'Installation', desc: 'Access, height, and site conditions affect install time.' },
+    ]}
+  />
+
+  <LSplit
+    sec="teal"
+    eyebrow="Honest Pricing"
+    heading="Why we don't list flat prices"
+    img="https://tefcofab.com/wp-content/uploads/2024/11/101810-003-scaled.jpg"
+    imgAlt="Custom ironwork by TEFCO that varies in price by project"
+  >
+    <p class="reveal">Every custom project is different, so a one-size price would either overcharge you or underdeliver. Instead we give you a detailed, free, no-obligation estimate built around your exact job.</p>
+    <div class="actions reveal">
+      <button class="btn btn-dark" data-open-quote>Get a Free Estimate</button>
+    </div>
+  </LSplit>
+
+  <LSplit
+    sec="gray"
+    eyebrow="Be Ready"
+    heading="Get the most accurate quote"
+    flip
+    img={null}
+    imgAlt="Planning a custom iron project with TEFCO"
+    imgNote="Photo: a customer/estimator reviewing measurements or a sketch on site, or a tape measure on a railing — conveys the estimate step."
+  >
+    <p class="reveal">Have measurements, photos, and your color/material preference ready; tell us whether it's residential or commercial; and mention your timeline. The more we know, the tighter the number. Explore <a href="/railings/">railings</a>, <a href="/gates/">gates</a>, or <a href="/powder-coating/">powder coating</a> to see what's possible.</p>
+    <div class="actions reveal">
+      <button class="btn btn-solid btn-sm" data-open-quote>Get a Free Estimate</button>
+    </div>
+  </LSplit>
+
+  <FAQ heading="Cost FAQs" items={faqs} />
+
+  <CtaBand heading="Get your number — free." text="Tell us about your project and we'll send a detailed, no-obligation estimate." />
+</BaseLayout>

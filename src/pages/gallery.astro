@@ -1,0 +1,96 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/PageHero.astro';
+import CtaBand from '../components/CtaBand.astro';
+import { breadcrumb } from '../lib/schema';
+
+const path = '/gallery/';
+const title = 'Project Gallery — Custom Iron Work in Ogden, UT | TEFCO';
+const description = "See TEFCO's custom iron work in Ogden, Utah — railings, gates, security doors, powder coating & more. 80+ years of metal fabrication. Call (801) 621-1010.";
+
+const filters = [
+  { cat: 'all', label: 'All Work' },
+  { cat: 'railings', label: 'Railings' },
+  { cat: 'gates', label: 'Gates' },
+  { cat: 'security-doors', label: 'Security Doors' },
+  { cat: 'powder-coating', label: 'Powder Coating' },
+  { cat: 'commercial', label: 'Commercial' },
+];
+
+const items = [
+  { cat: 'railings', label: 'Railings', title: 'Modern Deck Railing', src: 'https://tefcofab.com/wp-content/uploads/2026/02/house-with-rails-scaled.jpg', alt: 'Modern horizontal-bar deck railing on a home in Ogden, Utah' },
+  { cat: 'railings', label: 'Railings', title: 'Indoor Railing System', src: 'https://tefcofab.com/wp-content/uploads/2026/02/Indoor-modern-railing-system-e1770237188274.png', alt: 'Modern indoor iron railing system by TEFCO' },
+  { cat: 'railings', label: 'Railings', title: 'Ornamental Indoor Railing', src: 'https://tefcofab.com/wp-content/uploads/2024/11/IMG_0803-scaled.jpg', alt: 'Custom ornamental indoor iron railing, Weber County Utah' },
+  { cat: 'railings', label: 'Railings', title: 'Wrought Iron Staircase', src: 'https://tefcofab.com/wp-content/uploads/2024/11/IMG_0230-scaled.jpg', alt: 'Custom wrought iron staircase railing in Northern Utah' },
+  { cat: 'railings', label: 'Railings', title: 'Modern Indoor Railing', src: 'https://tefcofab.com/wp-content/uploads/2026/05/image-72.png', alt: 'Clean modern indoor railing fabricated by TEFCO' },
+  { cat: 'railings', label: 'Railings', title: 'Exterior Metal Railing', src: 'https://tefcofab.com/wp-content/uploads/2021/09/metal-railing.jpg', alt: 'Exterior metal railing on a Utah home' },
+  { cat: 'gates', label: 'Gates', title: 'Black Driveway Gate', src: 'https://tefcofab.com/wp-content/uploads/2026/02/large-black-gate-1-scaled-e1770149579200.jpg', alt: 'Large custom black iron driveway gate, Ogden Utah' },
+  { cat: 'gates', label: 'Gates', title: 'Custom Entry Gate', src: 'https://tefcofab.com/wp-content/uploads/2026/02/IMG_3739-scaled.jpeg', alt: 'Custom ornamental iron entry gate fabricated in Utah' },
+  { cat: 'gates', label: 'Gates', title: 'Ornamental Iron Gate', src: 'https://tefcofab.com/wp-content/uploads/2026/02/IMG_3731-scaled.jpeg', alt: 'Ornamental custom iron gate by TEFCO, Northern Utah' },
+  { cat: 'gates', label: 'Gates', title: 'Iron Gate', src: 'https://tefcofab.com/wp-content/uploads/2026/02/Iron-gate-Utah.jpg', alt: 'Custom iron gate installed at a Utah property' },
+  { cat: 'gates', label: 'Gates', title: 'Country Iron Gate', src: 'https://tefcofab.com/wp-content/uploads/2021/10/iron-gate-resized.jpg', alt: 'Rustic country-style custom iron gate' },
+  { cat: 'security-doors', label: 'Security Doors', title: 'Ornamental Security Door', src: 'https://tefcofab.com/wp-content/uploads/2026/05/image-77.png', alt: 'Custom security door with ornamental scrollwork, Ogden Utah' },
+  { cat: 'security-doors', label: 'Security Doors', title: 'Ornate Security Door', src: 'https://tefcofab.com/wp-content/uploads/2026/02/ornate-door.png', alt: 'Ornate iron security door by TEFCO' },
+  { cat: 'security-doors', label: 'Security Doors', title: 'Rustic Security Door', src: 'https://tefcofab.com/wp-content/uploads/2021/09/security-door-rustic.jpg', alt: 'Rustic custom iron security door, Northern Utah' },
+  { cat: 'security-doors', label: 'Security Doors', title: 'Black Iron Door with Scrolls', src: 'https://tefcofab.com/wp-content/uploads/2021/11/black-iron-door-scrolls-scaled.jpg', alt: 'Black iron security door with custom scrollwork' },
+  { cat: 'powder-coating', label: 'Powder Coating', title: 'Powder Coated Wheels', src: 'https://tefcofab.com/wp-content/uploads/2026/02/wheelspowdercoat.jpg', alt: "Gloss powder coated wheels at TEFCO's Ogden shop" },
+  { cat: 'powder-coating', label: 'Powder Coating', title: 'Red Powder Coated Wheel', src: 'https://tefcofab.com/wp-content/uploads/2026/02/Red-wheel-scaled.jpg', alt: 'Red powder coated wheel, custom finish' },
+  { cat: 'powder-coating', label: 'Powder Coating', title: 'UTV Cage — Gray', src: 'https://tefcofab.com/wp-content/uploads/2021/11/utv-cage-gray-powder-coat.jpg', alt: 'UTV cage in textured gray powder coat' },
+  { cat: 'powder-coating', label: 'Powder Coating', title: 'UTV Cage — Blue', src: 'https://tefcofab.com/wp-content/uploads/2021/11/blue-powder-utv-cage.jpg', alt: 'UTV cage in blue powder coat finish' },
+  { cat: 'powder-coating', label: 'Powder Coating', title: 'UTV Cage — Turquoise', src: 'https://tefcofab.com/wp-content/uploads/2021/11/turquiose-powder-coat-utv-cage.jpg', alt: 'UTV cage in turquoise powder coat' },
+  { cat: 'commercial', label: 'Commercial', title: 'Commercial Fabrication', src: 'https://tefcofab.com/wp-content/uploads/2026/03/IMG_4047-scaled.jpeg', alt: 'Commercial metal fabrication project by TEFCO' },
+  { cat: 'commercial', label: 'Commercial', title: 'Commercial Railing', src: 'https://tefcofab.com/wp-content/uploads/2024/11/IMG_1203-scaled.jpg', alt: 'Commercial iron railing fabricated in Ogden, Utah' },
+  { cat: 'commercial', label: 'Commercial', title: 'Fabrication Shop', src: 'https://tefcofab.com/wp-content/uploads/2024/11/Tefcopics2011-008-scaled.jpg', alt: 'Inside the TEFCO metal fabrication shop, Ogden Utah' },
+];
+
+const schema = [breadcrumb([{ name: 'Home', path: '/' }, { name: 'Gallery', path }])];
+---
+<BaseLayout title={title} description={description} path={path} active="/gallery/" schema={schema}>
+  <PageHero
+    eyebrow="Residential & Commercial"
+    title="Our Work"
+    accent="built across Northern Utah"
+    lede="Custom iron railings, gates, security doors, powder coating, and commercial fabrication — hand-built in our Ogden shop since 1942. Filter by category, then click any photo to view it full size."
+    bg="https://tefcofab.com/wp-content/uploads/2026/02/house-with-rails-scaled.jpg"
+    bgAlt="Custom metalwork by TEFCO across Northern Utah"
+    breadcrumb={[{ label: 'Home', href: '/' }, { label: 'Gallery' }]}
+  />
+
+  <section class="features" style="background: var(--slate);">
+    <div class="wrap">
+      <div class="gallery-filter" id="galleryFilter">
+        {filters.map((f) => (
+          <button class={f.cat === 'all' ? 'active' : undefined} data-cat={f.cat}>{f.label}</button>
+        ))}
+      </div>
+
+      <div class="gallery-masonry" id="galleryMasonry">
+        {items.map((it) => (
+          <a class="g-item" data-cat={it.cat} data-title={it.title}>
+            <img src={it.src} alt={it.alt} loading="lazy" referrerpolicy="no-referrer" />
+            <div class="g-ov"><span class="cat">{it.label}</span><span class="zoom">+</span></div>
+          </a>
+        ))}
+      </div>
+      <p class="gallery-empty" id="galleryEmpty">No projects in this category yet — check back soon.</p>
+    </div>
+  </section>
+
+  <CtaBand heading="See something you like?" text="Tell us about your project and we'll provide a detailed free estimate. We serve Ogden, the Wasatch Front, and Northern Utah." />
+
+  <!-- Lightbox (driven by tefco.js) -->
+  <div id="glb" aria-hidden="true">
+    <span class="glb-count" id="glbCount"></span>
+    <button class="glb-x" id="glbX" aria-label="Close">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+    </button>
+    <button class="glb-nav glb-prev" id="glbPrev" aria-label="Previous">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+    </button>
+    <button class="glb-nav glb-next" id="glbNext" aria-label="Next">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+    </button>
+    <div class="glb-stage"><img id="glbImg" src="" alt="" /></div>
+    <div class="glb-cap" id="glbCap"></div>
+  </div>
+</BaseLayout>

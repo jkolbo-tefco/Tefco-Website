@@ -1,0 +1,86 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/PageHero.astro';
+import LSplit from '../components/LSplit.astro';
+import Features from '../components/Features.astro';
+import StatStrip from '../components/StatStrip.astro';
+import ReviewGrid from '../components/ReviewGrid.astro';
+import FAQ from '../components/FAQ.astro';
+import CtaBand from '../components/CtaBand.astro';
+import { reviewsFor } from '../data/site';
+import { faqPage, breadcrumb } from '../lib/schema';
+
+const path = '/about-us/';
+const title = "About TEFCO — Ogden's Ornamental Iron Shop Since 1942";
+const description = 'TEFCO has built custom ornamental iron, fabrication & powder coating in Ogden, Utah since 1942. Family owned, licensed & insured. Call (801) 621-1010.';
+
+const faqs = [
+  { q: 'Is TEFCO really family owned?', a: 'Yes — TEFCO has been family owned since 1942, and you work directly with the people who build your project.' },
+  { q: 'What metals do you work with?', a: 'Aluminum, mild and carbon steel, stainless, wrought and cast iron, galvanized steel, copper and copper alloys, corten, and more.' },
+  { q: 'What are the benefits of your powder coating?', a: 'Powder coating (added in 2000) gives a tougher, more uniform, longer-lasting finish than paint — in custom-matched colors, with strong corrosion resistance.' },
+];
+
+const schema = [
+  faqPage(faqs),
+  breadcrumb([{ name: 'Home', path: '/' }, { name: 'About Us', path }]),
+];
+---
+<BaseLayout title={title} description={description} path={path} active="/about-us/" schema={schema}>
+  <PageHero
+    eyebrow="Family Owned Since 1942"
+    title="Over 80 years of Utah ironwork"
+    accent="and counting"
+    lede="Quality ornamental iron, custom fabrication, sandblasting and powder coating — built in Ogden, by people who've done it for over 80 years."
+    bg="https://tefcofab.com/wp-content/uploads/2024/11/Tefcopics2011-008-scaled.jpg"
+    bgAlt="The TEFCO fabrication shop in Ogden, Utah"
+    breadcrumb={[{ label: 'Home', href: '/' }, { label: 'About Us' }]}
+  />
+
+  <LSplit
+    eyebrow="Our Story"
+    heading="Experience you can trust"
+    flip
+    img="https://tefcofab.com/wp-content/uploads/2024/11/Tefcopics2011-008-scaled.jpg"
+    imgAlt="Inside TEFCO's Ogden, Utah metal fabrication shop"
+    caption="Since 1942"
+  >
+    <p class="reveal">TEFCO has served Weber County and Northern Utah with high-rated ornamental iron since 1942. Over eight decades we've earned a reputation for quality craftsmanship and one-of-a-kind designs.</p>
+    <p class="reveal">We take the time to know our customers and put their needs first — and our crew takes on jobs of any size, from a single railing to a full commercial run.</p>
+  </LSplit>
+
+  <LSplit
+    eyebrow="Our Craft"
+    heading="We take metal and make art"
+    img="https://tefcofab.com/wp-content/uploads/2026/02/Custom-outdoor-railing-system.png"
+    imgAlt="Ornamental custom metalwork by TEFCO, Ogden Utah"
+  >
+    <p class="reveal">Custom metal fabrication and ornamental iron is what we do best — from the simple to the lavish. Combining decades of knowledge with modern equipment, we build products and finishes that make people say <em>wow</em>. Tell us your vision and we'll make it a reality.</p>
+    <div class="actions reveal">
+      <button class="btn btn-solid btn-sm" data-open-quote>Get a Free Estimate</button>
+    </div>
+  </LSplit>
+
+  <Features
+    sec="gray"
+    eyebrow="What Sets Us Apart"
+    heading="Why customers stay with us"
+    items={[
+      { title: 'High-quality products', desc: 'Built to exceed expectations, not just meet them.' },
+      { title: 'Superior service', desc: 'Responsive, honest, and easy to work with — ask our repeat customers.' },
+      { title: '100% satisfaction guaranteed', desc: 'We back our work, every time.' },
+    ]}
+  />
+
+  <StatStrip items={[
+    { n: '1942', l: 'Founded' },
+    { n: '80+', l: 'Years Experience' },
+    { n: '4.6 ★', l: '29 Google Reviews' },
+    { n: 'Family', l: 'Owned & Operated' },
+  ]} />
+
+  <ReviewGrid heading="A reputation built one job at a time" items={reviewsFor('about', 3)} narrow />
+
+  <FAQ heading="About TEFCO — FAQs" items={faqs} />
+
+  <CtaBand heading="Come build with a shop that's been here since 1942." />
+</BaseLayout>

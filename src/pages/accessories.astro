@@ -1,0 +1,39 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/PageHero.astro';
+import Features from '../components/Features.astro';
+import CtaBand from '../components/CtaBand.astro';
+import { breadcrumb } from '../lib/schema';
+
+const path = '/accessories/';
+const title = 'Planter Accessories — Irrigation, Lighting & More | TEFCO';
+const description = 'Add irrigation, LED lighting, casters and more to your custom TEFCO metal planters. Built in Ogden, Utah. Call (801) 621-1010.';
+const schema = [breadcrumb([{ name: 'Home', path: '/' }, { name: 'Planters', path: '/planters/' }, { name: 'Accessories', path }])];
+---
+<BaseLayout title={title} description={description} path={path} active="/services/" schema={schema}>
+  <PageHero
+    eyebrow="Make It Yours"
+    title="Planter Accessories"
+    accent="built right in"
+    lede="Turn a planter into a feature. We can integrate irrigation, lighting, mobility, and more into any custom planter."
+    bg={null}
+    bgAlt="Custom planter accessories by TEFCO"
+    bgNote="Hero photo: a planter with a visible accessory — integrated LED lighting glowing at dusk, or a self-watering/irrigation setup."
+    breadcrumb={[{ label: 'Home', href: '/' }, { label: 'Planters', href: '/planters/' }, { label: 'Accessories' }]}
+  />
+
+  <Features
+    eyebrow="Add-Ons"
+    heading="What we can integrate"
+    items={[
+      { title: 'Irrigation systems', desc: 'Built-in watering for low-maintenance, healthy plants.' },
+      { title: 'LED lighting', desc: 'Integrated lighting for a dramatic look after dark.' },
+      { title: 'Casters & wheels', desc: 'Move large planters easily — great for patios and events.' },
+      { title: 'Integrated sound', desc: 'Hidden speakers built into the planter body.' },
+      { title: 'Custom drainage', desc: 'Removable drain holes and reservoirs designed in.' },
+      { title: 'Liners & inserts', desc: 'Protect plantings and simplify seasonal swaps.' },
+    ]}
+  />
+
+  <CtaBand heading="Add the extras you want." text="Tell us what you're planting and where — we'll spec the accessories to match." />
+</BaseLayout>

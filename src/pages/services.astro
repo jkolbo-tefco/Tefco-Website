@@ -1,0 +1,68 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/PageHero.astro';
+import ServiceCards from '../components/ServiceCards.astro';
+import LSplit from '../components/LSplit.astro';
+import StatStrip from '../components/StatStrip.astro';
+import ReviewGrid from '../components/ReviewGrid.astro';
+import FAQ from '../components/FAQ.astro';
+import CtaBand from '../components/CtaBand.astro';
+import { reviewsFor } from '../data/site';
+import { faqPage, breadcrumb } from '../lib/schema';
+
+const path = '/services/';
+const title = 'Services — Custom Iron & Metal Fabrication, Ogden UT | TEFCO';
+const description = 'Railings, gates, security doors, powder coating, sandblasting & custom fabrication in Ogden, Utah. The best custom iron work the Wasatch Front offers. (801) 621-1010.';
+
+const faqs = [
+  { q: 'What services does TEFCO offer?', a: 'Custom iron railings, gates, security doors and staircases; powder coating and sandblasting; and full custom metal fabrication for residential and commercial clients.' },
+  { q: 'What custom projects can you build?', a: 'Edging, fire pits, ladders, radius containers, railings, roof racks, table frames, tool boxes, planters, trellises, benches, water features, and more — if you can describe it, we can fabricate it.' },
+  { q: 'Do you handle both residential and commercial work?', a: 'Yes — from a single home railing to large commercial and contractor runs.' },
+];
+
+const schema = [
+  faqPage(faqs),
+  breadcrumb([{ name: 'Home', path: '/' }, { name: 'Services', path }]),
+];
+---
+<BaseLayout title={title} description={description} path={path} active="/services/" schema={schema}>
+  <PageHero
+    eyebrow="Residential & Commercial"
+    title="Our services"
+    accent="all under one roof"
+    lede="Quality craftsmanship and custom fabrication for Ogden and the Wasatch Front since 1942. What can we build for you?"
+    bg="https://tefcofab.com/wp-content/uploads/2024/11/101810-003-scaled.jpg"
+    bgAlt="A range of TEFCO custom ironwork and fabrication, Ogden Utah"
+    breadcrumb={[{ label: 'Home', href: '/' }, { label: 'Services' }]}
+  />
+
+  <ServiceCards eyebrow="What We Do" heading="What we can do for you" />
+
+  <LSplit
+    sec="gray"
+    eyebrow="What We Offer"
+    heading="Beautiful, custom ironwork — start to finish"
+    flip
+    img="https://tefcofab.com/wp-content/uploads/2026/02/Custom-outdoor-railing-system.png"
+    imgAlt="Custom ornamental iron and fabrication by TEFCO, Ogden Utah"
+  >
+    <p class="reveal">We've built our reputation on custom ornamental iron: expert design, fabrication, finishing, and installation for homes and businesses. From iron doors and railings to gates, balconies, planters, and architectural details, if it's metal, we can make it — and make it last.</p>
+    <div class="actions reveal">
+      <a href="/gallery/" class="btn btn-outline-dark">View Gallery</a>
+      <button class="btn btn-solid btn-sm" data-open-quote>Get a Free Estimate</button>
+    </div>
+  </LSplit>
+
+  <StatStrip items={[
+    { n: '80+', l: 'Years Experience' },
+    { n: '4.6 ★', l: '29 Google Reviews' },
+    { n: 'In-House', l: 'Design → Install' },
+    { n: 'Free', l: 'Estimates' },
+  ]} />
+
+  <ReviewGrid heading="What Customers Say" items={reviewsFor('railings', 3)} narrow />
+
+  <FAQ heading="Services FAQs" items={faqs} />
+
+  <CtaBand heading="Not sure which service you need?" text="Call us or request a free estimate — we'll point you in the right direction." />
+</BaseLayout>
