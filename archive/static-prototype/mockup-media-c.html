@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TEFCO — Media Section Mockup C: Look Book Hero + Cards Below</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,400..700;1,400..700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="tefco.css">
+<style>
+  body { background: #f2f2f2; }
+  .demo-label {
+    background: var(--charcoal); color: #fff; padding: 18px 0;
+    border-top: 4px solid var(--gold);
+    font-family: var(--font-mono); font-size: 11px; letter-spacing: .25em; text-transform: uppercase;
+  }
+  .demo-label .wrap { display: flex; align-items: center; gap: 16px; }
+  .demo-label strong { color: var(--gold); }
+
+  /* ── OPTION C: Look Book hero + news/video row below ── */
+
+  /* Top: Look Book banner — full-width accent strip */
+  .lb-banner {
+    background: var(--gold-dark); color: #fff; padding: 0;
+    position: relative; overflow: hidden;
+  }
+  .lb-banner-grid {
+    display: grid; grid-template-columns: 1fr;
+    min-height: 320px;
+  }
+  @media (min-width: 1024px) { .lb-banner-grid { grid-template-columns: 1fr 1.4fr; } }
+
+  .lb-banner-copy {
+    padding: 56px 48px; display: flex; flex-direction: column;
+    justify-content: center; gap: 20px; position: relative; z-index: 2;
+  }
+  .lb-banner-copy .lb-kicker {
+    font-family: var(--font-mono); font-size: 9px; letter-spacing: .4em;
+    text-transform: uppercase; color: var(--gold-light); font-weight: 700;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .lb-banner-copy .lb-kicker::before {
+    content: ""; width: 32px; height: 2px; background: var(--gold-light); flex-shrink: 0;
+  }
+  .lb-banner-copy h2 {
+    font-family: var(--font-display); font-size: clamp(1.6rem, 3vw, 2.4rem);
+    font-weight: 800; text-transform: uppercase; color: #fff; line-height: 1.1;
+    letter-spacing: -.01em;
+  }
+  .lb-banner-copy p {
+    font-size: 14px; color: rgba(255,255,255,.75); line-height: 1.7;
+    font-weight: 300; max-width: 420px;
+  }
+  .lb-banner-copy .lb-actions { display: flex; flex-wrap: wrap; gap: 12px; }
+  .btn-lb-dl {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 15px 28px; background: #fff; color: var(--gold-dark);
+    font-weight: 800; font-size: 11px; letter-spacing: .1em; text-transform: uppercase;
+    border-radius: 2px; transition: all .2s; border: none; cursor: pointer;
+    box-shadow: 0 8px 20px rgba(0,0,0,.2);
+  }
+  .btn-lb-dl:hover { background: var(--gold-light); color: #fff; }
+  .btn-lb-preview {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 15px 24px; background: transparent; color: #fff;
+    font-weight: 600; font-size: 11px; letter-spacing: .1em; text-transform: uppercase;
+    border-radius: 2px; border: 1px solid rgba(255,255,255,.3); transition: all .2s; cursor: pointer;
+  }
+  .btn-lb-preview:hover { border-color: rgba(255,255,255,.7); background: rgba(255,255,255,.08); }
+
+  /* Look Book cover mockup on the right */
+  .lb-banner-visual {
+    position: relative; overflow: hidden; min-height: 280px;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .lb-banner-visual img {
+    position: absolute; inset: 0; width: 100%; height: 100%;
+    object-fit: cover; filter: brightness(.4);
+  }
+  .lb-book {
+    position: relative; z-index: 2;
+    width: 180px;
+    box-shadow: -12px 12px 40px rgba(0,0,0,.6), 4px 0 0 var(--gold);
+    transform: perspective(800px) rotateY(-8deg);
+    transition: transform .4s;
+  }
+  .lb-banner-visual:hover .lb-book { transform: perspective(800px) rotateY(-4deg) scale(1.03); }
+  .lb-book-cover {
+    background: var(--charcoal); aspect-ratio: 8.5/11;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    gap: 8px; padding: 24px; border: 1px solid rgba(255,255,255,.1);
+  }
+  .lb-book-cover img { width: 60px; height: auto; filter: brightness(1); }
+  .lb-book-cover .lb-book-year {
+    font-family: var(--font-display); font-size: 2.2rem; font-weight: 800;
+    color: #fff; line-height: 1; letter-spacing: -.03em;
+  }
+  .lb-book-cover .lb-book-sub {
+    font-family: var(--font-mono); font-size: 8px; letter-spacing: .4em;
+    text-transform: uppercase; color: var(--gold); font-weight: 700;
+  }
+  .lb-book-cover .lb-book-rule { width: 40px; height: 2px; background: var(--gold); }
+  .lb-book-cover .lb-book-tag {
+    font-family: var(--font-mono); font-size: 7px; letter-spacing: .25em;
+    text-transform: uppercase; color: rgba(255,255,255,.4);
+    border: 1px solid rgba(255,255,255,.1); padding: 4px 8px; border-radius: 1px;
+    margin-top: 4px;
+  }
+
+  /* Bottom row: news + video cards */
+  .media-row { background: var(--slate); padding: 48px 0; }
+  .media-row-grid {
+    display: grid; grid-template-columns: 1fr; gap: 24px;
+  }
+  @media (min-width: 768px) { .media-row-grid { grid-template-columns: 1fr 1fr; } }
+
+  .row-card {
+    background: #fff; border-radius: 2px; overflow: hidden;
+    box-shadow: 0 2px 16px rgba(0,0,0,.07); display: flex;
+    transition: box-shadow .25s, transform .25s;
+  }
+  .row-card:hover { box-shadow: 0 8px 32px rgba(0,0,0,.13); transform: translateY(-2px); }
+
+  .row-card .rc-thumb {
+    width: 160px; flex-shrink: 0; position: relative; overflow: hidden;
+  }
+  @media (max-width: 600px) { .row-card { flex-direction: column; } .row-card .rc-thumb { width: 100%; aspect-ratio: 16/9; } }
+  .row-card .rc-thumb img {
+    position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;
+    filter: brightness(.85); transition: transform .4s;
+  }
+  .row-card:hover .rc-thumb img { transform: scale(1.06); }
+  .rc-play {
+    position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+    background: rgba(0,0,0,.25);
+  }
+  .rc-play-btn {
+    width: 40px; height: 40px; border-radius: 50%;
+    background: rgba(255,255,255,.9); display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 4px 14px rgba(0,0,0,.35); transition: transform .2s;
+  }
+  .row-card:hover .rc-play-btn { transform: scale(1.1); }
+  .rc-play-btn svg { color: var(--gold-dark); margin-left: 2px; }
+
+  .row-card .rc-body { padding: 20px 22px; display: flex; flex-direction: column; gap: 6px; flex-grow: 1; }
+  .row-card .rc-tag {
+    font-family: var(--font-mono); font-size: 9px; letter-spacing: .3em;
+    text-transform: uppercase; font-weight: 700; color: var(--gold-dark);
+  }
+  .row-card .rc-title {
+    font-family: var(--font-display); font-size: 14px; font-weight: 700;
+    text-transform: uppercase; color: var(--charcoal); line-height: 1.3;
+  }
+  .row-card .rc-desc { font-size: 12px; color: rgba(0,0,0,.5); line-height: 1.6; font-weight: 300; flex-grow: 1; }
+  .row-card .rc-link {
+    font-family: var(--font-mono); font-size: 10px; letter-spacing: .2em;
+    text-transform: uppercase; font-weight: 700; color: var(--gold-dark);
+    display: inline-flex; align-items: center; gap: 5px; margin-top: 6px;
+    text-decoration: none; transition: gap .2s;
+  }
+  .row-card .rc-link:hover { gap: 9px; }
+</style>
+</head>
+<body>
+
+<div class="demo-label">
+  <div class="wrap">
+    <strong>Option C</strong> — Look Book Hero Banner + News &amp; Video Row &nbsp;·&nbsp; Teal banner top, horizontal cards below
+  </div>
+</div>
+
+<section class="lb-banner">
+  <div class="lb-banner-grid">
+    <!-- Copy -->
+    <div class="lb-banner-copy">
+      <span class="lb-kicker">New for 2025</span>
+      <h2>Download Our<br>2025 Look Book</h2>
+      <p>Browse our full collection of custom iron railings, gates, security doors, powder coating colors, and fabrication options. Free PDF — share it with your contractor or designer.</p>
+      <div class="lb-actions">
+        <button class="btn-lb-dl">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          Free Download — PDF
+        </button>
+        <button class="btn-lb-preview">Preview →</button>
+      </div>
+    </div>
+
+    <!-- Book visual -->
+    <div class="lb-banner-visual">
+      <img src="https://tefcofab.com/wp-content/uploads/2026/02/house-with-rails-scaled.jpg" alt="" referrerpolicy="no-referrer">
+      <div class="lb-book">
+        <div class="lb-book-cover">
+          <img src="https://tefcofab.com/wp-content/uploads/2026/02/Tefco_Primary_Logo_Clear-1.png" alt="TEFCO" referrerpolicy="no-referrer">
+          <div class="lb-book-rule"></div>
+          <div class="lb-book-year">2025</div>
+          <div class="lb-book-sub">Look Book</div>
+          <div class="lb-book-tag">Custom Iron &amp; Fabrication</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- News + Video row -->
+<section class="media-row">
+  <div class="wrap">
+    <div class="media-row-grid">
+
+      <!-- Latest News -->
+      <a href="/blog/" class="row-card" style="text-decoration:none;">
+        <div class="rc-thumb">
+          <img src="https://tefcofab.com/wp-content/uploads/2026/02/house-with-rails-scaled.jpg" alt="Latest news" referrerpolicy="no-referrer">
+        </div>
+        <div class="rc-body">
+          <span class="rc-tag">Latest News · June 2025</span>
+          <div class="rc-title">Stainless Cable Railing Systems Now Available</div>
+          <p class="rc-desc">We've expanded our railing lineup with fully custom stainless cable systems for decks and commercial builds.</p>
+          <span class="rc-link">
+            Read More
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+          </span>
+        </div>
+      </a>
+
+      <!-- Latest Video -->
+      <a href="#" class="row-card" style="text-decoration:none;">
+        <div class="rc-thumb">
+          <img src="https://tefcofab.com/wp-content/uploads/2024/11/101810-003-scaled.jpg" alt="Watch video" referrerpolicy="no-referrer">
+          <div class="rc-play">
+            <div class="rc-play-btn">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+            </div>
+          </div>
+        </div>
+        <div class="rc-body">
+          <span class="rc-tag">Featured Video</span>
+          <div class="rc-title">See How We Build Custom Ironwork</div>
+          <p class="rc-desc">Inside our Ogden fabrication shop — from raw steel to finished powder-coated railings and gates.</p>
+          <span class="rc-link">
+            Watch Now
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+          </span>
+        </div>
+      </a>
+
+    </div>
+  </div>
+</section>
+
+</body>
+</html>

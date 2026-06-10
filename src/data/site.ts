@@ -17,7 +17,7 @@ export const business = {
   hours: 'Monday – Friday, 8:00 AM – 4:30 PM',
   rating: 4.6,
   reviewCount: 29,
-  logo: '/images/tefco-logo.webp',
+  logo: '/images/tefco-logo-inverted.png',
   // Remote logo still used by the prototype; localized copy lives at /images/tefco-logo.webp
   logoRemote: 'https://tefcofab.com/wp-content/uploads/2026/02/Tefco_Primary_Logo_Clear-1.png',
   mapUrl: 'https://www.google.com/maps/place/120+9th+St,+Ogden,+UT+84404',
@@ -33,20 +33,19 @@ export const nav = [
   { label: 'Home', href: '/' },
   { label: 'About Us', href: '/about-us/' },
   { label: 'Services', href: '/services/' },
+  { label: 'Powder Coating', href: '/powder-coating/' },
   { label: 'Gallery', href: '/gallery/' },
-  { label: 'Reviews', href: '/reviews/' },
-  { label: 'Contact Us', href: '/contact-us/' },
 ];
 
 // Service catalogue — drives the Services hub, footer, and cards.
 // `card` = representative photo (live-site URL where known; null → placeholder).
 export const services = [
   { slug: 'railings', title: 'Railings', href: '/railings/', group: 'Ironwork', blurb: 'Ornamental, modern & custom iron railings.', card: 'https://tefcofab.com/wp-content/uploads/2026/02/house-with-rails-scaled.jpg', cardNote: 'Custom iron railing on an Ogden, UT home' },
+  { slug: 'powder-coating', title: 'Powder Coating', href: '/powder-coating/', group: 'Powder Coating', blurb: 'In-house finish up to 30 ft — 500+ color options.', card: 'https://tefcofab.com/wp-content/uploads/2026/02/wheelspowdercoat.jpg', cardNote: 'Powder-coated wheels, Ogden UT' },
   { slug: 'cable-railing', title: 'Cable Railing', href: '/cable-railing/', group: 'Ironwork', blurb: 'Sleek stainless systems with the view left in.', card: 'https://tefcofab.com/wp-content/uploads/2025/01/outdoor-railing-system-1.jpg', cardNote: 'Stainless cable railing on a deck, Utah' },
   { slug: 'floating-stairs', title: 'Floating Stairs', href: '/floating-stairs/', group: 'Ironwork', blurb: 'Custom open-riser staircases that make a statement.', card: 'https://tefcofab.com/wp-content/uploads/2025/01/shutterstock_2433528987.jpg', cardNote: 'Modern floating open-riser staircase' },
   { slug: 'gates', title: 'Gates', href: '/gates/', group: 'Ironwork', blurb: 'Entry & security gates built to last.', card: 'https://tefcofab.com/wp-content/uploads/2026/02/Iron-gate-Utah.jpg', cardNote: 'Custom iron gate in Utah' },
   { slug: 'security-doors', title: 'Security Doors', href: '/security-doors/', group: 'Ironwork', blurb: 'Beauty and protection in one custom door.', card: 'https://tefcofab.com/wp-content/uploads/2024/12/Tefcopics2011-002-1-scaled.jpg', cardNote: 'Custom iron security door, Ogden UT' },
-  { slug: 'powder-coating', title: 'Powder Coating', href: '/powder-coating/', group: 'Finishing', blurb: 'A durable, in-house finish in hundreds of colors.', card: 'https://tefcofab.com/wp-content/uploads/2026/02/wheelspowdercoat.jpg', cardNote: 'Powder-coated wheels, Ogden UT' },
   { slug: 'sand-shot-blasting', title: 'Sand/Shot Blasting', href: '/sand-shot-blasting/', group: 'Finishing', blurb: 'Strip rust and prep any surface — chemical-free.', card: 'https://tefcofab.com/wp-content/uploads/2021/09/Depositphotos_442109094_l-2015.jpg', cardNote: 'Sandblasting / shot blasting in progress' },
   { slug: 'custom-fabrication', title: 'Custom Fabrication', href: '/custom-fabrication/', group: 'Fabrication', blurb: 'If you can sketch it, we can build it.', card: 'https://tefcofab.com/wp-content/uploads/2026/02/Custom-outdoor-railing-system.png', cardNote: 'Custom metal fabrication work, Ogden UT' },
   { slug: 'planters', title: 'Planters', href: '/planters/', group: 'Fabrication', blurb: 'Custom metal planters in any size or color.', card: null, cardNote: 'Custom metal planters (aluminum/steel/corten) styled outdoors — a row of cube and pillar planters with plants' },

@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TEFCO — Media Section Mockup A: Three-Column Triptych</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,400..700;1,400..700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="tefco.css">
+<style>
+  body { background: #f2f2f2; }
+  .demo-label {
+    background: var(--charcoal); color: #fff; padding: 18px 0;
+    border-top: 4px solid var(--gold);
+    font-family: var(--font-mono); font-size: 11px; letter-spacing: .25em; text-transform: uppercase;
+  }
+  .demo-label .wrap { display: flex; align-items: center; gap: 16px; }
+  .demo-label strong { color: var(--gold); }
+
+  /* ── OPTION A: Three-Column Triptych ── */
+  .media-strip { background: #fff; padding: 72px 0; }
+  .media-strip-head { text-align: center; margin-bottom: 48px; }
+  .media-strip-head h2 {
+    font-family: var(--font-display); font-size: clamp(1.4rem, 2.5vw, 2rem);
+    font-weight: 800; text-transform: uppercase; color: var(--charcoal); margin-top: 10px;
+  }
+  .media-grid {
+    display: grid; grid-template-columns: 1fr;
+    gap: 28px;
+  }
+  @media (min-width: 768px) { .media-grid { grid-template-columns: repeat(3, 1fr); } }
+
+  /* shared card base */
+  .m-card {
+    border-radius: 2px; overflow: hidden;
+    box-shadow: 0 4px 24px rgba(0,0,0,.08);
+    display: flex; flex-direction: column;
+    background: #fff; border: 1px solid rgba(0,0,0,.06);
+    transition: box-shadow .25s, transform .25s;
+  }
+  .m-card:hover { box-shadow: 0 12px 40px rgba(0,0,0,.14); transform: translateY(-3px); }
+
+  /* news card */
+  .m-card .m-thumb {
+    position: relative; aspect-ratio: 16/9; overflow: hidden; background: var(--charcoal);
+  }
+  .m-card .m-thumb img { width: 100%; height: 100%; object-fit: cover; filter: brightness(.9); transition: transform .4s; }
+  .m-card:hover .m-thumb img { transform: scale(1.04); }
+  .m-card .m-tag {
+    position: absolute; top: 12px; left: 12px;
+    background: var(--gold); color: #fff;
+    font-family: var(--font-mono); font-size: 9px; letter-spacing: .25em;
+    text-transform: uppercase; font-weight: 700; padding: 4px 10px; border-radius: 2px;
+  }
+  .m-card .m-body { padding: 24px; display: flex; flex-direction: column; gap: 10px; flex-grow: 1; }
+  .m-card .m-date { font-family: var(--font-mono); font-size: 10px; color: rgba(0,0,0,.4); letter-spacing: .15em; text-transform: uppercase; }
+  .m-card .m-title {
+    font-family: var(--font-display); font-size: 15px; font-weight: 700;
+    color: var(--charcoal); line-height: 1.35; text-transform: uppercase; letter-spacing: .02em;
+  }
+  .m-card .m-desc { font-size: 13px; color: rgba(0,0,0,.55); line-height: 1.65; font-weight: 300; flex-grow: 1; }
+  .m-card .m-link {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-family: var(--font-mono); font-size: 10px; letter-spacing: .2em;
+    text-transform: uppercase; font-weight: 700; color: var(--gold-dark);
+    margin-top: 8px; transition: gap .2s;
+  }
+  .m-card .m-link:hover { gap: 10px; }
+
+  /* video card — play button overlay */
+  .m-card .m-play {
+    position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+    background: rgba(0,0,0,.3); transition: background .25s;
+  }
+  .m-card:hover .m-play { background: rgba(0,0,0,.45); }
+  .m-play-btn {
+    width: 52px; height: 52px; border-radius: 50%;
+    background: rgba(255,255,255,.95); display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 8px 24px rgba(0,0,0,.35); transition: transform .2s;
+  }
+  .m-card:hover .m-play-btn { transform: scale(1.1); }
+  .m-play-btn svg { color: var(--gold-dark); margin-left: 3px; }
+
+  /* look book card — dark CTA */
+  .m-card.lookbook {
+    background: var(--charcoal);
+    background-image:
+      linear-gradient(rgba(255,255,255,.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,.03) 1px, transparent 1px);
+    background-size: 28px 28px, 28px 28px;
+  }
+  .lookbook .m-cover {
+    position: relative; aspect-ratio: 16/9; overflow: hidden;
+    border-bottom: 3px solid var(--gold);
+  }
+  .lookbook .m-cover img { width: 100%; height: 100%; object-fit: cover; filter: brightness(.65); }
+  .lookbook .m-cover-year {
+    position: absolute; inset: 0; display: flex; flex-direction: column;
+    align-items: center; justify-content: center; gap: 4px;
+  }
+  .lookbook .m-cover-year span:first-child {
+    font-family: var(--font-mono); font-size: 9px; letter-spacing: .4em;
+    text-transform: uppercase; color: var(--gold); font-weight: 700;
+  }
+  .lookbook .m-cover-year span:last-child {
+    font-family: var(--font-display); font-size: 2rem; font-weight: 800;
+    color: #fff; letter-spacing: -.02em; line-height: 1;
+  }
+  .lookbook .m-body { flex-grow: 1; }
+  .lookbook .m-title { color: #fff; }
+  .lookbook .m-desc { color: rgba(255,255,255,.6); }
+  .lookbook .btn-dl {
+    display: inline-flex; align-items: center; gap: 8px; margin-top: 16px;
+    padding: 14px 24px; background: var(--gold); color: #fff;
+    font-weight: 700; font-size: 11px; letter-spacing: .12em; text-transform: uppercase;
+    border-radius: 2px; transition: background .2s; border: none; cursor: pointer; width: 100%;
+    justify-content: center;
+  }
+  .lookbook .btn-dl:hover { background: var(--gold-light); }
+</style>
+</head>
+<body>
+
+<div class="demo-label">
+  <div class="wrap">
+    <strong>Option A</strong> — Three-Column Triptych &nbsp;·&nbsp; News / Video / Look Book on a white background
+  </div>
+</div>
+
+<section class="media-strip">
+  <div class="wrap">
+    <div class="media-strip-head">
+      <span class="eyebrow">Stay Connected</span>
+      <h2>News, Videos &amp; Resources</h2>
+    </div>
+
+    <div class="media-grid">
+
+      <!-- News card -->
+      <div class="m-card">
+        <div class="m-thumb">
+          <img src="https://tefcofab.com/wp-content/uploads/2026/02/house-with-rails-scaled.jpg" alt="Custom iron railing project" referrerpolicy="no-referrer">
+          <span class="m-tag">Latest News</span>
+        </div>
+        <div class="m-body">
+          <span class="m-date">June 2025</span>
+          <div class="m-title">New Stainless Cable Railing Systems Now Available</div>
+          <p class="m-desc">We've expanded our railing lineup with fully custom stainless cable systems — perfect for decks, balconies, and commercial builds across Utah.</p>
+          <a href="/blog/" class="m-link">
+            Read More
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <!-- Video card -->
+      <div class="m-card">
+        <div class="m-thumb">
+          <img src="https://tefcofab.com/wp-content/uploads/2024/11/101810-003-scaled.jpg" alt="TEFCO fabrication video" referrerpolicy="no-referrer">
+          <div class="m-play">
+            <div class="m-play-btn">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+            </div>
+          </div>
+          <span class="m-tag">Watch</span>
+        </div>
+        <div class="m-body">
+          <span class="m-date">Behind the Shop</span>
+          <div class="m-title">See How We Build Custom Ironwork</div>
+          <p class="m-desc">Take a look inside our Ogden fabrication shop — from raw steel to finished powder-coated railings. This is what 80 years of craft looks like.</p>
+          <a href="#" class="m-link">
+            Watch Now
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <!-- Look Book card -->
+      <div class="m-card lookbook">
+        <div class="m-cover">
+          <img src="https://tefcofab.com/wp-content/uploads/2024/11/IMG_0803-scaled.jpg" alt="TEFCO Look Book cover" referrerpolicy="no-referrer">
+          <div class="m-cover-year">
+            <span>TEFCO</span>
+            <span>2025</span>
+          </div>
+        </div>
+        <div class="m-body">
+          <div class="m-title">2025 Look Book</div>
+          <p class="m-desc">Browse our full catalog of custom iron railings, gates, security doors, and powder coating options. Download the PDF to share with your contractor or designer.</p>
+          <button class="btn-dl">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            Download Free PDF
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+</body>
+</html>

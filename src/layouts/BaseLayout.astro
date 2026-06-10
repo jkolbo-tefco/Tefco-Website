@@ -12,6 +12,8 @@ interface Props {
   ogImage?: string;
   active?: string;
   solidHeader?: boolean;
+  /** Home page: hide the header logo at top; slide it in on scroll */
+  heroLogo?: boolean;
   /** One or more JSON-LD objects rendered into <head> */
   schema?: object | object[];
 }
@@ -23,6 +25,7 @@ const {
   ogImage = 'https://tefcofab.com/wp-content/uploads/2024/11/101810-003-scaled.jpg',
   active = path,
   solidHeader = false,
+  heroLogo = false,
   schema,
 } = Astro.props;
 
@@ -55,7 +58,7 @@ const schemaList = schema ? (Array.isArray(schema) ? schema : [schema]) : [];
   ))}
 </head>
 <body>
-  <Header active={active} solid={solidHeader} />
+  <Header active={active} solid={solidHeader} heroLogo={heroLogo} />
   <main>
     <slot />
   </main>

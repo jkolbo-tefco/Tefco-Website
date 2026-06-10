@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Process F — Teal Chapter Headers</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,400..700;1,400..700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="tefco.css">
+<style>
+  body { margin: 0; background: #fff; }
+  .demo-label {
+    background: var(--charcoal); color: #fff; padding: 18px 0;
+    border-top: 4px solid var(--gold);
+    font-family: var(--font-mono); font-size: 11px; letter-spacing: .25em; text-transform: uppercase;
+  }
+  .demo-label .wrap { display: flex; align-items: center; gap: 16px; }
+  .demo-label strong { color: var(--gold); }
+
+  /* ── Wrapper ── */
+  .process-section { background: #fff; padding: 80px 0 72px; }
+
+  .process-head { text-align: center; margin-bottom: 64px; }
+  .process-head h2 {
+    font-family: var(--font-display); font-size: clamp(1.6rem, 3vw, 2.4rem);
+    font-weight: 800; text-transform: uppercase; color: var(--charcoal); margin-top: 10px;
+  }
+  .process-head p {
+    font-size: 15px; color: rgba(0,0,0,.45); font-weight: 300;
+    line-height: 1.7; max-width: 500px; margin: 12px auto 0;
+  }
+
+  /* ── Chapter step ── */
+  .chapter-step {
+    margin-bottom: 0;
+    border: 1px solid rgba(0,0,0,.08);
+    border-radius: 2px;
+    overflow: hidden;
+    /* Merge borders between steps */
+    margin-bottom: -1px;
+  }
+
+  /* Teal header bar */
+  .ch-header {
+    background: var(--gold);
+    padding: 14px 28px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    cursor: pointer;
+    user-select: none;
+  }
+  .ch-num {
+    font-family: var(--font-display); font-weight: 800; font-size: 2rem;
+    color: rgba(255,255,255,.25); line-height: 1; letter-spacing: -.04em;
+    flex-shrink: 0;
+  }
+  .ch-title-col { flex: 1; }
+  .ch-kicker {
+    font-family: var(--font-mono); font-size: 8px; letter-spacing: .4em;
+    text-transform: uppercase; color: rgba(255,255,255,.65); display: block; margin-bottom: 2px;
+  }
+  .ch-title {
+    font-family: var(--font-display); font-size: clamp(.95rem, 1.5vw, 1.2rem);
+    font-weight: 800; text-transform: uppercase; color: #fff; line-height: 1.1;
+  }
+
+  /* Body row: photo + text */
+  .ch-body {
+    display: grid;
+    grid-template-columns: 1fr;
+    background: #fff;
+  }
+  @media (min-width: 768px) {
+    .ch-body { grid-template-columns: 380px 1fr; }
+    .chapter-step:nth-child(even) .ch-body { grid-template-columns: 1fr 380px; }
+    .chapter-step:nth-child(even) .ch-photo { order: 2; }
+    .chapter-step:nth-child(even) .ch-text  { order: 1; }
+  }
+
+  .ch-photo {
+    position: relative; overflow: hidden;
+    aspect-ratio: 16/10;
+    flex-shrink: 0;
+  }
+  @media (min-width: 768px) { .ch-photo { aspect-ratio: auto; min-height: 240px; } }
+  .ch-photo img {
+    width: 100%; height: 100%; object-fit: cover;
+    filter: brightness(.9);
+    transition: transform .5s ease;
+  }
+  .chapter-step:hover .ch-photo img { transform: scale(1.04); }
+
+  .ch-text {
+    padding: 32px 36px;
+    display: flex; align-items: center;
+  }
+  .ch-text-inner { max-width: 480px; }
+  .ch-text p {
+    font-size: 14.5px; color: rgba(0,0,0,.6); line-height: 1.8;
+    font-weight: 300; margin: 0;
+  }
+  /* Small teal detail bullet at top of text */
+  .ch-text-inner::before {
+    content: "";
+    display: block; width: 28px; height: 2px;
+    background: var(--gold); margin-bottom: 18px;
+  }
+</style>
+</head>
+<body>
+
+<div class="demo-label">
+  <div class="wrap">
+    <strong>Option F</strong> — Teal Chapter Headers &nbsp;·&nbsp; White page, each step has a teal title bar, photo + text expand below, alternating sides
+  </div>
+</div>
+
+<section class="process-section">
+  <div class="wrap">
+    <div class="process-head">
+      <span class="eyebrow">How It Works</span>
+      <h2>Our Powder Coating Process</h2>
+      <p>Every piece goes through the same six steps — no shortcuts. Prep is everything, and we do it all in-house.</p>
+    </div>
+
+    <!-- Step 1 -->
+    <div class="chapter-step">
+      <div class="ch-header">
+        <div class="ch-num">01</div>
+        <div class="ch-title-col">
+          <span class="ch-kicker">Step One</span>
+          <div class="ch-title">Inspect &amp; Assess</div>
+        </div>
+      </div>
+      <div class="ch-body">
+        <div class="ch-photo">
+          <img src="https://tefcofab.com/wp-content/uploads/2026/02/wheelspowdercoat.jpg" alt="Inspect" referrerpolicy="no-referrer">
+        </div>
+        <div class="ch-text">
+          <div class="ch-text-inner">
+            <p>We evaluate the part — material, existing coatings, condition, and the end-use environment. This determines the right prep method, primer if needed, and the ideal powder formulation for your project.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Step 2 -->
+    <div class="chapter-step">
+      <div class="ch-header">
+        <div class="ch-num">02</div>
+        <div class="ch-title-col">
+          <span class="ch-kicker">Step Two</span>
+          <div class="ch-title">Strip &amp; Degrease</div>
+        </div>
+      </div>
+      <div class="ch-body">
+        <div class="ch-photo">
+          <img src="https://tefcofab.com/wp-content/uploads/2024/11/Tefcopics2011-008-scaled.jpg" alt="Strip and degrease" referrerpolicy="no-referrer">
+        </div>
+        <div class="ch-text">
+          <div class="ch-text-inner">
+            <p>Old paint, oil, mill scale, and contaminants are removed. We degrease chemically first — a step many shops skip that leads to adhesion failures and early peeling down the road.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Step 3 -->
+    <div class="chapter-step">
+      <div class="ch-header">
+        <div class="ch-num">03</div>
+        <div class="ch-title-col">
+          <span class="ch-kicker">Step Three</span>
+          <div class="ch-title">In-House Sand / Shot Blast</div>
+        </div>
+      </div>
+      <div class="ch-body">
+        <div class="ch-photo">
+          <img src="https://tefcofab.com/wp-content/uploads/2021/09/Depositphotos_442109094_l-2015.jpg" alt="Sandblasting" referrerpolicy="no-referrer">
+        </div>
+        <div class="ch-text">
+          <div class="ch-text-inner">
+            <p>Every piece is blasted to a near-white metal profile in our own facility. This creates a mechanical anchor for the powder, removes all rust and scale, and ensures the finish bonds at the molecular level.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Step 4 -->
+    <div class="chapter-step">
+      <div class="ch-header">
+        <div class="ch-num">04</div>
+        <div class="ch-title-col">
+          <span class="ch-kicker">Step Four</span>
+          <div class="ch-title">Electrostatic Application</div>
+        </div>
+      </div>
+      <div class="ch-body">
+        <div class="ch-photo">
+          <img src="https://tefcofab.com/wp-content/uploads/2026/02/wheelspowdercoat.jpg" alt="Apply powder" referrerpolicy="no-referrer">
+        </div>
+        <div class="ch-text">
+          <div class="ch-text-inner">
+            <p>Dry powder is electrostatically charged as it's sprayed, clinging uniformly to the grounded metal. The result is an even, consistent coat with no runs, sags, or thin spots — even on complex shapes and recesses.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Step 5 -->
+    <div class="chapter-step">
+      <div class="ch-header">
+        <div class="ch-num">05</div>
+        <div class="ch-title-col">
+          <span class="ch-kicker">Step Five</span>
+          <div class="ch-title">Oven Cure</div>
+        </div>
+      </div>
+      <div class="ch-body">
+        <div class="ch-photo">
+          <img src="https://tefcofab.com/wp-content/uploads/2024/11/101810-003-scaled.jpg" alt="Oven cure" referrerpolicy="no-referrer">
+        </div>
+        <div class="ch-text">
+          <div class="ch-text-inner">
+            <p>Parts are cured at high temperature, causing the powder to melt, flow, and cross-link into a hard, continuous film. The result outlasts paint by years and shrugs off Utah's UV, freeze-thaw cycles, and road salt.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Step 6 -->
+    <div class="chapter-step">
+      <div class="ch-header">
+        <div class="ch-num">06</div>
+        <div class="ch-title-col">
+          <span class="ch-kicker">Step Six</span>
+          <div class="ch-title">Inspect &amp; Release</div>
+        </div>
+      </div>
+      <div class="ch-body">
+        <div class="ch-photo">
+          <img src="https://tefcofab.com/wp-content/uploads/2026/02/house-with-rails-scaled.jpg" alt="Final inspection" referrerpolicy="no-referrer">
+        </div>
+        <div class="ch-text">
+          <div class="ch-text-inner">
+            <p>Every finished piece is visually inspected for coverage, color consistency, and surface quality before it leaves the shop. If it doesn't meet our standard, it goes back through — that's the satisfaction guarantee.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+</body>
+</html>

@@ -175,12 +175,24 @@
     closeQuote();
   });
 
+  /* ── home hero video: play once, then crossfade to poster image ── */
+  const heroVideo = $('#heroVideo');
+  if (heroVideo) {
+    // begin the crossfade ~2.5s before the end so it blends while still moving
+    heroVideo.addEventListener('timeupdate', () => {
+      if (heroVideo.duration && heroVideo.currentTime > heroVideo.duration - 2.5) {
+        heroVideo.classList.add('ended');
+      }
+    });
+    heroVideo.addEventListener('ended', () => heroVideo.classList.add('ended'));
+  }
+
   /* ── reveal-on-scroll ── */
   const io = new IntersectionObserver((entries) => {
     entries.forEach((en) => {
       if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); }
     });
-  }, { rootMargin: '-40px' });
+  }, { rootMargin: '0px 0px 80px 0px' });
   $$('.reveal').forEach((el) => io.observe(el));
 
   /* ── parallax for [data-parallax] images (inside .split-photo or any overflow:hidden box) ── */

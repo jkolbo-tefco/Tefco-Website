@@ -7,8 +7,10 @@ interface Props {
   sec?: '' | 'gray' | 'warm' | 'pale';
   items: Review[];
   narrow?: boolean;
+  moreHref?: string;
+  moreLabel?: string;
 }
-const { eyebrow = 'Reviews', heading = 'What Customers Say', sub, sec = '', items, narrow = false } = Astro.props;
+const { eyebrow = 'Reviews', heading = 'What Customers Say', sub, sec = '', items, narrow = false, moreHref = '/reviews/', moreLabel = 'Read All Reviews' } = Astro.props;
 const secClass = sec ? ` sec-${sec}` : '';
 ---
 <section class={`features${secClass}`}>
@@ -28,5 +30,10 @@ const secClass = sec ? ` sec-${sec}` : '';
         </div>
       ))}
     </div>
+    {moreHref && (
+      <div style="text-align:center;margin-top:32px;">
+        <a href={moreHref} class="btn btn-outline-dark">{moreLabel}</a>
+      </div>
+    )}
   </div>
 </section>

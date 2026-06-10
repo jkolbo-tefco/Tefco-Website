@@ -1,15 +1,17 @@
 ---
 import { nav, business } from '../data/site';
-interface Props { active?: string; solid?: boolean; }
-const { active = '', solid = false } = Astro.props;
+interface Props { active?: string; solid?: boolean; heroLogo?: boolean; }
+const { active = '', solid = false, heroLogo = false } = Astro.props;
 const isActive = (href: string) =>
   href === '/' ? active === '/' : active === href || active.startsWith(href);
 ---
-<header class={`site-header${solid ? ' solid' : ''}`}>
+<header class={`site-header${solid ? ' solid' : ''}`} data-hero-logo={heroLogo ? '' : undefined}>
   <div class="wrap header-inner">
+    {heroLogo && (
+      <img class="header-logo-slide" src="/images/tefco-logo-inverted.png" alt="TEFCO" aria-hidden="true" />
+    )}
     <a href="/" class="logo">
       <img class="mark" src={business.logo} alt="TEFCO — custom iron & metal fabrication in Ogden, Utah" />
-      <span class="strap">ORNAMENTAL IRON &bull; SINCE 1942</span>
     </a>
     <nav class="desk-nav">
       {nav.map((n) => (

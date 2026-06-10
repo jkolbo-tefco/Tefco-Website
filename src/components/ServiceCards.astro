@@ -22,10 +22,9 @@ const secClass = sec ? ` sec-${sec}` : '';
     )}
     <div class="card-grid">
       {list.map((s, i) => (
-        <article class="pillar reveal" style={`transition-delay:${(i % 3) * 70}ms`}>
+        <article class="pillar reveal" style={`transition-delay:${i * 70}ms`}>
           <div class="ph">
             <Photo src={s.card} alt={s.cardNote} note={s.cardNote} />
-            <span class="num">{String(i + 1).padStart(2, '0')}</span>
           </div>
           <div class="body">
             <h3><a href={s.href}>{s.title}</a></h3>
