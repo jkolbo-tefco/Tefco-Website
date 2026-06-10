@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Process C — Full-Bleed Photo Steps</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,400..700;1,400..700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="tefco.css">
+<style>
+  body { margin: 0; background: #fff; }
+  .demo-label {
+    background: var(--charcoal); color: #fff; padding: 18px 0;
+    border-top: 4px solid var(--gold);
+    font-family: var(--font-mono); font-size: 11px; letter-spacing: .25em; text-transform: uppercase;
+  }
+  .demo-label .wrap { display: flex; align-items: center; gap: 16px; }
+  .demo-label strong { color: var(--gold); }
+
+  /* ── Full-bleed photo stack ── */
+  .process-intro {
+    padding: 72px 0 56px; text-align: center;
+    background: var(--slate);
+  }
+  .process-intro h2 {
+    font-family: var(--font-display); font-size: clamp(1.6rem, 3vw, 2.4rem);
+    font-weight: 800; text-transform: uppercase; color: var(--charcoal); margin-top: 10px;
+  }
+  .process-intro p {
+    font-size: 15px; color: rgba(0,0,0,.5); font-weight: 300; line-height: 1.7;
+    max-width: 520px; margin: 12px auto 0;
+  }
+
+  /* Step: full-width photo with text overlay panel */
+  .pb-step {
+    position: relative; min-height: 480px;
+    display: flex; align-items: flex-end;
+    overflow: hidden;
+  }
+  @media (min-width: 900px) { .pb-step { min-height: 560px; } }
+
+  .pb-step-bg {
+    position: absolute; inset: 0;
+  }
+  .pb-step-bg img {
+    width: 100%; height: 100%; object-fit: cover; object-position: center;
+    filter: brightness(.55);
+    transition: transform .8s ease;
+  }
+  .pb-step:hover .pb-step-bg img { transform: scale(1.04); }
+
+  /* Gradient overlay: dark bottom, lighter top */
+  .pb-step-bg::after {
+    content: ""; position: absolute; inset: 0;
+    background: linear-gradient(to top, rgba(0,0,0,.85) 0%, rgba(0,0,0,.4) 50%, rgba(0,0,0,.15) 100%);
+  }
+
+  /* Text content anchored to bottom */
+  .pb-step-content {
+    position: relative; z-index: 2;
+    width: 100%; padding: 48px 0 52px;
+  }
+
+  .pb-step-inner {
+    display: grid; grid-template-columns: 1fr;
+    gap: 20px;
+  }
+  @media (min-width: 900px) {
+    .pb-step-inner { grid-template-columns: auto 1fr; align-items: end; gap: 48px; }
+  }
+
+  /* Big number column */
+  .pb-num-col {
+    display: flex; flex-direction: column; align-items: flex-start;
+  }
+  .pb-num {
+    font-family: var(--font-display); font-size: clamp(4rem, 8vw, 8rem);
+    font-weight: 800; line-height: 1; color: var(--gold);
+    letter-spacing: -.04em;
+  }
+  .pb-num-label {
+    font-family: var(--font-mono); font-size: 9px; letter-spacing: .4em;
+    text-transform: uppercase; color: rgba(255,255,255,.5); font-weight: 700;
+    margin-top: 4px;
+  }
+
+  /* Text column */
+  .pb-text h3 {
+    font-family: var(--font-display); font-size: clamp(1.4rem, 2.5vw, 2.2rem);
+    font-weight: 800; text-transform: uppercase; color: #fff; line-height: 1.1;
+    letter-spacing: -.01em;
+  }
+  .pb-text p {
+    font-size: 15px; color: rgba(255,255,255,.7); line-height: 1.75;
+    font-weight: 300; margin-top: 14px; max-width: 640px;
+  }
+
+  /* Teal accent bar at the top of each step */
+  .pb-step::before {
+    content: ""; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+    background: var(--gold); z-index: 3;
+  }
+  /* Alternate steps get a slightly different tint */
+  .pb-step:nth-child(even) .pb-step-bg img { object-position: right center; }
+</style>
+</head>
+<body>
+
+<div class="demo-label">
+  <div class="wrap">
+    <strong>Option C</strong> — Full-Bleed Photo Steps &nbsp;·&nbsp; Each step fills the width with a photo background, text + large number anchored at the bottom
+  </div>
+</div>
+
+<div class="process-intro">
+  <div class="wrap">
+    <span class="eyebrow">How It Works</span>
+    <h2>Our Powder Coating Process</h2>
+    <p>Every piece goes through the same six steps — no shortcuts. Prep is everything, and we do it all in-house.</p>
+  </div>
+</div>
+
+<!-- Step 1 -->
+<div class="pb-step">
+  <div class="pb-step-bg">
+    <img src="https://tefcofab.com/wp-content/uploads/2026/02/wheelspowdercoat.jpg" alt="Inspect" referrerpolicy="no-referrer">
+  </div>
+  <div class="pb-step-content">
+    <div class="wrap pb-step-inner">
+      <div class="pb-num-col">
+        <div class="pb-num">01</div>
+        <div class="pb-num-label">Step One</div>
+      </div>
+      <div class="pb-text">
+        <h3>Inspect &amp; Assess</h3>
+        <p>We evaluate the part — material, existing coatings, condition, and the end-use environment. This determines the right prep method, primer if needed, and the ideal powder formulation for your project.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Step 2 -->
+<div class="pb-step">
+  <div class="pb-step-bg">
+    <img src="https://tefcofab.com/wp-content/uploads/2024/11/Tefcopics2011-008-scaled.jpg" alt="Strip and degrease" referrerpolicy="no-referrer">
+  </div>
+  <div class="pb-step-content">
+    <div class="wrap pb-step-inner">
+      <div class="pb-num-col">
+        <div class="pb-num">02</div>
+        <div class="pb-num-label">Step Two</div>
+      </div>
+      <div class="pb-text">
+        <h3>Strip &amp; Degrease</h3>
+        <p>Old paint, oil, mill scale, and contaminants are removed. We degrease chemically first — a step many shops skip that leads to adhesion failures and early peeling down the road.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Step 3 -->
+<div class="pb-step">
+  <div class="pb-step-bg">
+    <img src="https://tefcofab.com/wp-content/uploads/2021/09/Depositphotos_442109094_l-2015.jpg" alt="Sandblasting" referrerpolicy="no-referrer">
+  </div>
+  <div class="pb-step-content">
+    <div class="wrap pb-step-inner">
+      <div class="pb-num-col">
+        <div class="pb-num">03</div>
+        <div class="pb-num-label">Step Three</div>
+      </div>
+      <div class="pb-text">
+        <h3>In-House Sand / Shot Blast</h3>
+        <p>Every piece is blasted to a near-white metal profile in our own facility. This creates a mechanical anchor for the powder, removes all rust and scale, and ensures the finish bonds at the molecular level — not just the surface.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Step 4 -->
+<div class="pb-step">
+  <div class="pb-step-bg">
+    <img src="https://tefcofab.com/wp-content/uploads/2026/02/wheelspowdercoat.jpg" alt="Electrostatic application" referrerpolicy="no-referrer">
+  </div>
+  <div class="pb-step-content">
+    <div class="wrap pb-step-inner">
+      <div class="pb-num-col">
+        <div class="pb-num">04</div>
+        <div class="pb-num-label">Step Four</div>
+      </div>
+      <div class="pb-text">
+        <h3>Electrostatic Application</h3>
+        <p>Dry powder is electrostatically charged as it's sprayed, clinging uniformly to the grounded metal. The result is an even, consistent coat with no runs, sags, or thin spots — even on complex shapes and recesses.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Step 5 -->
+<div class="pb-step">
+  <div class="pb-step-bg">
+    <img src="https://tefcofab.com/wp-content/uploads/2024/11/101810-003-scaled.jpg" alt="Oven cure" referrerpolicy="no-referrer">
+  </div>
+  <div class="pb-step-content">
+    <div class="wrap pb-step-inner">
+      <div class="pb-num-col">
+        <div class="pb-num">05</div>
+        <div class="pb-num-label">Step Five</div>
+      </div>
+      <div class="pb-text">
+        <h3>Oven Cure</h3>
+        <p>Parts are cured at high temperature, causing the powder to melt, flow, and cross-link into a hard, continuous film. The result outlasts paint by years and shrugs off Utah's UV, freeze-thaw cycles, and road salt.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Step 6 -->
+<div class="pb-step">
+  <div class="pb-step-bg">
+    <img src="https://tefcofab.com/wp-content/uploads/2026/02/house-with-rails-scaled.jpg" alt="Final inspection" referrerpolicy="no-referrer">
+  </div>
+  <div class="pb-step-content">
+    <div class="wrap pb-step-inner">
+      <div class="pb-num-col">
+        <div class="pb-num">06</div>
+        <div class="pb-num-label">Step Six</div>
+      </div>
+      <div class="pb-text">
+        <h3>Inspect &amp; Release</h3>
+        <p>Every finished piece is visually inspected for coverage, color consistency, and surface quality before it leaves the shop. If it doesn't meet our standard, it goes back through — that's the satisfaction guarantee.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

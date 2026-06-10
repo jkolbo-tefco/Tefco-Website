@@ -12,7 +12,7 @@ import { business, reviewsFor } from '../data/site';
 import { localBusiness, faqPage } from '../lib/schema';
 
 const path = '/';
-const title = 'Custom Iron Fabrication in Ogden, UT — TEFCO Since 1942';
+const title = 'Custom Iron Railings & Powder Coating in Ogden, UT — TEFCO Since 1942';
 const description = 'Custom iron railings, gates, security doors & powder coating in Ogden, Utah. Family-owned metal fabrication since 1942. Free estimates — call (801) 621-1010.';
 
 const faqs = [
@@ -31,47 +31,145 @@ const tiles = [
   { img: 'https://tefcofab.com/wp-content/uploads/2024/11/IMG_0803-scaled.jpg', title: 'Ornamental Railing', cat: 'Railings' },
 ];
 ---
-<BaseLayout title={title} description={description} path={path} active="/" schema={schema}>
+<BaseLayout title={title} description={description} path={path} active="/" schema={schema} heroLogo>
 
   <!-- Video hero (home-only) -->
-  <section class="page-hero">
-    <div class="bg">
-      <video autoplay muted loop playsinline preload="metadata" poster="https://tefcofab.com/wp-content/uploads/2024/11/101810-003-scaled.jpg">
+  <section class="home-hero">
+    <div class="hero-bg">
+      <img src="https://tefcofab.com/wp-content/uploads/2024/11/101810-003-scaled.jpg" alt="Custom iron railing by TEFCO, Ogden Utah" />
+      <video id="heroVideo" autoplay muted playsinline preload="metadata"
+             poster="https://tefcofab.com/wp-content/uploads/2024/11/101810-003-scaled.jpg">
         <source src="/video/hero.mp4" type="video/mp4" />
       </video>
+      <div class="ov-1"></div>
+      <div class="ov-2"></div>
     </div>
-    <div class="wrap inner">
-      <span class="eyebrow reveal">Welcome to TEFCO · Ornamental Iron Since 1942</span>
-      <h1 class="reveal">Northern Utah's trusted custom iron <span class="serif-accent">& metal fabrication</span></h1>
-      <p class="lede reveal">Custom iron railings, gates, security doors, staircases, powder coating and metal fabrication — designed, built, and finished in our Ogden shop. Family owned for over 80 years, and our work is second to none.</p>
-      <div class="actions reveal">
-        <a href={business.phoneHref} class="btn btn-solid">Call {business.phone}</a>
-        <button class="btn btn-outline-light" data-open-quote>Get a Free Estimate</button>
+
+    <div class="wrap hero-grid">
+      <div class="hero-copy">
+        <div class="hero-logo-anchor">
+          <img src="/images/logo_no_text.png" alt="TEFCO — custom iron & metal fabrication in Ogden, Utah" />
+        </div>
+        <div class="hero-label reveal">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="rgba(20,184,166,.25)" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z"/></svg>
+          <span>WELCOME TO TEFCO &bull; OGDEN, UTAH</span>
+        </div>
+
+        <h1 class="reveal">
+          <span class="l1">Utah's Trusted</span>
+          <span class="l2">Custom Ironwork</span>
+          <span class="l3">&amp; powder coating</span>
+          <span class="l4">railings, gates, doors &amp; more</span>
+        </h1>
+
+        <p class="hero-desc reveal">Since 1942, TEFCO has hand-crafted custom iron railings, security gates &amp; doors, and staircases for homes and businesses across Ogden and Weber County — with in-house powder coating and sandblasting. Call now for a free estimate!</p>
+
+        <div class="hero-actions reveal">
+          <a href={business.phoneHref} class="btn-hero-primary">Call Now</a>
+          <button class="btn-hero-outline" data-open-quote>
+            <span>Get a Free Estimate</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+  <div class="hero-spacer"></div>
+
+  <div class="page-body">
+
+  <div class="media-band">
+    <div class="wrap">
+      <div class="media-band-inner">
+
+        <a href="/blog/" class="band-group">
+          <div class="band-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-2 2Zm0 0a2 2 0 0 1-2-2v-9c0-1.1.9-2 2-2h2"/><path d="M18 14h-8"/><path d="M15 18h-5"/><path d="M10 6h8v4h-8V6Z"/></svg>
+          </div>
+          <div class="band-text">
+            <span class="band-kicker">Latest News</span>
+            <span class="band-title">Stainless Cable Railing Systems Now Available</span>
+            <span class="band-cta">Read More <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>
+          </div>
+        </a>
+
+        <div class="band-divider"></div>
+
+        <a href="#" class="band-group">
+          <div class="band-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m22 8-6 4 6 4V8Z"/><rect width="14" height="12" x="2" y="6" rx="2" ry="2"/></svg>
+          </div>
+          <div class="band-text">
+            <span class="band-kicker">Latest Video</span>
+            <span class="band-title">See How We Build Custom Ironwork From Start to Finish</span>
+            <span class="band-cta">Watch Now <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>
+          </div>
+        </a>
+
+        <div class="band-divider"></div>
+
+        <a href="#" class="band-group">
+          <div class="band-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H19a1 1 0 0 1 1 1v18a1 1 0 0 1-1 1H6.5a1 1 0 0 1 0-5H20"/></svg>
+          </div>
+          <div class="band-text">
+            <span class="band-kicker">2025 Look Book</span>
+            <span class="band-title">Browse Our Full Catalog &amp; Download the Free PDF</span>
+            <span class="band-cta">Download PDF <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>
+          </div>
+        </a>
+
+      </div>
+    </div>
+  </div>
+
+  <section class="overlap-panel">
+    <div class="wrap">
+      <div class="panel-box bg-grid">
+        <div class="panel-copy">
+          <span class="eyebrow reveal">About TEFCO</span>
+          <h2 class="reveal">Trusted Metal<br>Fabrication Shop.</h2>
+          <div class="divider reveal"></div>
+          <p class="reveal">We've got all your needs covered: from residential, to commercial, repairs, and everything in between. We specialize in all kinds of ornamental iron work. From powder coating, sand/shot blasting to custom fabrication, gates, railing and security doors, we can help.</p>
+          <p class="reveal">Due to the level of our quality craftsmanship over the last 80 years, we've built a trusted reputation in the Ogden area &amp; throughout Utah. Our work is second to none — we back it with a satisfaction guarantee, and we won't stop working until you like what we've done.</p>
+          <div class="about-badges reveal">
+            <div class="about-badge">
+              <div class="bx">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></svg>
+              </div>
+              <span>Licensed &amp; Insured</span>
+            </div>
+            <div class="about-badge">
+              <div class="bx">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15.477 12.89 1.515 8.526a.5.5 0 0 1-.81.47l-3.58-2.687a1 1 0 0 0-1.197 0l-3.586 2.686a.5.5 0 0 1-.81-.469l1.514-8.526"/><circle cx="12" cy="8" r="6"/></svg>
+              </div>
+              <span>Free Estimates</span>
+            </div>
+            <div class="about-badge">
+              <div class="bx">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z"/></svg>
+              </div>
+              <span>Family Owned Since 1942</span>
+            </div>
+          </div>
+          <div class="actions reveal">
+            <a href="/about-us/" class="btn btn-solid btn-sm">Learn More</a>
+          </div>
+        </div>
+        <div class="panel-media reveal">
+          <img src="https://tefcofab.com/wp-content/uploads/2024/11/Tefcopics2011-008-scaled.jpg"
+               alt="TEFCO metal fabrication shop floor in Ogden, Utah" loading="lazy" referrerpolicy="no-referrer" />
+        </div>
       </div>
     </div>
   </section>
 
   <ServiceCards eyebrow="Our Services" heading="What we build" />
 
-  <LSplit
-    eyebrow="Ogden & The Wasatch Front"
-    heading="A real fabrication shop — not a catalog"
-    flip
-    img="https://tefcofab.com/wp-content/uploads/2024/11/Tefcopics2011-008-scaled.jpg"
-    imgAlt="TEFCO metal fabrication shop floor in Ogden, Utah"
-    caption="Our Ogden Shop"
-  >
-    <p class="reveal">We've got every need covered: residential, commercial, repairs, and everything in between. From custom iron railings and gates to powder coating, sandblasting, and full metal fabrication, it's all done in-house by our own crew.</p>
-    <p class="reveal">Eighty years of quality craftsmanship is why homeowners, builders, and contractors across Ogden and Northern Utah keep coming back.</p>
-    <div class="actions reveal">
-      <a href="/about-us/" class="link-more">Meet the shop <span>→</span></a>
-    </div>
-  </LSplit>
-
   <StatStrip items={[
     { n: '80+', l: 'Years In The Trade' },
     { n: '4.6 ★', l: '29 Google Reviews' },
-    { n: 'In-House', l: 'Design → Install' },
+    { n: '500+', l: 'Powder Coat Colors' },
     { n: 'Free', l: 'Estimates' },
   ]} />
 
@@ -98,7 +196,7 @@ const tiles = [
       { title: '80+ years in the trade', desc: 'The equipment and skill to get it right the first time.' },
       { title: 'Truly custom', desc: 'One-of-a-kind designs — not stock, off-the-shelf parts.' },
       { title: 'Local & family owned', desc: 'You talk to the people actually doing the work.' },
-      { title: 'Finished to last', desc: 'In-house powder coating built for Utah weather.' },
+      { title: 'In-house powder coating', desc: 'Sandblast prep to color-matched finish — all done in our Ogden shop, up to 30 ft.' },
     ]}
   />
 
@@ -107,4 +205,5 @@ const tiles = [
   <FAQ heading="Frequently Asked Questions" items={faqs} />
 
   <CtaBand heading="Let's build something that lasts." />
+  </div>
 </BaseLayout>

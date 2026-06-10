@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Process B — Light Timeline, Dark Copy Boxes</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,400..700;1,400..700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="tefco.css">
+<style>
+  body { margin: 0; background: #fff; }
+  .demo-label {
+    background: var(--charcoal); color: #fff; padding: 18px 0;
+    border-top: 4px solid var(--gold);
+    font-family: var(--font-mono); font-size: 11px; letter-spacing: .25em; text-transform: uppercase;
+  }
+  .demo-label .wrap { display: flex; align-items: center; gap: 16px; }
+  .demo-label strong { color: var(--gold); }
+
+  /* ── Light section with timeline ── */
+  .process-section {
+    background: var(--slate);
+    padding: 80px 0;
+  }
+  .process-head { text-align: center; margin-bottom: 72px; }
+  .process-head h2 {
+    font-family: var(--font-display); font-size: clamp(1.6rem, 3vw, 2.4rem);
+    font-weight: 800; text-transform: uppercase; color: var(--charcoal); margin-top: 10px;
+  }
+  .process-head p {
+    font-size: 15px; color: rgba(0,0,0,.45); font-weight: 300;
+    line-height: 1.7; max-width: 520px; margin: 12px auto 0;
+  }
+
+  /* Timeline row */
+  .tl-row {
+    display: grid; grid-template-columns: 1fr;
+    gap: 0; margin-bottom: 0; position: relative;
+  }
+  @media (min-width: 900px) {
+    .tl-row { grid-template-columns: 1fr 80px 1fr; align-items: center; margin-bottom: 0; }
+  }
+
+  /* The connecting spine */
+  .tl-spine {
+    display: none;
+    flex-direction: column; align-items: center; justify-content: center;
+    position: relative; padding: 0;
+  }
+  @media (min-width: 900px) { .tl-spine { display: flex; } }
+
+  .tl-dot {
+    width: 48px; height: 48px; border-radius: 50%;
+    background: var(--gold); color: #fff; z-index: 2;
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--font-display); font-weight: 800; font-size: 16px;
+    box-shadow: 0 0 0 6px rgba(20,184,166,.15);
+    flex-shrink: 0;
+  }
+  .tl-line {
+    width: 2px; flex-grow: 1; background: rgba(20,184,166,.3);
+    min-height: 40px;
+  }
+  .tl-row:last-child .tl-line-bottom { display: none; }
+
+  /* Photo panel */
+  .tl-photo {
+    position: relative; overflow: hidden; border-radius: 2px;
+    aspect-ratio: 4/3;
+    box-shadow: 0 16px 40px rgba(0,0,0,.18);
+  }
+  .tl-photo img {
+    width: 100%; height: 100%; object-fit: cover;
+    filter: brightness(.9);
+    transition: transform .5s ease;
+  }
+  .tl-row:hover .tl-photo img { transform: scale(1.04); }
+
+  /* Copy panel — dark charcoal box */
+  .tl-copy {
+    background: var(--charcoal);
+    background-image:
+      linear-gradient(rgba(255,255,255,.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,.03) 1px, transparent 1px);
+    background-size: 24px 24px;
+    border-radius: 2px;
+    padding: 36px 40px;
+    box-shadow: 0 16px 40px rgba(0,0,0,.18);
+    /* Stretch to match photo height */
+    align-self: stretch;
+    display: flex;
+    align-items: center;
+  }
+  .tl-copy-inner { width: 100%; }
+  .tl-copy .tl-num {
+    font-family: var(--font-display); font-size: clamp(3rem, 6vw, 5rem);
+    font-weight: 800; color: rgba(255,255,255,.05); line-height: 1;
+    letter-spacing: -.04em; margin-bottom: -10px;
+  }
+  .tl-copy h3 {
+    font-family: var(--font-display); font-size: clamp(1.1rem, 1.8vw, 1.5rem);
+    font-weight: 800; text-transform: uppercase; color: #fff;
+    line-height: 1.2; position: relative;
+  }
+  .tl-copy h3::before {
+    content: ""; display: block; width: 28px; height: 2px;
+    background: var(--gold); margin-bottom: 12px;
+  }
+  .tl-copy p {
+    font-size: 14px; color: rgba(255,255,255,.6); line-height: 1.75;
+    font-weight: 300; margin-top: 14px; max-width: 420px;
+  }
+  .tl-copy .tl-tag {
+    font-family: var(--font-mono); font-size: 9px; letter-spacing: .35em;
+    text-transform: uppercase; color: var(--gold); font-weight: 700; margin-bottom: 6px;
+    display: block;
+  }
+
+  /* On mobile, steps stack with a left border accent */
+  @media (max-width: 899px) {
+    .tl-row { margin-bottom: 36px; }
+    .tl-photo { border-radius: 2px 2px 0 0; }
+    .tl-copy { border-radius: 0 0 2px 2px; padding: 28px 24px; }
+  }
+
+  /* Separator between rows — vertical spine connector */
+  .tl-sep {
+    display: none;
+  }
+  @media (min-width: 900px) {
+    .tl-sep {
+      display: block; grid-column: 2; height: 24px;
+      width: 2px; background: rgba(20,184,166,.3); margin: 0 auto;
+    }
+  }
+</style>
+</head>
+<body>
+
+<div class="demo-label">
+  <div class="wrap">
+    <strong>Option B (revised)</strong> — Light Timeline, Dark Copy Boxes &nbsp;·&nbsp; Light slate background, charcoal text panels, teal dot spine
+  </div>
+</div>
+
+<section class="process-section">
+  <div class="wrap">
+    <div class="process-head">
+      <span class="eyebrow">How It Works</span>
+      <h2>Our Powder Coating Process</h2>
+      <p>Every piece goes through the same six steps — no shortcuts. Prep is everything, and we do it all in-house.</p>
+    </div>
+
+    <!-- Step 1: photo left, copy right -->
+    <div class="tl-row">
+      <div class="tl-photo">
+        <img src="https://tefcofab.com/wp-content/uploads/2026/02/wheelspowdercoat.jpg" alt="Inspect part" referrerpolicy="no-referrer">
+      </div>
+      <div class="tl-spine">
+        <div class="tl-line"></div>
+        <div class="tl-dot">1</div>
+        <div class="tl-line"></div>
+      </div>
+      <div class="tl-copy">
+        <div class="tl-copy-inner">
+          <span class="tl-tag">Step One</span>
+          <div class="tl-num">01</div>
+          <h3>Inspect &amp; Assess</h3>
+          <p>We evaluate the part — material, existing coatings, condition, and the end-use environment. This determines the right prep method, primer if needed, and the ideal powder formulation for your project.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Step 2: copy left, photo right -->
+    <div class="tl-row flip">
+      <div class="tl-copy">
+        <div class="tl-copy-inner">
+          <span class="tl-tag">Step Two</span>
+          <div class="tl-num">02</div>
+          <h3>Strip &amp; Degrease</h3>
+          <p>Old paint, oil, mill scale, and contaminants are removed. We degrease chemically first — a step many shops skip that causes adhesion failures and early peeling down the road.</p>
+        </div>
+      </div>
+      <div class="tl-spine">
+        <div class="tl-line"></div>
+        <div class="tl-dot">2</div>
+        <div class="tl-line"></div>
+      </div>
+      <div class="tl-photo">
+        <img src="https://tefcofab.com/wp-content/uploads/2024/11/Tefcopics2011-008-scaled.jpg" alt="Strip and degrease" referrerpolicy="no-referrer">
+      </div>
+    </div>
+
+    <!-- Step 3: photo left, copy right -->
+    <div class="tl-row">
+      <div class="tl-photo">
+        <img src="https://tefcofab.com/wp-content/uploads/2021/09/Depositphotos_442109094_l-2015.jpg" alt="Sand blast" referrerpolicy="no-referrer">
+      </div>
+      <div class="tl-spine">
+        <div class="tl-line"></div>
+        <div class="tl-dot">3</div>
+        <div class="tl-line"></div>
+      </div>
+      <div class="tl-copy">
+        <div class="tl-copy-inner">
+          <span class="tl-tag">Step Three</span>
+          <div class="tl-num">03</div>
+          <h3>In-House Sand / Shot Blast</h3>
+          <p>Every piece is blasted to a near-white metal profile in our own facility. This creates a mechanical anchor, removes all rust and scale, and ensures the finish bonds at the molecular level — not just the surface.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Step 4 -->
+    <div class="tl-row flip">
+      <div class="tl-copy">
+        <div class="tl-copy-inner">
+          <span class="tl-tag">Step Four</span>
+          <div class="tl-num">04</div>
+          <h3>Electrostatic Application</h3>
+          <p>Dry powder is electrostatically charged as it's sprayed, clinging uniformly to the grounded metal. The result is an even, consistent coat with no runs, sags, or thin spots — even on complex shapes.</p>
+        </div>
+      </div>
+      <div class="tl-spine">
+        <div class="tl-line"></div>
+        <div class="tl-dot">4</div>
+        <div class="tl-line"></div>
+      </div>
+      <div class="tl-photo">
+        <img src="https://tefcofab.com/wp-content/uploads/2026/02/wheelspowdercoat.jpg" alt="Apply powder" referrerpolicy="no-referrer">
+      </div>
+    </div>
+
+    <!-- Step 5 -->
+    <div class="tl-row">
+      <div class="tl-photo">
+        <img src="https://tefcofab.com/wp-content/uploads/2024/11/101810-003-scaled.jpg" alt="Oven cure" referrerpolicy="no-referrer">
+      </div>
+      <div class="tl-spine">
+        <div class="tl-line"></div>
+        <div class="tl-dot">5</div>
+        <div class="tl-line"></div>
+      </div>
+      <div class="tl-copy">
+        <div class="tl-copy-inner">
+          <span class="tl-tag">Step Five</span>
+          <div class="tl-num">05</div>
+          <h3>Oven Cure</h3>
+          <p>Parts are cured in our oven at high temperature, causing the powder to melt, flow, and cross-link into a hard, continuous film. The result outlasts paint by years and shrugs off UV, moisture, and impact.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Step 6 -->
+    <div class="tl-row flip">
+      <div class="tl-copy">
+        <div class="tl-copy-inner">
+          <span class="tl-tag">Step Six</span>
+          <div class="tl-num">06</div>
+          <h3>Inspect &amp; Release</h3>
+          <p>Every finished piece is visually inspected for coverage, color consistency, and surface quality. If it doesn't meet our standard, it goes back through. That's the satisfaction guarantee.</p>
+        </div>
+      </div>
+      <div class="tl-spine">
+        <div class="tl-line"></div>
+        <div class="tl-dot">6</div>
+        <div class="tl-line"></div>
+      </div>
+      <div class="tl-photo">
+        <img src="https://tefcofab.com/wp-content/uploads/2026/02/house-with-rails-scaled.jpg" alt="Final inspection" referrerpolicy="no-referrer">
+      </div>
+    </div>
+
+  </div>
+</section>
+
+</body>
+</html>

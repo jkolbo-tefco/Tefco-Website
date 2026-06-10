@@ -120,13 +120,13 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 }
 .site-header.scrolled, .site-header.solid {
   background: rgba(22,23,25,.95); backdrop-filter: blur(12px);
-  padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,.05);
+  padding: 12px 0;
   box-shadow: 0 10px 15px -3px rgba(0,0,0,.1);
 }
 .header-inner { position: relative; display: flex; align-items: center; justify-content: space-between; }
 .logo { display: flex; flex-direction: column; align-items: flex-start; gap: 4px; }
-.logo img.mark { height: 48px; width: auto; transition: all .5s; }
-.site-header.scrolled .logo img.mark { height: 40px; }
+.logo img.mark { height: 60px; width: auto; transition: all .5s; }
+.site-header.scrolled .logo img.mark { height: 52px; }
 .logo .strap {
   font-size: 7.5px; letter-spacing: .45em; font-family: var(--font-mono);
   line-height: 1; margin-left: 2px; color: rgba(255,255,255,.55); font-weight: 600;
@@ -143,7 +143,10 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   content: ""; position: absolute; bottom: 0; left: 0; height: 2px; width: 0;
   background: var(--gold); transition: width .3s;
 }
-.desk-nav a:hover::after, .desk-nav a.active::after { width: 100%; }
+.desk-nav a:hover::after { width: 100%; }
+.desk-nav a.active { color: #fff; }
+.desk-nav a.active::after { animation: nav-ul-in .35s .05s ease both; }
+@keyframes nav-ul-in { from { width: 0; } to { width: 100%; } }
 .header-actions { display: none; align-items: center; gap: 16px; }
 @media (min-width: 640px) { .header-actions { display: flex; } }
 .quick-dial { display: flex; align-items: center; gap: 6px; font-size: 12px; color: rgba(255,255,255,.45); transition: color .2s; }
@@ -249,7 +252,8 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 .pillar {
   background: #fff; border: 1px solid rgba(0,0,0,.05); border-radius: 2px;
   overflow: hidden; cursor: pointer; display: flex; flex-direction: column;
-  transition: box-shadow .5s, transform .5s;
+  transition: box-shadow .5s, transform .5s, opacity .6s ease;
+  position: relative;
 }
 .pillar:hover { box-shadow: var(--shadow-premium); transform: translateY(-6px); }
 .pillar .ph { position: relative; aspect-ratio: 16/10; overflow: hidden; background: var(--charcoal); }
@@ -260,22 +264,18 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   background: var(--gold); transition: width .5s ease; z-index: 1;
 }
 .pillar:hover .ph::after { width: 100%; }
-.pillar .num {
-  position: absolute; top: 12px; right: 12px;
-  font-family: var(--font-mono); font-size: 10px; letter-spacing: .2em; font-weight: 700;
-  color: #fff; background: rgba(22,23,25,.7); backdrop-filter: blur(4px);
-  padding: 6px 10px; border-radius: 2px;
-}
 .pillar .body { padding: 26px 26px 28px; display: flex; flex-direction: column; flex-grow: 1; text-align: left; }
 .pillar h3 {
   font-family: var(--font-display); font-size: 15px; font-weight: 800;
   letter-spacing: .15em; color: var(--charcoal); text-transform: uppercase; transition: color .3s;
 }
+/* Stretched link — h3 anchor covers the entire card */
 .pillar h3 a { color: inherit; }
-.pillar h3 a:hover { text-decoration: underline; }
+.pillar h3 a::after { content: ""; position: absolute; inset: 0; z-index: 1; }
 .pillar:hover h3 { color: var(--gold-dark); }
 .pillar p { font-size: 14px; line-height: 1.7; color: rgba(0,0,0,.55); font-weight: 300; margin-top: 10px; flex-grow: 1; }
-.pillar .link-more { margin-top: 18px; }
+/* Link-more sits above the stretched overlay so it's independently clickable */
+.pillar .link-more { margin-top: 18px; position: relative; z-index: 2; }
 
 /* ── 11. IMAGE TILE (gallery) ── */
 .tile-grid { display: grid; grid-template-columns: 1fr; gap: 14px; }
@@ -369,6 +369,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 
 /* ── 15. FOOTER ── */
 .site-footer {
+  position: relative; z-index: 2;
   background: var(--slate); padding: 64px 0 48px; border-top: 1px solid rgba(0,0,0,.1);
   text-align: left; color: rgba(0,0,0,.9);
 }

@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TEFCO — Media Section Mockup B: Dark Feature + Sidebar</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,400..700;1,400..700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="tefco.css">
+<style>
+  body { background: #f2f2f2; }
+  .demo-label {
+    background: var(--charcoal); color: #fff; padding: 18px 0;
+    border-top: 4px solid var(--gold);
+    font-family: var(--font-mono); font-size: 11px; letter-spacing: .25em; text-transform: uppercase;
+  }
+  .demo-label .wrap { display: flex; align-items: center; gap: 16px; }
+  .demo-label strong { color: var(--gold); }
+
+  /* ── OPTION B: Dark Feature + Right Sidebar ── */
+  .media-feature {
+    background: var(--charcoal);
+    background-image:
+      linear-gradient(rgba(255,255,255,.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,.03) 1px, transparent 1px),
+      linear-gradient(rgba(255,255,255,.015) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,.015) 1px, transparent 1px);
+    background-size: 112px 112px, 112px 112px, 28px 28px, 28px 28px;
+    padding: 72px 0; color: #fff;
+  }
+  .media-feature-head { margin-bottom: 40px; }
+  .media-feature-head h2 {
+    font-family: var(--font-display); font-size: clamp(1.4rem, 2.5vw, 2rem);
+    font-weight: 800; text-transform: uppercase; color: #fff; margin-top: 10px;
+  }
+
+  .feature-layout {
+    display: grid; grid-template-columns: 1fr; gap: 28px;
+  }
+  @media (min-width: 1024px) { .feature-layout { grid-template-columns: 1.6fr 1fr; align-items: start; } }
+
+  /* ── Left: big featured item (video or news) ── */
+  .feature-main { display: flex; flex-direction: column; gap: 0; }
+  .feature-thumb {
+    position: relative; aspect-ratio: 16/9; overflow: hidden; border-radius: 2px;
+    background: #000;
+  }
+  .feature-thumb img {
+    width: 100%; height: 100%; object-fit: cover;
+    filter: brightness(.8); transition: transform .5s;
+  }
+  .feature-main:hover .feature-thumb img { transform: scale(1.03); }
+  .feature-thumb .f-tag {
+    position: absolute; top: 16px; left: 16px;
+    background: var(--gold); color: #fff;
+    font-family: var(--font-mono); font-size: 9px; letter-spacing: .25em;
+    text-transform: uppercase; font-weight: 700; padding: 5px 12px; border-radius: 2px;
+  }
+  .feature-play {
+    position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+  }
+  .feature-play-btn {
+    width: 68px; height: 68px; border-radius: 50%;
+    background: rgba(255,255,255,.92); display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 12px 32px rgba(0,0,0,.5); transition: transform .25s, background .25s;
+  }
+  .feature-main:hover .feature-play-btn { transform: scale(1.08); background: #fff; }
+  .feature-play-btn svg { color: var(--gold-dark); margin-left: 4px; }
+
+  .feature-info {
+    background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.07);
+    border-top: 3px solid var(--gold); padding: 28px 28px 24px; border-radius: 0 0 2px 2px;
+  }
+  .feature-info .fi-type {
+    font-family: var(--font-mono); font-size: 9px; letter-spacing: .35em;
+    text-transform: uppercase; color: var(--gold); font-weight: 700; margin-bottom: 10px;
+  }
+  .feature-info h3 {
+    font-family: var(--font-display); font-size: clamp(1rem, 1.8vw, 1.4rem);
+    font-weight: 800; text-transform: uppercase; color: #fff; line-height: 1.2;
+  }
+  .feature-info p {
+    font-size: 13px; color: rgba(255,255,255,.6); line-height: 1.7; font-weight: 300;
+    margin-top: 10px; max-width: 560px;
+  }
+  .feature-info .fi-actions { display: flex; gap: 12px; margin-top: 20px; }
+  .btn-watch {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 12px 22px; background: var(--gold); color: #fff;
+    font-weight: 700; font-size: 11px; letter-spacing: .1em; text-transform: uppercase;
+    border-radius: 2px; transition: background .2s; border: none; cursor: pointer;
+  }
+  .btn-watch:hover { background: var(--gold-light); }
+  .btn-ghost {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 12px 22px; background: transparent; color: rgba(255,255,255,.7);
+    font-weight: 600; font-size: 11px; letter-spacing: .1em; text-transform: uppercase;
+    border-radius: 2px; border: 1px solid rgba(255,255,255,.15); transition: all .2s; cursor: pointer;
+  }
+  .btn-ghost:hover { border-color: var(--gold); color: #fff; }
+
+  /* ── Right sidebar ── */
+  .feature-sidebar { display: flex; flex-direction: column; gap: 20px; }
+
+  /* Latest news mini-card */
+  .news-mini {
+    background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.07);
+    border-left: 3px solid var(--gold); border-radius: 2px; padding: 20px;
+    display: flex; flex-direction: column; gap: 8px;
+    transition: background .2s;
+  }
+  .news-mini:hover { background: rgba(255,255,255,.08); }
+  .news-mini .nm-tag {
+    font-family: var(--font-mono); font-size: 9px; letter-spacing: .3em;
+    text-transform: uppercase; color: var(--gold); font-weight: 700;
+  }
+  .news-mini h4 {
+    font-family: var(--font-display); font-size: 13px; font-weight: 700;
+    text-transform: uppercase; color: #fff; line-height: 1.3;
+  }
+  .news-mini p { font-size: 12px; color: rgba(255,255,255,.55); line-height: 1.6; font-weight: 300; }
+  .news-mini a {
+    font-family: var(--font-mono); font-size: 10px; letter-spacing: .2em;
+    text-transform: uppercase; color: var(--gold); font-weight: 700;
+    display: inline-flex; align-items: center; gap: 5px; margin-top: 4px;
+  }
+
+  /* Look book download card */
+  .lookbook-card {
+    background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.07);
+    border-radius: 2px; overflow: hidden;
+  }
+  .lookbook-card .lb-cover {
+    position: relative; aspect-ratio: 3/2; overflow: hidden;
+  }
+  .lookbook-card .lb-cover img {
+    width: 100%; height: 100%; object-fit: cover; filter: brightness(.55);
+  }
+  .lookbook-card .lb-cover-overlay {
+    position: absolute; inset: 0; display: flex; flex-direction: column;
+    align-items: center; justify-content: center; gap: 6px;
+    background: linear-gradient(to bottom, transparent 30%, rgba(0,0,0,.5));
+  }
+  .lb-cover-overlay .lb-eyebrow {
+    font-family: var(--font-mono); font-size: 9px; letter-spacing: .4em;
+    text-transform: uppercase; color: var(--gold-light); font-weight: 700;
+  }
+  .lb-cover-overlay .lb-year {
+    font-family: var(--font-display); font-size: 3rem; font-weight: 800;
+    color: #fff; line-height: 1; letter-spacing: -.03em;
+  }
+  .lb-cover-overlay .lb-sub {
+    font-family: var(--font-mono); font-size: 8px; letter-spacing: .35em;
+    text-transform: uppercase; color: rgba(255,255,255,.7);
+  }
+  .lookbook-card .lb-body { padding: 20px; display: flex; flex-direction: column; gap: 10px; }
+  .lookbook-card .lb-title {
+    font-family: var(--font-display); font-size: 14px; font-weight: 800;
+    text-transform: uppercase; color: #fff;
+  }
+  .lookbook-card .lb-desc { font-size: 12px; color: rgba(255,255,255,.55); line-height: 1.6; font-weight: 300; }
+  .btn-dl-full {
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+    padding: 14px; background: var(--gold); color: #fff;
+    font-weight: 700; font-size: 11px; letter-spacing: .1em; text-transform: uppercase;
+    border-radius: 2px; transition: background .2s; border: none; cursor: pointer; width: 100%;
+  }
+  .btn-dl-full:hover { background: var(--gold-light); }
+</style>
+</head>
+<body>
+
+<div class="demo-label">
+  <div class="wrap">
+    <strong>Option B</strong> — Dark Feature + Sidebar &nbsp;·&nbsp; Large video/news left, Look Book + news mini-card stacked right
+  </div>
+</div>
+
+<section class="media-feature">
+  <div class="wrap">
+    <div class="media-feature-head">
+      <span class="eyebrow">Stay Connected</span>
+      <h2>News, Videos &amp; Resources</h2>
+    </div>
+
+    <div class="feature-layout">
+
+      <!-- LEFT: Big featured video -->
+      <div class="feature-main">
+        <div class="feature-thumb">
+          <img src="https://tefcofab.com/wp-content/uploads/2024/11/101810-003-scaled.jpg" alt="TEFCO fabrication video" referrerpolicy="no-referrer">
+          <span class="f-tag">Featured Video</span>
+          <div class="feature-play">
+            <div class="feature-play-btn">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+            </div>
+          </div>
+        </div>
+        <div class="feature-info">
+          <div class="fi-type">Behind the Shop · June 2025</div>
+          <h3>See How We Build Custom Ironwork From Start to Finish</h3>
+          <p>Take a look inside our Ogden fabrication shop — from raw steel to finished powder-coated railings, gates, and security doors. This is what 80 years of craft looks like up close.</p>
+          <div class="fi-actions">
+            <button class="btn-watch">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+              Watch Now
+            </button>
+            <a href="/blog/" class="btn-ghost">All Videos →</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- RIGHT: Sidebar -->
+      <div class="feature-sidebar">
+
+        <!-- Latest news -->
+        <a href="/blog/" class="news-mini" style="text-decoration:none;">
+          <span class="nm-tag">Latest News · June 2025</span>
+          <h4>Stainless Cable Railing Systems Now Available</h4>
+          <p>We've expanded our railing lineup with fully custom stainless cable systems — perfect for decks and commercial builds across Utah.</p>
+          <span>
+            Read More
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+          </span>
+        </a>
+
+        <!-- Look Book -->
+        <div class="lookbook-card">
+          <div class="lb-cover">
+            <img src="https://tefcofab.com/wp-content/uploads/2024/11/IMG_0803-scaled.jpg" alt="TEFCO Look Book" referrerpolicy="no-referrer">
+            <div class="lb-cover-overlay">
+              <span class="lb-eyebrow">TEFCO</span>
+              <span class="lb-year">2025</span>
+              <span class="lb-sub">Look Book</span>
+            </div>
+          </div>
+          <div class="lb-body">
+            <div class="lb-title">Download the 2025 Look Book</div>
+            <p class="lb-desc">Our full catalog of custom ironwork, powder coating colors, and fabrication options — free PDF, ready to share.</p>
+            <button class="btn-dl-full">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+              Free Download — PDF
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+</body>
+</html>

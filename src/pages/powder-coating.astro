@@ -3,7 +3,8 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import PageHero from '../components/PageHero.astro';
 import LSplit from '../components/LSplit.astro';
 import Features from '../components/Features.astro';
-import BeforeAfter from '../components/BeforeAfter.astro';
+import StatStrip from '../components/StatStrip.astro';
+import GalleryFeature from '../components/GalleryFeature.astro';
 import ReviewGrid from '../components/ReviewGrid.astro';
 import FAQ from '../components/FAQ.astro';
 import CtaBand from '../components/CtaBand.astro';
@@ -11,88 +12,298 @@ import { reviewsFor } from '../data/site';
 import { service, faqPage, breadcrumb } from '../lib/schema';
 
 const path = '/powder-coating/';
-const title = 'Powder Coating in Ogden, UT — Custom Colors | TEFCO';
-const description = 'Professional powder coating in Ogden, Utah — wheels, parts, furniture, railings & more. Durable, custom-matched finishes from TEFCO. Free quotes: (801) 621-1010.';
+const title = 'Powder Coating in Ogden, UT — In-House, Up to 30 Ft | TEFCO';
+const description = 'Professional powder coating in Ogden, Utah. In-house sandblast prep, pieces up to 30 ft, 20 stocked colors + 500+ custom options via Sherwin-Williams, TCI & Prismatic. Free quotes: (801) 621-1010.';
 const ogImage = 'https://tefcofab.com/wp-content/uploads/2026/02/wheelspowdercoat.jpg';
 
 const faqs = [
-  { q: 'How does powder coating work?', a: 'A dry pigment is electrostatically sprayed onto clean metal, then cured in an oven so it melts into a hard, even shell — far more durable than liquid paint.' },
-  { q: 'What are the benefits of powder coating?', a: "It's more durable, more eco-friendly (no solvents), and available in far more colors and textures than paint — and it resists chips, scratches, and fading." },
-  { q: 'How do I maintain powder-coated surfaces?', a: 'Just wash with mild soap and water; avoid abrasive pads and harsh solvents. The finish does the rest.' },
-  { q: 'What can you powder coat?', a: 'Wheels, automotive and UTV parts, railings, gates, furniture, fencing, machinery, and most metal — bring it in or call for a quote.' },
+  { q: 'How does powder coating work?', a: 'A dry pigment is electrostatically sprayed onto clean, prepared metal, then cured in an oven at high heat so it melts and flows into a hard, even shell. The result is far more durable and impact-resistant than liquid paint.' },
+  { q: 'Why does surface prep matter so much?', a: 'Powder coating is only as good as the surface underneath. Oils, rust, old coatings, and mill scale all prevent proper adhesion and cause the finish to peel or bubble early. That\'s why we sandblast or shot-blast every piece before we coat — it\'s the most important step in the whole process.' },
+  { q: 'What sizes can you powder coat?', a: 'Our oven handles pieces up to 30 feet long, making us one of the few shops in Northern Utah capable of coating full-length structural members, fence panels, long gate frames, and large architectural metalwork.' },
+  { q: 'How many colors do you offer?', a: 'We stock 20 in-house colors ready to go same-week. For custom colors, we order through our partnerships with Sherwin-Williams, TCI, and Prismatic Powders — giving you access to 500+ colors, textures, and specialty finishes including metallic, hammertone, wrinkle, and flat/matte options.' },
+  { q: 'Can you match an existing color?', a: 'Yes. Bring in a sample, a paint chip, or a RAL/Pantone reference and we\'ll order a custom match through our supplier partners. Custom color orders typically add 3–5 business days.' },
+  { q: 'What can you powder coat?', a: 'Any conductive metal that can handle oven temperatures: steel, aluminum, iron, stainless, galvanized steel, and more. Common items include wheels, automotive and UTV parts, railings, gates, fencing, furniture, machinery components, and structural members. If you\'re unsure whether your part qualifies, give us a call.' },
+  { q: 'Do you offer sandblasting as a separate service?', a: 'Yes — our in-house sand and shot blasting is available as a standalone service for rust removal, paint stripping, and surface preparation on any metal part. See our sandblasting page for details.' },
+  { q: 'How long does powder coating last?', a: 'A properly prepped and applied powder coat finish typically lasts 15–20 years in normal conditions. Utah\'s UV, freeze-thaw cycles, and road salt are hard on finishes — which is why our blasting prep step is non-negotiable.' },
 ];
 
 const schema = [
-  service({ name: 'Powder Coating', description: 'In-house powder coating for wheels, parts, furniture, railings and more in hundreds of custom colors.', path }),
+  service({
+    name: 'Powder Coating',
+    description: 'In-house powder coating in Ogden, Utah. Pieces up to 30 ft, in-house sandblast prep, 20 stocked colors and 500+ custom options via Sherwin-Williams, TCI, and Prismatic Powders.',
+    path,
+  }),
   faqPage(faqs),
   breadcrumb([{ name: 'Home', path: '/' }, { name: 'Services', path: '/services/' }, { name: 'Powder Coating', path }]),
 ];
+
+const galleryTiles = [
+  { img: 'https://tefcofab.com/wp-content/uploads/2026/02/wheelspowdercoat.jpg',           title: 'Custom Powder-Coated Wheels',           cat: 'Powder Coating', desc: 'Gloss black finish — automotive & UTV wheels', big: true },
+  { img: 'https://tefcofab.com/wp-content/uploads/2026/02/house-with-rails-scaled.jpg',    title: 'Exterior Deck Railing',                 cat: 'Powder Coating', desc: 'Matte black powder coat on custom iron railing' },
+  { img: 'https://tefcofab.com/wp-content/uploads/2024/11/IMG_0803-scaled.jpg',            title: 'Ornamental Iron Railing',               cat: 'Powder Coating', desc: 'Dark bronze finish, residential staircase' },
+  { img: 'https://tefcofab.com/wp-content/uploads/2024/11/101810-003-scaled.jpg',          title: 'Fabrication & Finish — Shop Floor',     cat: 'In-House',       desc: 'All coating work done in our Ogden facility' },
+  { img: 'https://tefcofab.com/wp-content/uploads/2021/09/Depositphotos_442109094_l-2015.jpg', title: 'Sand & Shot Blast Prep',            cat: 'Surface Prep',   desc: 'In-house blasting before every coat' },
+];
+
+// 20 in-house stocked colors with representative hex values
+const stockColors = [
+  { name: 'Gloss Black',       hex: '#111111' },
+  { name: 'Matte Black',       hex: '#1a1a1a' },
+  { name: 'Flat Black',        hex: '#222222' },
+  { name: 'Gloss White',       hex: '#f5f5f5' },
+  { name: 'Satin White',       hex: '#e8e8e8' },
+  { name: 'Dark Bronze',       hex: '#3b2a1a' },
+  { name: 'Matte Bronze',      hex: '#6b4c2a' },
+  { name: 'Charcoal Gray',     hex: '#3d3d3d' },
+  { name: 'Satin Gray',        hex: '#7a7a7a' },
+  { name: 'Hammertone Black',  hex: '#2a2a2a' },
+  { name: 'Hammertone Gray',   hex: '#555555' },
+  { name: 'Safety Red',        hex: '#cc2200' },
+  { name: 'Safety Yellow',     hex: '#f5c400' },
+  { name: 'Hunter Green',      hex: '#2d5a27' },
+  { name: 'Forest Green',      hex: '#3a6b35' },
+  { name: 'Royal Blue',        hex: '#1a3a8f' },
+  { name: 'Navy Blue',         hex: '#0d1f4f' },
+  { name: 'Copper Metallic',   hex: '#b87333' },
+  { name: 'Metallic Silver',   hex: '#a8a8a8' },
+  { name: 'Flat Anthracite',   hex: '#2f3336' },
+];
 ---
-<BaseLayout title={title} description={description} path={path} ogImage={ogImage} active="/services/" schema={schema}>
+<BaseLayout title={title} description={description} path={path} ogImage={ogImage} active="/powder-coating/" schema={schema}>
+
   <PageHero
-    eyebrow="Residential & Commercial"
+    eyebrow="Residential & Commercial — Ogden, Utah"
     title="Powder Coating"
-    accent="in hundreds of colors"
-    lede="Ogden's go-to powder coating shop — a tougher, longer-lasting finish than paint, for everything from a single set of wheels to thousands of parts."
+    accent="done right, in-house"
+    lede="One of Northern Utah's few shops capable of coating pieces up to 30 ft long. In-house sandblast prep, 20 stocked colors, and 500+ options through our Sherwin-Williams, TCI & Prismatic partnerships."
     bg="https://tefcofab.com/wp-content/uploads/2026/02/wheelspowdercoat.jpg"
     bgAlt="Freshly powder-coated wheels at TEFCO in Ogden, Utah"
     breadcrumb={[{ label: 'Home', href: '/' }, { label: 'Services', href: '/services/' }, { label: 'Powder Coating' }]}
   />
 
-  <BeforeAfter
-    eyebrow="See The Difference"
-    heading="Bare metal → durable finish"
-    before={null}
-    after="https://tefcofab.com/wp-content/uploads/2026/02/wheelspowdercoat.jpg"
-    beforeAlt="Bare, unfinished metal wheels before powder coating"
-    beforeNote="BEFORE photo: a set of bare/rusty or stripped metal wheels (or parts) on the shop floor, unfinished — pairs with the coated 'after' wheels shot."
-    afterAlt="The same wheels after a glossy powder-coat finish, Ogden Utah"
-    caption="Drag the handle: bare metal vs. a durable powder-coated finish. Ogden, Utah."
-  />
+  <StatStrip items={[
+    { n: '30 ft', l: 'Max Piece Length' },
+    { n: '20', l: 'In-Stock Colors' },
+    { n: '500+', l: 'Custom Color Options' },
+    { n: 'In-House', l: 'Sandblast Prep' },
+  ]} />
 
+  <!-- ── Overview / History ── -->
   <LSplit
-    eyebrow="Powder Coating"
-    heading="Quality powder coating in Utah"
-    flip
-    img="https://tefcofab.com/wp-content/uploads/2026/02/wheelspowdercoat.jpg"
-    imgAlt="Powder-coated automotive wheels by TEFCO, Ogden Utah"
-    caption="Powder-Coated Wheels"
+    eyebrow="About Our Finish Shop"
+    heading="Powder coating & sandblasting — open to the public."
+    img="https://tefcofab.com/wp-content/uploads/2024/11/Tefcopics2011-008-scaled.jpg"
+    imgAlt="TEFCO powder coating and sandblasting facility in Ogden, Utah"
+    caption="Ogden, Utah — Since 2000"
   >
-    <p class="reveal">TEFCO is your go-to powder coating company for residential and commercial work — wheels, automotive and UTV parts, patio furniture, railings, fencing, machinery, and more. From a single piece to a production run, we deliver an unparalleled, even finish and a fast turnaround.</p>
+    <p class="reveal">TEFCO has been building custom ironwork since 1942. We added our in-house powder coating operation in 2000 — and it's grown into one of the most capable finish shops in Northern Utah. Our powder coating and sandblasting services are available to <strong>outside customers</strong>, not just our own fabrication work. Bring us your parts, wheels, frames, or structural members and we'll handle the rest.</p>
+    <ul class="pc-caps reveal">
+      <li><span>Pieces up to <strong>30 ft long</strong> — one of the largest capacities in the region</span></li>
+      <li><span>In-house <strong>sand &amp; shot blasting</strong> — we prep every piece ourselves</span></li>
+      <li><span><strong>20 stocked colors</strong> ready for same-week turnaround</span></li>
+      <li><span><strong>500+ colors &amp; finishes</strong> available via Sherwin-Williams, TCI &amp; Prismatic</span></li>
+      <li><span>Color matching from RAL, Pantone, or a physical sample</span></li>
+      <li><span>Residential, commercial &amp; industrial — any volume</span></li>
+    </ul>
+    <div class="actions reveal">
+      <button class="btn btn-solid btn-sm" data-open-quote>Get a Free Quote</button>
+      <a href="/sand-shot-blasting/" class="btn btn-outline btn-sm">Sandblasting Services</a>
+    </div>
+  </LSplit>
+
+  <!-- ── Process ── -->
+  <section class="process-ruled">
+    <div class="wrap">
+      <div class="pr-head">
+        <span class="eyebrow">How It Works</span>
+        <h2>Our Powder Coating Process</h2>
+        <p>Every piece that leaves our shop goes through the same six steps — no shortcuts, no skipped stages, no exceptions. We treat surface prep as seriously as the finish itself, because the best powder in the world won't last on a poorly prepared substrate. That's why we handle sandblasting, degreasing, and inspection in-house: we control every variable that determines how long the coating lasts.</p>
+        <p>Owning the entire process under one roof also means faster turnaround. There's no waiting on a sub-contractor to return your part, no coordination delays, no surprises. When we quote a lead time, we hit it — and the finish you get on day one looks the same in year ten.</p>
+      </div>
+
+      <div class="ruled-row reveal">
+        <div class="rr-num">01</div>
+        <div class="rr-text">
+          <span class="rr-kicker">Step One</span>
+          <h3>Inspect &amp; Assess</h3>
+          <p>We evaluate the part — material, existing coatings, condition, and end-use environment. This determines the right prep method, primer if needed, and the ideal powder formulation for your project.</p>
+        </div>
+        <div class="rr-photo">
+          <img src="https://tefcofab.com/wp-content/uploads/2026/02/wheelspowdercoat.jpg" alt="Inspecting metal parts before powder coating at TEFCO Ogden" loading="lazy" referrerpolicy="no-referrer" />
+        </div>
+      </div>
+
+      <div class="ruled-row reveal">
+        <div class="rr-num">02</div>
+        <div class="rr-text">
+          <span class="rr-kicker">Step Two</span>
+          <h3>Strip &amp; Degrease</h3>
+          <p>Old paint, oil, mill scale, and contaminants are removed. We degrease chemically first so the blast media isn't contaminated — a step many shops skip that causes adhesion failures and early peeling down the road.</p>
+        </div>
+        <div class="rr-photo">
+          <img src="https://tefcofab.com/wp-content/uploads/2024/11/Tefcopics2011-008-scaled.jpg" alt="Stripping and degreasing metal before powder coating, TEFCO Ogden Utah" loading="lazy" referrerpolicy="no-referrer" />
+        </div>
+      </div>
+
+      <div class="ruled-row reveal">
+        <div class="rr-num">03</div>
+        <div class="rr-text">
+          <span class="rr-kicker">Step Three</span>
+          <h3>In-House Sand / Shot Blast</h3>
+          <p>Every piece is blasted to a near-white metal profile in our own facility. This creates a mechanical anchor for the powder, removes all rust and scale, and ensures the finish bonds at the molecular level — not just the surface.</p>
+        </div>
+        <div class="rr-photo">
+          <img src="https://tefcofab.com/wp-content/uploads/2021/09/Depositphotos_442109094_l-2015.jpg" alt="In-house sandblasting metal parts at TEFCO powder coating shop, Ogden Utah" loading="lazy" referrerpolicy="no-referrer" />
+        </div>
+      </div>
+
+      <div class="ruled-row reveal">
+        <div class="rr-num">04</div>
+        <div class="rr-text">
+          <span class="rr-kicker">Step Four</span>
+          <h3>Electrostatic Application</h3>
+          <p>Dry powder is electrostatically charged as it's sprayed, clinging uniformly to the grounded metal. The result is an even, consistent coat with no runs, sags, or thin spots — even on complex shapes and recesses.</p>
+        </div>
+        <div class="rr-photo">
+          <img src="https://tefcofab.com/wp-content/uploads/2024/11/IMG_0803-scaled.jpg" alt="Applying powder coat finish to metal railings at TEFCO, Ogden Utah" loading="lazy" referrerpolicy="no-referrer" />
+        </div>
+      </div>
+
+      <div class="ruled-row reveal">
+        <div class="rr-num">05</div>
+        <div class="rr-text">
+          <span class="rr-kicker">Step Five</span>
+          <h3>Oven Cure</h3>
+          <p>Parts are cured at high temperature, causing the powder to melt, flow, and cross-link into a hard, continuous film. The result outlasts paint by years and shrugs off Utah's UV, freeze-thaw cycles, and road salt.</p>
+        </div>
+        <div class="rr-photo">
+          <img src="https://tefcofab.com/wp-content/uploads/2024/11/101810-003-scaled.jpg" alt="Curing powder-coated parts in the TEFCO oven, Ogden Utah" loading="lazy" referrerpolicy="no-referrer" />
+        </div>
+      </div>
+
+      <div class="ruled-row reveal">
+        <div class="rr-num">06</div>
+        <div class="rr-text">
+          <span class="rr-kicker">Step Six</span>
+          <h3>Inspect &amp; Release</h3>
+          <p>Every finished piece is visually inspected for coverage, color consistency, and surface quality before it leaves the shop. If it doesn't meet our standard, it goes back through — that's the satisfaction guarantee.</p>
+        </div>
+        <div class="rr-photo">
+          <img src="https://tefcofab.com/wp-content/uploads/2026/02/house-with-rails-scaled.jpg" alt="Finished powder-coated railing installed on Utah home" loading="lazy" referrerpolicy="no-referrer" />
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ── Capability split ── -->
+  <LSplit
+    eyebrow="Built for Big Jobs"
+    heading="Up to 30 feet. Residential to industrial."
+    flip
+    img="https://tefcofab.com/wp-content/uploads/2021/09/Depositphotos_442109094_l-2015.jpg"
+    imgAlt="Large metal parts being powder coated at TEFCO, Ogden Utah"
+    caption="In-House Facility"
+  >
+    <p class="reveal">Most powder coating shops are limited to short parts — wheels, small frames, individual components. Our oven handles pieces up to <strong>30 feet long</strong>, which means we can coat full-length fence panels, long gate frames, structural members, and large architectural metalwork that other shops have to turn away.</p>
+    <p class="reveal">We work with homeowners on single pieces and with contractors and fabricators on full production runs. Residential railings, commercial fencing, automotive and UTV parts, heavy equipment components — if it's metal and it fits, we coat it.</p>
     <div class="actions reveal">
       <button class="btn btn-solid btn-sm" data-open-quote>Get a Free Quote</button>
     </div>
   </LSplit>
 
-  <Features
-    eyebrow="Why Powder Coat"
-    heading="Benefits of powder coating"
-    items={[
-      { title: 'Wide application', desc: 'Wheels, parts, furniture, railings, fencing, machinery and more.' },
-      { title: 'Custom color matching', desc: 'Hundreds of colors and textures to match your project.' },
-      { title: 'Superior durability', desc: 'A hard finish that commonly lasts 15–20 years.' },
-      { title: 'Uniform finish', desc: 'Even coverage with no runs, drips, or thin spots.' },
-      { title: 'Enhanced protection', desc: 'Strong corrosion resistance for the Utah outdoors.' },
-      { title: 'Efficient & fast', desc: 'Quick turnaround, even on large batches.' },
-    ]}
+  <!-- ── Colors section ── -->
+  <section style="background: var(--charcoal); padding: 72px 0; background-image: linear-gradient(rgba(255,255,255,.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.03) 1px, transparent 1px); background-size: 28px 28px, 28px 28px;">
+    <div class="wrap">
+      <div class="sec-head on-dark">
+        <span class="eyebrow">Colors &amp; Finishes</span>
+        <h2 style="color:#fff;">20 In-Stock Colors. 500+ Available.</h2>
+        <p style="color:rgba(255,255,255,.6); font-size:15px; font-weight:300; max-width:620px; margin: 12px auto 0; line-height:1.7;">
+          We stock 20 colors ready for same-week turnaround. Through our partnerships with Sherwin-Williams, TCI, and Prismatic Powders, we can order virtually any color, texture, or specialty finish.
+        </p>
+      </div>
+
+      <!-- Color swatches -->
+      <div class="reveal" style="display:grid; grid-template-columns: repeat(auto-fill, minmax(90px, 1fr)); gap: 12px; margin-top: 48px;">
+        {stockColors.map((c) => (
+          <div style="display:flex; flex-direction:column; align-items:center; gap:8px;">
+            <div style={`width:56px; height:56px; border-radius:50%; background:${c.hex}; border: 2px solid rgba(255,255,255,.12); box-shadow: 0 4px 12px rgba(0,0,0,.4);`}></div>
+            <span style="font-family:var(--font-mono); font-size:8.5px; letter-spacing:.1em; text-transform:uppercase; color:rgba(255,255,255,.55); text-align:center; line-height:1.4;">{c.name}</span>
+          </div>
+        ))}
+      </div>
+
+      <p class="reveal" style="text-align:center; margin-top:20px; font-family:var(--font-mono); font-size:10px; letter-spacing:.2em; text-transform:uppercase; color:rgba(255,255,255,.3);">
+        + textures: hammertone · wrinkle · metallic · flat/matte · gloss · satin
+      </p>
+
+      <!-- Partner badges -->
+      <div class="reveal" style="margin-top: 56px; border-top: 1px solid rgba(255,255,255,.08); padding-top: 40px;">
+        <p style="text-align:center; font-family:var(--font-mono); font-size:9px; letter-spacing:.35em; text-transform:uppercase; color:var(--gold); font-weight:700; margin-bottom:28px;">
+          Custom Color Partners
+        </p>
+        <div style="display:flex; flex-wrap:wrap; justify-content:center; gap:16px;">
+          {['Sherwin-Williams', 'TCI Powder Coatings', 'Prismatic Powders'].map((p) => (
+            <div style="padding: 14px 28px; background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.1); border-top: 2px solid var(--gold); border-radius:2px; font-family:var(--font-display); font-size:13px; font-weight:700; text-transform:uppercase; color:#fff; letter-spacing:.05em;">
+              {p}
+            </div>
+          ))}
+        </div>
+        <p style="text-align:center; margin-top:18px; font-size:13px; color:rgba(255,255,255,.45); font-weight:300;">
+          Bring a RAL number, Pantone reference, or a color sample — we'll order an exact match.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Gallery ── -->
+  <GalleryFeature
+    eyebrow="Our Work"
+    heading="Powder coating projects — Ogden & Northern Utah"
+    sec="gray"
+    tiles={galleryTiles}
+    moreHref="/gallery/"
+    moreLabel="View Full Gallery"
   />
 
+  <!-- ── Surface prep ── -->
   <LSplit
     sec="gray"
-    eyebrow="Prepped Right"
-    heading="Blasted clean first"
+    eyebrow="Surface Prep"
+    heading="The finish is only as good as the prep."
     img="https://tefcofab.com/wp-content/uploads/2021/09/Depositphotos_442109094_l-2015.jpg"
-    imgAlt="Sandblasting a part before powder coating, Ogden Utah"
+    imgAlt="Sandblasting metal parts before powder coating at TEFCO Ogden"
+    caption="In-House Sand & Shot Blast"
   >
-    <p class="reveal">A great finish starts with great prep. Every part we coat is first cleaned with our in-house <a href="/sand-shot-blasting/">sand &amp; shot blasting</a> so the powder bonds tight and lasts. It's why our finishes hold up the way they do.</p>
+    <p class="reveal">Most coating failures — peeling, bubbling, early rust — trace back to poor surface preparation. Oils, mill scale, old paint, and rust all prevent powder from bonding properly, no matter how good the coating itself is.</p>
+    <p class="reveal">Our in-house <a href="/sand-shot-blasting/" style="color:var(--gold-dark); font-weight:600;">sand &amp; shot blasting</a> facility means we control the prep ourselves. Every piece is blasted to a clean metal profile before it ever sees powder — and we won't coat it until it meets our standard. It's why our finishes hold up the way they do.</p>
     <div class="actions reveal">
-      <button class="btn btn-solid btn-sm" data-open-quote>Get a Free Quote</button>
+      <a href="/sand-shot-blasting/" class="btn btn-solid btn-sm">Learn About Our Blasting</a>
     </div>
   </LSplit>
+
+  <!-- ── Features ── -->
+  <Features
+    eyebrow="Why Choose TEFCO"
+    heading="What sets our powder coating apart"
+    items={[
+      { title: 'Up to 30 ft pieces', desc: 'One of the largest coating capacities in Northern Utah — full fence panels, long frames, structural members.' },
+      { title: 'In-house sandblast prep', desc: 'We blast every piece ourselves. No outsourcing, no skipped steps, no mystery prep work.' },
+      { title: '500+ color options', desc: '20 in-stock colors ready to go, plus full custom ordering via Sherwin-Williams, TCI & Prismatic.' },
+      { title: 'Color matching', desc: 'RAL, Pantone, or bring a sample — we\'ll order an exact match for your project.' },
+      { title: 'Residential & commercial', desc: 'Single wheels, full production runs, architectural metalwork — we handle any volume.' },
+      { title: 'Satisfaction guarantee', desc: 'If the finish doesn\'t meet our standard, it goes back through. No exceptions.' },
+    ]}
+  />
 
   <ReviewGrid heading="What Customers Say" items={reviewsFor('powder-coating', 3)} narrow />
 
   <FAQ heading="Powder Coating FAQs" items={faqs} />
 
-  <CtaBand heading="Give us something to coat." text="Bring in your wheels, parts, or furniture — or call for a fast, free quote." button="Get a Free Quote" />
+  <CtaBand
+    heading="Give us something to coat."
+    text="Bring in your wheels, parts, railings, or structural members — or call for a fast, free quote."
+    button="Get a Free Quote"
+  />
+
 </BaseLayout>
